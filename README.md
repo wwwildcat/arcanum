@@ -14,4 +14,6 @@
 
 - форматирование ответа в нужный json
 
-Поскольку собственно запрос возвращает результат работы стороннего API (git), то его нет смысла тестировать, а подготовку параметров и форматирование ответа для удобства тестирования можно выделить в отдельные функции. Результатом их сценариев соответственно будет результат функции.
+Поскольку собственно запрос возвращает результат работы стороннего API (git), то его нет смысла тестировать, а подготовку параметров и форматирование ответа для удобства тестирования можно выделить в отдельные функции. Например, для запроса содержимого директории [getRepository](https://github.com/wwwildcat/arcanum/blob/tests/src/server/callbacks/getRepository/getRepository.js) это [ветка getCommandParams](https://github.com/wwwildcat/arcanum/blob/tests/src/server/callbacks/getCommandParams.js#L11) и [getRepositoryData](https://github.com/wwwildcat/arcanum/blob/tests/src/server/callbacks/getRepository/getRepositoryData.js). Результатом их сценариев соответственно будет результат функции.
+
+[Тесты](https://github.com/wwwildcat/arcanum/tree/tests/tests)
