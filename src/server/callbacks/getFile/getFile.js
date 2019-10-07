@@ -2,6 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const {spawn} = require('child_process');
 
+const getParams = require('../getCommandParams');
+const getFormattedFile = require('./getFormattedFile');
+
 const pathToRepos = process.argv[2];
 
 //Ручка GET /api/repos/:repositoryId/blob/:commitHash/:pathToFile
@@ -13,7 +16,7 @@ module.exports = function (request, response) {
 		}
 		else {
 			let out = '';
-			const gitBlob = spawn('git', ['show', request.params['commitHash'] + ':' + request.params['pathToFile']], {cwd: pathToFile});
+			const gitBlob = spawn('git', getParams(request, 'getFile'), {cwd: pathToFile});
 			gitBlob.stdout.on('data', chunk => {
 				out += chunk.toString();
 			});
@@ -22,9 +25,7 @@ module.exports = function (request, response) {
 					response.status(404).send(request.params['commitHash'] + ' not found');
 				}
 				else {
-					const fileLines = out.split(/\n/);
-					fileLines.pop(); //Файл разбит на строки, последняя пустая убрана
-					response.json(fileLines); 
+					response.json(getFormattedFile(out)); 
 				}
 			});
 		}
