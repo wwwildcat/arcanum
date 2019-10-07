@@ -4,12 +4,6 @@ export function receiveListOfRepositories(json) {
 		content: json
 	};
 }
-export function receiveRepositoryContent(json) {
-	return {
-		type: 'RECEIVE_REPOSITORY_CONTENT',
-		content: json
-	};
-}
 export function setRepo(repoName) {
 	return {
 		type: 'SET_REPO',

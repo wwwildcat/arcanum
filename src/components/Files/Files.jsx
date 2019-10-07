@@ -10,7 +10,6 @@ import {goToDirectory, goToFile, setPath, setRepo} from '../../server/redux/acti
 import {getDirectoryContent, getFileContent} from '../../server/redux/middleware';
 
 function mapStateToProps(state) {
-	console.log(state);
 	return {
 		allRepositories: state.allRepositories
 	};

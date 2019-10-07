@@ -5,9 +5,9 @@ import './Tabs.css';
 
 export const cnTabs = cn('Tabs');
 
-function Tabs({isFile, activeTab}) {
-	let tab1 = isFile ? 'DETAILS' : 'FILES';
-	let tab2 = isFile ? 'HISTORY' : 'BRANCHES';
+function Tabs({type, activeTab}) {
+	let tab1 = type === 'blob' ? 'DETAILS' : 'FILES';
+	let tab2 = type === 'blob' ? 'HISTORY' : 'BRANCHES';
 	let isActive1 = (activeTab === '1') ? true : false;
 	let isActive2 = (activeTab === '2') ? true : false;
 	return (
@@ -19,7 +19,7 @@ function Tabs({isFile, activeTab}) {
 }
 
 Tabs.defaultProps = {
-	isFile: false,
+	type: 'tree',
 	activeTab: '1'
 };
 

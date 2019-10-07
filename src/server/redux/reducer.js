@@ -1,7 +1,6 @@
 //Типы Action
 const Types = {
 	RECEIVE_LIST_OF_REPOSITORIES: 'RECEIVE_LIST_OF_REPOSITORIES',
-	RECEIVE_REPOSITORY_CONTENT: 'RECEIVE_REPOSITORY_CONTENT',
 	SET_REPO: 'SET_REPO',
 	SET_PATH: 'SET_PATH',
 	GO_TO_DIRECTORY: 'GO_TO_DIRECTORY',
@@ -27,13 +26,6 @@ export function reducer(state, action) {
 		};
 		return Object.assign({}, state, newState);
 	}
-	else if (action.type === Types.RECEIVE_REPOSITORY_CONTENT) {//Получение содержимого корневой папки репозитория
-		const data = action.content;
-		const newState = {};
-		newState.currentFiles = data;
-		newState.isLoading = false;
-		return Object.assign({}, state, newState);
-	}
 	else if (action.type === Types.RECEIVE_REPOSITORY_CONTENT_ALL) {//Получение содержимого всех папок и подпапок репозитория
 		const data = action.content;
 		const newState = {};
@@ -41,28 +33,31 @@ export function reducer(state, action) {
 		newState.allFilesFilter = data;
 		return Object.assign({}, state, newState);
 	}
-	else if (action.type === Types.SET_REPO) {
+	else if (action.type === Types.SET_REPO) { //Запись в state названия текущего репозитория
 		const repoName = action.content;
 		const newState = {};
 		newState.currentRepository = repoName;
 		return Object.assign({}, state, newState);
 	}
-	else if (action.type === Types.SET_PATH) {
+	else if (action.type === Types.SET_PATH) { //Запись в state пути к текущему объекту
 		const path = action.content ? action.content.split('/') : [];
 		const newState = {};
 		newState.pathToObject = path;
 		return Object.assign({}, state, newState);
 	}
-	else if (action.type === Types.GO_TO_DIRECTORY) {//Переход в подпапку
+	else if (action.type === Types.GO_TO_DIRECTORY) {//Переход к папке
 		const dirName = action.content;
 		const newState = {};
 		newState.currentObject = dirName;
 		return Object.assign({}, state, newState);
 	}
-	else if (action.type === Types.RECEIVE_DIRECTORY_CONTENT) {//Получение содержимого подпапки репозитория
+	else if (action.type === Types.RECEIVE_DIRECTORY_CONTENT) {//Получение содержимого папки
 		const data = action.content;
 		const newState = {};
 		newState.currentFiles = data;
+		if (state.isLoading) {
+			newState.isLoading = false;
+		}
 		return Object.assign({}, state, newState);
 	}
 	else if (action.type === Types.GO_TO_FILE) {//Переход к содержимому файла
