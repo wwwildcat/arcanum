@@ -21,6 +21,7 @@ export function reducer(state, action) {
 			currentRepository: data[0],
 			currentObject: data[0],
 			pathToObject: [],
+			fileContent: [],
 			isLoading: true,
 			viewFiles: 'root'
 		};

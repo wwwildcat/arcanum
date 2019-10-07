@@ -5,7 +5,7 @@ const {spawn} = require('child_process');
 const pathToRepos = process.argv[2];
 
 //Ручка GET /api/repos/:repositoryId/blob/:commitHash/:pathToFile
-module.exports = function(request, response) {
+module.exports = function (request, response) {
 	const pathToFile = path.join(pathToRepos, request.params['repositoryId']);
 	fs.access(pathToFile, err => { //Проверка пути к файлу
 		if(err) {
@@ -22,7 +22,9 @@ module.exports = function(request, response) {
 					response.status(404).send(request.params['commitHash'] + ' not found');
 				}
 				else {
-					response.send(out);
+					const fileLines = out.split(/\n/);
+					fileLines.pop(); //Файл разбит на строки, последняя пустая убрана
+					response.json(fileLines); 
 				}
 			});
 		}

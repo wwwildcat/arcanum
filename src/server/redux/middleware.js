@@ -39,8 +39,8 @@ export function getDirectoryContent(repositoryId, pathToDirectory) {
 export function getFileContent(repositoryId, pathToFile) {
 	return function (dispatch) {
 		return fetch(`http://localhost:3030/api/repos/${repositoryId}/blob/master/${pathToFile}`)
-			.then(response => response.text())
-			.then(text => dispatch(receiveFileContent(text)));
+			.then(response => response.json())
+			.then(json => dispatch(receiveFileContent(json)));
 	};
 }
 //Получение содержимого всех папок и подпапок репозитория

@@ -1,0 +1,6 @@
+.Viewer-Header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: solid 1px #e5e5e5;
+}
