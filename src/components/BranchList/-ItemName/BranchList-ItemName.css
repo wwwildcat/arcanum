@@ -1,0 +1,9 @@
+.BranchList-ItemName {
+  margin-bottom: 2px;
+}
+.BranchList-Item:first-child .BranchList-ItemName {
+  color: #f2f2f2;
+}
+.BranchList-Item:not(:first-child):hover .BranchList-ItemName {
+  color: #000;
+}

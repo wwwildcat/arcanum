@@ -1,0 +1,9 @@
+.Current-ObjectName {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+@media (max-width: 360px) {
+  .Current-ObjectName {
+    margin-bottom: 4px;
+  }
+}

@@ -1,0 +1,12 @@
+.RepoList-Arrow {
+  position: relative;
+  top: 3px;
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+@media (max-width: 360px) {
+  .RepoList-Arrow {
+    top: 7px;
+  }
+}

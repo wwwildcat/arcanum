@@ -1,0 +1,8 @@
+.Layout {
+  padding: 0 32px;
+}
+@media (max-width: 360px) {
+  .Layout {
+    padding: 0;
+  }
+}

@@ -1,0 +1,6 @@
+.BranchList-Item:first-child .BranchList-LastCommit {
+  color: #e0e0e0;
+}
+.BranchList-Item:not(:first-child):hover .BranchList-LastCommit {
+  color: #434445;
+}

@@ -1,0 +1,13 @@
+.BranchList-Item {
+  margin: 0;
+  padding: 10px 12px 6px;
+}
+.BranchList-Item:first-child {
+  margin: 4px 0;
+  padding: 10px 12px 6px;
+  background: #4f4f4f;
+}
+.BranchList-Item:not(:first-child):hover {
+  cursor: pointer;
+  background: #f4f5f6;
+}

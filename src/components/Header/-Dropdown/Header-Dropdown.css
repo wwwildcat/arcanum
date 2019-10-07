@@ -1,0 +1,8 @@
+.Header-Dropdown {
+  position: relative;
+}
+@media (max-width: 360px) {
+  .Header-Dropdown {
+    position: static;
+  }
+}

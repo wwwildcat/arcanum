@@ -1,0 +1,9 @@
+.Table-Cell_content_name {
+  cursor: pointer;
+}
+@media (max-width: 360px) {
+  .Table-Cell_content_name {
+    padding-bottom: 10px;
+    grid-area: name;
+  }
+}

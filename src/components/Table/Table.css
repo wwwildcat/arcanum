@@ -1,0 +1,8 @@
+.Table {
+  margin: 0 32px;
+}
+@media (max-width: 360px) {
+  .Table {
+    margin: 0 16px;
+  }
+}

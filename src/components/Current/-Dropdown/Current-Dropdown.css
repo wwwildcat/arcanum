@@ -1,0 +1,12 @@
+.Current-Dropdown {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 10px;
+  margin-left: 8px;
+}
+@media (max-width: 360px) {
+  .Current-Dropdown {
+    position: static;
+    margin-bottom: 4px;
+  }
+}

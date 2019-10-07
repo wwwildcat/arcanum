@@ -1,0 +1,11 @@
+.Tabs {
+  margin: 18px 32px 0;
+  border-bottom: solid 1px #e5e5e5;
+}
+
+@media (max-width: 360px) {
+  .Tabs {
+    margin: 16px;
+    margin-bottom: 0;
+  }
+}

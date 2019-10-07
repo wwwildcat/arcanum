@@ -1,0 +1,7 @@
+@media (max-width: 360px) {
+  .Table-Cell_content_hash {
+    padding-right: 8px;
+    text-align: left;
+    grid-area: hash;
+  }
+}

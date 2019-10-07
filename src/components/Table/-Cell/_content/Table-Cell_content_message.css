@@ -1,0 +1,6 @@
+@media (max-width: 360px) {
+  .Table-Cell_content_message {
+    padding-bottom: 9px;
+    grid-area: message;
+  }
+}
