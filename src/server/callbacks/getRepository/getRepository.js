@@ -25,18 +25,16 @@ module.exports =  function (request, response) {
 					response.status(404).send(commitHash + ' not found');
 				}
 				else {
-				//	const objects = getInitialData(out);
 					const pathToDir = request.params['path'] ? path.join(pathToRepo, request.params['path']) : pathToRepo; //Новый рабочий каталог для дочернего процесса
 					let promises = [];
 					getInitialData(out).forEach(obj => { //Создание промисов на каждый элемент массива, запрашивающих дополнительные данные
 						const promise = new Promise (function (resolve) {
 							let out = '';
-							const commitInfo = spawn ('git', ['log', '-1', obj.name], {cwd: pathToDir});
+							const commitInfo = spawn ('git', ['log', '-1', commitHash, '--', obj.name], {cwd: pathToDir});
 							commitInfo.stdout.on('data', chunk => {
 								out += chunk.toString();
 							});
 							commitInfo.on('close', () => {
-							//	const fullObject = Object.assign(obj, getFullData(out));
 								resolve(Object.assign(obj, getFullData(out)));
 							});
 						});

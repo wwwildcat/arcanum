@@ -6,24 +6,26 @@ import Table from '../Table/Table';
 import Viewer from '../Viewer/Viewer';
 import NotFound from '../NotFound/NotFound';
 import {connect} from 'react-redux';
-import {goToDirectory, goToFile, setPath, setRepo} from '../../server/redux/actions';
+import {goToObject, setPath, setRepo} from '../../server/redux/actions';
 import {getDirectoryContent, getFileContent} from '../../server/redux/middleware';
 
 function mapStateToProps(state) {
 	return {
-		allRepositories: state.allRepositories
+		isLoading: state.isLoading,
+		allRepositories: state.allRepositories,
+		currentRepository: state.currentRepository,
+		pathToObject: state.pathToObject
 	};
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
 		getData: (type, value, repo, path) => {
+			dispatch(goToObject(value));
 			if (type === 'tree') {
-				dispatch(goToDirectory(value));
 				dispatch(getDirectoryContent(repo, path));
 			}
 			if (type === 'blob') {
-				dispatch(goToFile(value));
 				dispatch(getFileContent(repo, path));
 			}
 		},
@@ -46,7 +48,7 @@ class Files extends React.Component {
 		this.props.setCurrentRepository(this.props.match.params.repositoryID);
 		this.props.setCurrentPath(this.props.match.params.path);
 		window.addEventListener('popstate', this.onBackForwardButtonEvent);
-		if (this.props.allRepositories.indexOf(this.props.match.params.repositoryID) !== -1) {
+		if (this.props.allRepositories && this.props.allRepositories.indexOf(this.props.match.params.repositoryID) !== -1) {
 			this.goToURL();
 		}
 	}
@@ -56,6 +58,9 @@ class Files extends React.Component {
 		}
 		if (this.props.match.params.repositoryID !== prevProps.match.params.repositoryID) {
 			this.props.setCurrentRepository(this.props.match.params.repositoryID);
+		}
+		if (this.props.allRepositories !== prevProps.allRepositories) {
+			this.goToURL();
 		}
 	}
 	goToURL() {
@@ -75,7 +80,10 @@ class Files extends React.Component {
 		this.goToURL();
 	}
 	render() {
-		if (this.props.allRepositories.indexOf(this.props.match.params.repositoryID) === -1) {
+		if (this.props.isLoading) {
+			return (<div></div>);
+		}
+		else if (this.props.allRepositories.indexOf(this.props.match.params.repositoryID) === -1) {
 			return (
 				<NotFound />
 			);

@@ -13,14 +13,19 @@ function mapStateToProps(state) {
 }
 
 function ViewerContent({fileContent}) {
-	return (
-		<div className={ViewerContentFile + ' ' + TextStyleCode + ' ' + Text_color_blue1}>
-			{fileContent.map((line, number) => 
-				<pre>
-					<ViewerLineNumber value={number + 1} />
-					<span key={number}>{line}</span>
-				</pre>)}
-		</div>
+	if (fileContent) {
+		return (
+			<div className={ViewerContentFile + ' ' + TextStyleCode + ' ' + Text_color_blue1}>
+				{fileContent.map((line, number) => 
+					<pre key={number}>
+						<ViewerLineNumber value={number + 1} />
+						<span>{line}</span>
+					</pre>)}
+			</div>
+		);
+	}
+	else return (
+		<div className={ViewerContentFile + ' ' + TextStyleCode + ' ' + Text_color_blue1}></div>
 	);
 }
 

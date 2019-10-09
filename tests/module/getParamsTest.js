@@ -1,5 +1,5 @@
 const {expect} = require('chai');
-const getParams = require('../src/server/callbacks/getCommandParams');
+const getParams = require('../../src/server/callbacks/getCommandParams');
 
 describe('getParams for getRepository', function (){
 	it('возвращает нужные параметры для вызова git в функции getRepository(), request содержит хэш коммита', function () {

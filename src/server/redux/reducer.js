@@ -3,9 +3,8 @@ const Types = {
 	RECEIVE_LIST_OF_REPOSITORIES: 'RECEIVE_LIST_OF_REPOSITORIES',
 	SET_REPO: 'SET_REPO',
 	SET_PATH: 'SET_PATH',
-	GO_TO_DIRECTORY: 'GO_TO_DIRECTORY',
+	GO_TO_OBJECT: 'GO_TO_OBJECT',
 	RECEIVE_DIRECTORY_CONTENT: 'RECEIVE_DIRECTORY_CONTENT',
-	GO_TO_FILE: 'GO_TO_FILE',
 	RECEIVE_FILE_CONTENT: 'RECEIVE_FILE_CONTENT',
 	RECEIVE_REPOSITORY_CONTENT_ALL: 'RECEIVE_REPOSITORY_CONTENT_ALL',
 	SUBMIT_SEARCH_FORM: 'SUBMIT_SEARCH_FORM',
@@ -17,11 +16,7 @@ export function reducer(state, action) {
 		const data = action.content;
 		const newState = {
 			allRepositories: data,
-			currentRepository: data[0],
-			currentObject: data[0],
-			pathToObject: [],
-			fileContent: [],
-			isLoading: true,
+			isLoading: false,
 			viewFiles: 'root'
 		};
 		return Object.assign({}, state, newState);
@@ -45,10 +40,10 @@ export function reducer(state, action) {
 		newState.pathToObject = path;
 		return Object.assign({}, state, newState);
 	}
-	else if (action.type === Types.GO_TO_DIRECTORY) {//Переход к папке
-		const dirName = action.content;
+	else if (action.type === Types.GO_TO_OBJECT) {//Переход к папке или файлу
+		const objName = action.content;
 		const newState = {};
-		newState.currentObject = dirName;
+		newState.currentObject = objName;
 		return Object.assign({}, state, newState);
 	}
 	else if (action.type === Types.RECEIVE_DIRECTORY_CONTENT) {//Получение содержимого папки
@@ -58,12 +53,6 @@ export function reducer(state, action) {
 		if (state.isLoading) {
 			newState.isLoading = false;
 		}
-		return Object.assign({}, state, newState);
-	}
-	else if (action.type === Types.GO_TO_FILE) {//Переход к содержимому файла
-		const fileName = action.content;
-		const newState = {};
-		newState.currentObject = fileName;
 		return Object.assign({}, state, newState);
 	}
 	else if (action.type === Types.RECEIVE_FILE_CONTENT) {//Получение содержимого файла

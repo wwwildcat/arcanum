@@ -1,32 +1,28 @@
 import React from 'react';
-import {BrowserRouter} from 'react-router-dom';
-import Main from './components/Main/Main';
+import { Switch, Route } from 'react-router-dom';
+import Files from './components/Files/Files';
+import NotFound from './components/NotFound/NotFound';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import './App.css';
-import {connect} from 'react-redux';
-
-function mapStateToProps(state) {
-	return {
-		state: state
-	};
-}
 
 
 class App extends React.Component {
 
 	render() {
-		if (this.props.state.isLoading) {
-			return (<div></div>);
-		}
 		return (
-			<BrowserRouter>
-				<Header />
-				<Main />
-				<Footer />
-			</BrowserRouter>
+		<>
+			<Header />
+			<Switch>
+				<Route exact path='/:repositoryID' component={Files} />
+				<Route exact path='/:repositoryID/tree/master/:path([^/]*)?' component={Files} />
+				<Route exact path='/:repositoryID/blob/master/:path([^/]*)?' component={Files} />
+				<Route component={NotFound} />
+			</Switch>
+			<Footer />
+		</>
 		);
 	}
 }
 
-export default connect(mapStateToProps)(App);
+export default App;

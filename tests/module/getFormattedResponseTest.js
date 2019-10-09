@@ -1,6 +1,6 @@
 const {expect} = require('chai');
-const {getInitialData, getFullData} = require('../src/server/callbacks/getRepository/getRepositoryData');
-const getFormattedFile = require('../src/server/callbacks/getFile/getFormattedFile');
+const {getInitialData, getFullData} = require('../../src/server/callbacks/getRepository/getRepositoryData');
+const getFormattedFile = require('../../src/server/callbacks/getFile/getFormattedFile');
 
 describe('getInitialData', function () {
 	it('получает объекты из строки', function () {

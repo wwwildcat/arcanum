@@ -18,8 +18,4 @@ function CurrentObjectName({currentObject}) {
 	);
 }
 
-CurrentObjectName.defaultProps = {
-	currentObject: 'arcadia'
-};
-
 export default connect(mapStateToProps)(CurrentObjectName);

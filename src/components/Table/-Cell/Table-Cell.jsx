@@ -11,7 +11,7 @@ import TableCellContentDate from './_content/Table-Cell_content_date';
 import TableIcon from '../-Icon/Table-Icon';
 import Commiter from '../../Commiter/Commiter';
 import {connect} from 'react-redux';
-import {goToDirectory, goToFile} from '../../../server/redux/actions';
+import {goToObject, setPath} from '../../../server/redux/actions';
 import {getDirectoryContent, getFileContent} from '../../../server/redux/middleware';
 
 function mapStateToProps(state) {
@@ -23,14 +23,14 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		onObjectNameClick: (type, value, repo, path) => {
+		onObjectNameClick: (type, value, repo, pathForData) => {
+			dispatch(goToObject(value));
+			dispatch(setPath(pathForData));
 			if (type === 'tree') {
-				dispatch(goToDirectory(value));
-				dispatch(getDirectoryContent(repo, path));
+				dispatch(getDirectoryContent(repo, pathForData));
 			}
 			if (type === 'blob') {
-				dispatch(goToFile(value));
-				dispatch(getFileContent(repo, path));
+				dispatch(getFileContent(repo, pathForData));
 			}
 		}
 	};
@@ -38,10 +38,8 @@ function mapDispatchToProps(dispatch) {
 
 function TableCell({content, value, type, onObjectNameClick, currentRepository, pathToObject}) {
 	if (content === 'name') {
-		//console.log(pathToObject);
 		const pathForData = pathToObject.length ? pathToObject.join('/') + '/' + value : value;
 		const pathToNext = '/' + currentRepository + '/' + type + '/master/' + pathForData;
-		//console.log(pathForData);
 		return (
 			<div className={TableCellContentName} onClick={() => onObjectNameClick(type, value, currentRepository, pathForData)}>
 				<Link to={pathToNext}>

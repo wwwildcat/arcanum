@@ -6,14 +6,17 @@
     "cors": "^2.8.5",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
-    "react-scripts": "3.2.0"
+    "react-scripts": "3.2.0",
+    "url-decorator": "^2.1.2"
   },
   "scripts": {
     "start": "run-p startClient \"startServer -- {*}\" --",
     "startServer": "node ./src/server/index.js",
     "startClient": "react-scripts start",
     "build": "react-scripts build",
-    "test": "mocha ./tests",
+    "test": "run-s testModule testIntegrate",
+    "testModule": "mocha ./tests/module",
+    "testIntegrate": "node_modules\\.bin\\hermione",
     "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:3030",
@@ -35,6 +38,8 @@
   "devDependencies": {
     "@bem-react/classname": "^1.5.6",
     "chai": "^4.2.0",
+    "hermione": "^2.12.6",
+    "html-reporter": "^4.13.1",
     "mocha": "^6.2.1",
     "npm-run-all": "^4.1.5",
     "react-redux": "^7.1.1",
