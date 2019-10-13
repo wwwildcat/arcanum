@@ -19,7 +19,7 @@
     "url-decorator": "^2.1.2"
   },
   "scripts": {
-    "start": "compile && run-p startClient \"startServer -- {*}\" --",
+    "start": "run-p startClient \"startServer -- {*}\" --",
     "compile": "cd ./src/server/js && tsc && cd ../../..",
     "startServer": "node ./src/server/js/index.js",
     "startClient": "react-scripts start",
