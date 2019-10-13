@@ -3,6 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.1",
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.12",
+    "@types/react": "^16.9.5",
+    "@types/react-dom": "^16.9.1",
+    "@types/react-redux": "^7.1.4",
+    "@types/react-router-dom": "^5.1.0",
+    "awesome-typescript-loader": "^5.2.1",
     "cors": "^2.8.5",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
@@ -10,8 +19,9 @@
     "url-decorator": "^2.1.2"
   },
   "scripts": {
-    "start": "run-p startClient \"startServer -- {*}\" --",
-    "startServer": "node ./src/server/index.js",
+    "start": "compile && run-p startClient \"startServer -- {*}\" --",
+    "compile": "cd ./src/server/js && tsc && cd ../../..",
+    "startServer": "node ./src/server/js/index.js",
     "startClient": "react-scripts start",
     "build": "react-scripts build",
     "test": "run-s testModule testIntegrate",
@@ -37,6 +47,8 @@
   },
   "devDependencies": {
     "@bem-react/classname": "^1.5.6",
+    "@typescript-eslint/eslint-plugin": "^2.3.3",
+    "@typescript-eslint/parser": "^2.3.3",
     "chai": "^4.2.0",
     "hermione": "^2.12.6",
     "html-reporter": "^4.13.1",
@@ -47,6 +59,7 @@
     "react-router-dom": "^5.1.2",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
-    "sinon": "^7.5.0"
+    "sinon": "^7.5.0",
+    "typescript": "^3.6.3"
   }
 }
