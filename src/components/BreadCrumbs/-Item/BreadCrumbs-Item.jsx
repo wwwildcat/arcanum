@@ -7,7 +7,7 @@ import TextLineHeight24 from '../../Text/_lineHeight/Text_lineHeight_24';
 import BreadCrumbsItemActive from './_active/BreadCrumbs-Item_active';
 import './BreadCrumbs-Item.css';
 import {connect} from 'react-redux';
-import {goToDirectory} from '../../../server/redux/actions';
+import {goToObject} from '../../../server/redux/actions';
 import {getDirectoryContent} from '../../../server/redux/middleware';
 
 function mapStateToProps(state) {
@@ -20,7 +20,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	return {
 		onObjectNameClick: (value, repo, path) => {
-			dispatch(goToDirectory(value));
+			dispatch(goToObject(value));
 			dispatch(getDirectoryContent(repo, path));
 		}
 	};
@@ -36,9 +36,9 @@ function BreadCrumbsItem({number, itemName, onObjectNameClick, isBreadCrumbsItem
 	}
 	else {
 		const newPath = pathToObject.slice(0, number);
-		const fullPath = newPath.length ? '/' + currentRepository + '/tree/master/' + newPath : '/' + currentRepository;
+		const fullPath = newPath.length ? '/' + currentRepository + '/tree/master/' + newPath.join('/') : '/' + currentRepository;
 		return (
-			<li className={cnBreadCrumbs('Item')} onClick={() => onObjectNameClick(itemName, currentRepository, newPath)}>
+			<li className={cnBreadCrumbs('Item')} onClick={() => onObjectNameClick(itemName.slice(0, itemName.length - 2), currentRepository, newPath.join('/'))}>
 				<Link to={fullPath}>
 					<span className={TextColorGray2 + ' ' + TextLineHeight24}>{itemName}</span>
 				</Link>

@@ -7,16 +7,6 @@ export function getListOfRepositories() {
 			.then(json => dispatch(receiveListOfRepositories(json)));
 	};
 }
-//Загрузка начальных данных из первого в списке репозитория
-export function getInitialData() {
-	return function (dispatch, getState) {
-		if (getState().isLoading) {
-			return getListOfRepositories()(dispatch)
-				.then(() => 
-					getDirectoryContent(getState().allRepositories[0])(dispatch));
-		}
-	};
-}
 //Получение содержимого папки
 export function getDirectoryContent(repositoryId, pathToDirectory) {
 	return function (dispatch) {

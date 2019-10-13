@@ -7,6 +7,7 @@
 
 # testing
 /coverage
+/hermione-html-report
 
 # production
 /build

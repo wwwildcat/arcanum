@@ -16,22 +16,16 @@ export function setPath(path) {
 		content: path
 	};
 }
-export function goToDirectory(dirName) {
+export function goToObject(objName) {
 	return {
-		type: 'GO_TO_DIRECTORY',
-		content: dirName
+		type: 'GO_TO_OBJECT',
+		content: objName
 	};
 }
 export function receiveDirectoryContent(json) {
 	return {
 		type: 'RECEIVE_DIRECTORY_CONTENT',
 		content: json
-	};
-}
-export function goToFile(fileName) {
-	return {
-		type: 'GO_TO_DIRECTORY',
-		content: fileName
 	};
 }
 export function receiveFileContent(text) {

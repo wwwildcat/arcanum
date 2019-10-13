@@ -6,10 +6,10 @@ const app = express();
 //Коллбэки
 const getRepos = require('./callbacks/getRepos.js');
 const getCommits = require('./callbacks/getCommits.js');
-const getDiff = require('./callbacks/getDiff.js');
-const getRepository = require('./callbacks/getRepository.js');
+const getDiff = require('./callbacks/getDiff/getDiff');
+const getRepository = require('./callbacks/getRepository/getRepository.js');
 const getRepositoryAll = require('./callbacks/getRepositoryAll.js');
-const getFile = require('./callbacks/getFile.js');
+const getFile = require('./callbacks/getFile/getFile');
 const deleteRepository = require('./callbacks/deleteRepository.js');
 const addRepository = require('./callbacks/addRepository.js');
 
