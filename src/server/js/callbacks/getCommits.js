@@ -7,9 +7,9 @@ var fs_1 = __importDefault(require("fs"));
 var path_1 = __importDefault(require("path"));
 var child_process_1 = require("child_process");
 var pathToRepos = process.argv[2];
-//Ручка GET /api/repos/:repositoryId/commits/:commitHash
+//Ручка GET /api/repos/:repoID/commits/:commitHash
 exports.getCommits = function (request, response) {
-    var pathToRepo = path_1.default.join(pathToRepos, request.params['repositoryId']);
+    var pathToRepo = path_1.default.join(pathToRepos, request.params['repoID']);
     fs_1.default.access(pathToRepo, function (err) {
         if (err) {
             response.status(404).send(pathToRepo + ' not found');

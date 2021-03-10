@@ -7,9 +7,9 @@ import {getFormattedFile} from './getFormattedFile';
 
 const pathToRepos = process.argv[2];
 
-//Ручка GET /api/repos/:repositoryId/blob/:commitHash/:pathToFile
+//Ручка GET /api/repos/:repoID/blob/:commitHash/:pathToFile
 export const getFile = (request: Express.Request, response: Express.Response) => {
-	const pathToFile = path.join(pathToRepos, request.params['repositoryId']);
+	const pathToFile = path.join(pathToRepos, request.params['repoID']);
 	fs.access(pathToFile, err => { //Проверка пути к файлу
 		if(err) {
 			response.status(404).send(pathToFile + ' not found');

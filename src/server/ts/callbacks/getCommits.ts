@@ -5,9 +5,9 @@ import Express from 'express';
 
 const pathToRepos = process.argv[2];
 
-//Ручка GET /api/repos/:repositoryId/commits/:commitHash
+//Ручка GET /api/repos/:repoID/commits/:commitHash
 export const getCommits = (request: Express.Request, response: Express.Response) => {
-	const pathToRepo = path.join(pathToRepos, request.params['repositoryId']);
+	const pathToRepo = path.join(pathToRepos, request.params['repoID']);
 	fs.access(pathToRepo, err => { //Проверка пути к репозиторию
 		if(err) {
 			response.status(404).send(pathToRepo + ' not found');

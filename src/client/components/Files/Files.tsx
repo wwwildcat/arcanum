@@ -9,46 +9,46 @@ import {RouteComponentProps} from 'react-router';
 import {connect} from 'react-redux';
 import {Action} from 'redux';
 import {ThunkDispatch} from 'redux-thunk';
-import {goToObject, setPath, setRepo} from '../../store/actions';
-import {getDirectoryContent, getFileContent} from '../../store/middleware';
-import State from '../../store/state';
+import {setView, setPath, setRepo} from '../../store/actions';
+import {fetchDirContent, fetchFileContent} from '../../store/thunks';
+import State from '../../store/types';
 
 interface RouteParams {
-	repositoryID: string;
+	repoID: string;
 	path: string;
 }
 
 interface Props extends RouteComponentProps<RouteParams> {
 	isLoading: Boolean;
-	allRepositories: string[];
-	currentRepository: string;
-	pathToObject: string;
+	allRepos: string[];
+	currentRepo: string;
+	currentPath: string;
 	getData: (type: 'tree' | 'blob' | 'branch', value: string, repo: string, path?: string) => void;
-	setCurrentRepository: (value: string) => void;
+	setcurrentRepo: (value: string) => void;
 	setCurrentPath: (path: string) => void;
 }
 
 const mapStateToProps = (state: State) => ({
 		isLoading: state.isLoading,
-		allRepositories: state.allRepositories,
-		currentRepository: state.currentRepository,
-		pathToObject: state.pathToObject
+		allRepos: state.allRepos,
+		currentRepo: state.currentRepo,
+		currentPath: state.currentPath
 	});
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => ({
 		getData: (type: 'tree' | 'blob' | 'branch', value: string, repo: string, path?: string) => {
-			dispatch(goToObject(value));
+			dispatch(setView(value));
 			if (type === 'tree') {
-				dispatch(getDirectoryContent(repo, path));
+				dispatch(fetchDirContent(repo, path));
 			}
-			if (type === 'blob') {
-				dispatch(getFileContent(repo, path));
+			if (type === 'blob' && path) {
+				dispatch(fetchFileContent(repo, path));
 			}
 		},
 		setCurrentPath: (path: string) => {
 			dispatch(setPath(path));
 		},
-		setCurrentRepository: (value: string) => {
+		setcurrentRepo: (value: string) => {
 			dispatch(setRepo(value));
 		}
 	});
@@ -60,10 +60,10 @@ class Files extends React.Component<Props> {
 		this.onBackForwardButtonEvent = this.onBackForwardButtonEvent.bind(this);
 	}
 	componentDidMount() {
-		this.props.setCurrentRepository(this.props.match.params.repositoryID);
+		this.props.setcurrentRepo(this.props.match.params.repoID);
 		this.props.setCurrentPath(this.props.match.params.path);
 		window.addEventListener('popstate', this.onBackForwardButtonEvent);
-		if (this.props.allRepositories && this.props.allRepositories.indexOf(this.props.match.params.repositoryID) !== -1) {
+		if (this.props.allRepos && this.props.allRepos.indexOf(this.props.match.params.repoID) !== -1) {
 			this.goToURL();
 		}
 	}
@@ -71,15 +71,15 @@ class Files extends React.Component<Props> {
 		if (this.props.match.params.path !== prevProps.match.params.path) {
 			this.props.setCurrentPath(this.props.match.params.path);
 		}
-		if (this.props.match.params.repositoryID !== prevProps.match.params.repositoryID) {
-			this.props.setCurrentRepository(this.props.match.params.repositoryID);
+		if (this.props.match.params.repoID !== prevProps.match.params.repoID) {
+			this.props.setcurrentRepo(this.props.match.params.repoID);
 		}
-		if (this.props.allRepositories !== prevProps.allRepositories) {
+		if (this.props.allRepos !== prevProps.allRepos) {
 			this.goToURL();
 		}
 	}
 	goToURL() {
-		const currentRepo = this.props.match.params.repositoryID;
+		const currentRepo = this.props.match.params.repoID;
 		const currentPath = this.props.match.params.path;
 		if(currentPath) {
 			const currentType = this.props.location.pathname.split('/')[2];
@@ -100,7 +100,7 @@ class Files extends React.Component<Props> {
 		if (this.props.isLoading) {
 			return (<div></div>);
 		}
-		else if (this.props.allRepositories.indexOf(this.props.match.params.repositoryID) === -1) {
+		else if (this.props.allRepos.indexOf(this.props.match.params.repoID) === -1) {
 			return (
 				<NotFound />
 			);

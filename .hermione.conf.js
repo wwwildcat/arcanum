@@ -26,7 +26,7 @@ module.exports = {
 		}
 	},
 	meta: {
-		repositoryID: 'arcanum',
+		repoID: 'arcanum',
 		pathToDir: 'src/server',
 		pathToFile: 'src/server/index.js'
 	}

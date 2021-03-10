@@ -5,17 +5,17 @@ import TextColorGray2 from '../../Text/_color/Text_color_gray2';
 import TextStyleBold from '../../Text/_style/Text_style_bold';
 import TextLineHeight24 from '../../Text/_lineHeight/Text_lineHeight_24';
 import BreadCrumbsItemActive from './_active/BreadCrumbs-Item_active';
-import State from '../../../store/state';
+import State from '../../../store/types';
 import './BreadCrumbs-Item.css';
 import {connect} from 'react-redux';
 import {Action} from 'redux';
 import {ThunkDispatch} from 'redux-thunk';
-import {goToObject} from '../../../store/actions';
-import {getDirectoryContent} from '../../../store/middleware';
+import {setView} from '../../../store/actions';
+import {fetchDirContent} from '../../../store/thunks';
 
 interface Props {
-	currentRepository: string;
-	pathToObject: string;
+	currentRepo: string;
+	currentPath: string;
 	isBreadCrumbsItemActive: Boolean;
 	number: number;
 	itemName: string;
@@ -23,18 +23,18 @@ interface Props {
 }
 
 const mapStateToProps = (state: State) => ({
-		currentRepository: state.currentRepository,
-		pathToObject: state.pathToObject
+		currentRepo: state.currentRepo,
+		currentPath: state.currentPath
 	});
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => ({
 		onObjectNameClick: (value: string, repo: string, path: string) => {
-			dispatch(goToObject(value));
-			dispatch(getDirectoryContent(repo, path));
+			dispatch(setView(value));
+			dispatch(fetchDirContent(repo, path));
 		}
 	});
 
-const BreadCrumbsItem = ({currentRepository, pathToObject, isBreadCrumbsItemActive, number, itemName, onObjectNameClick}: Props) => {
+const BreadCrumbsItem = ({currentRepo, currentPath, isBreadCrumbsItemActive, number, itemName, onObjectNameClick}: Props) => {
 		if (isBreadCrumbsItemActive) {
 			return (
 				<li className={BreadCrumbsItemActive}>
@@ -43,11 +43,11 @@ const BreadCrumbsItem = ({currentRepository, pathToObject, isBreadCrumbsItemActi
 			);
 		}
 		else {
-			const appayPath = pathToObject.split('/');
+			const appayPath = currentPath.split('/');
 			const newPath = appayPath.slice(0, number);
-			const fullPath = newPath.length ? '/' + currentRepository + '/tree/master/' + newPath.join('/') : '/' + currentRepository;
+			const fullPath = newPath.length ? '/' + currentRepo + '/tree/master/' + newPath.join('/') : '/' + currentRepo;
 			return (
-				<li className={cnBreadCrumbs('Item')} onClick={() => onObjectNameClick(itemName.slice(0, itemName.length - 2), currentRepository, newPath.join('/'))}>
+				<li className={cnBreadCrumbs('Item')} onClick={() => onObjectNameClick(itemName.slice(0, itemName.length - 2), currentRepo, newPath.join('/'))}>
 					<Link to={fullPath}>
 						<span className={TextColorGray2 + ' ' + TextLineHeight24}>{itemName}</span>
 					</Link>

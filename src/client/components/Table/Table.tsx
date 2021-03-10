@@ -3,7 +3,7 @@ import {cn} from '@bem-react/classname';
 import {TableRow} from './-Row/Table-Row';
 import './Table.css';
 import {connect} from 'react-redux';
-import State, {FilesData} from '../../store/state';
+import State, {FilesData} from '../../store/types';
 
 interface Props {
 	content: 'files' | 'branches';

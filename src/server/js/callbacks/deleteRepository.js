@@ -19,16 +19,16 @@ var deleteDir = function (pathToDir) {
     });
     fs_1.default.rmdirSync(pathToDir);
 };
-//Ручка DELETE /api/repos/:repositoryId
+//Ручка DELETE /api/repos/:repoID
 exports.deleteRepository = function (request, response) {
-    var pathToRepo = path_1.default.join(pathToRepos, request.params['repositoryId']);
+    var pathToRepo = path_1.default.join(pathToRepos, request.params['repoID']);
     fs_1.default.access(pathToRepo, function (err) {
         if (err) {
             response.status(404).send(pathToRepo + ' not found');
         }
         else {
             deleteDir(pathToRepo);
-            response.send(request.params['repositoryId'] + ' has been deleted succesfully');
+            response.send(request.params['repoID'] + ' has been deleted succesfully');
         }
     });
 };

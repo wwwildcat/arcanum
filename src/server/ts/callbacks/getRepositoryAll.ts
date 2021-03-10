@@ -5,9 +5,9 @@ import Express from 'express';
 
 const pathToRepos = process.argv[2];
 
-//Ручка GET /api/repos/:repositoryId/all
+//Ручка GET /api/repos/:repoID/all
 export const getRepositoryAll = (request: Express.Request, response: Express.Response) => {
-	const pathToRepo = path.join(pathToRepos, request.params['repositoryId']);
+	const pathToRepo = path.join(pathToRepos, request.params['repoID']);
 	const commitHash = 'master';
 	const params = ['ls-tree', '-t', '-r', '--name-only', commitHash];
 	fs.access(pathToRepo, err => { //Проверка пути к репозиторию

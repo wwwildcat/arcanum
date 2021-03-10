@@ -2,7 +2,7 @@ import React from 'react';
 import {cn} from '@bem-react/classname';
 import {HeaderDropdown} from './-Dropdown/Header-Dropdown';
 import {HeaderLogo} from './-Logo/Header-Logo';
-import State from '../../store/state';
+import State from '../../store/types';
 import './Header.css';
 import {connect} from 'react-redux';
 

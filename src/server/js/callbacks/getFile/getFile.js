@@ -9,9 +9,9 @@ var child_process_1 = require("child_process");
 var getCommandParams_1 = require("../getCommandParams");
 var getFormattedFile_1 = require("./getFormattedFile");
 var pathToRepos = process.argv[2];
-//Ручка GET /api/repos/:repositoryId/blob/:commitHash/:pathToFile
+//Ручка GET /api/repos/:repoID/blob/:commitHash/:pathToFile
 exports.getFile = function (request, response) {
-    var pathToFile = path_1.default.join(pathToRepos, request.params['repositoryId']);
+    var pathToFile = path_1.default.join(pathToRepos, request.params['repoID']);
     fs_1.default.access(pathToFile, function (err) {
         if (err) {
             response.status(404).send(pathToFile + ' not found');

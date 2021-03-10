@@ -9,10 +9,10 @@ var child_process_1 = require("child_process");
 var getCommandParams_1 = require("../getCommandParams");
 var getRepositoryData_1 = require("./getRepositoryData");
 var pathToRepos = process.argv[2];
-//Ручка GET /api/repos/:repositoryId(/tree/:commitHash/:path)
+//Ручка GET /api/repos/:repoID(/tree/:commitHash/:path)
 exports.getRepository = function (request, response) {
     var commitHash = request.params['commitHash'] ? request.params['commitHash'] : 'master';
-    var pathToRepo = path_1.default.join(pathToRepos, request.params['repositoryId']);
+    var pathToRepo = path_1.default.join(pathToRepos, request.params['repoID']);
     fs_1.default.access(pathToRepo, function (err) {
         if (err) {
             response.status(404).send(pathToRepo + ' not found');

@@ -7,7 +7,7 @@ import TableRowContentBranches from './_content/Table-Row_content_branches';
 import TableRowHeader from './_header/Table-Row_header';
 import TextStyleBold from '../../Text/_style/Text_style_bold';
 import TextColorGray5 from '../../Text/_color/Text_color_gray5';
-import {FilesData} from '../../../store/state';
+import {FilesData} from '../../../store/types';
 import './Table-Row.css';
 
 interface Props {

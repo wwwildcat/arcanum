@@ -25,13 +25,13 @@ app.use(cors_1.default({
 }));
 //Данные с сервера
 app.get('/api/repos', getRepos_1.getRepos);
-app.get('/api/repos/:repositoryId/commits/:commitHash', getCommits_1.getCommits);
-app.get('/api/repos/:repositoryId/commits/:commitHash/diff', getDiff_1.getDiff);
-app.get('/api/repos/:repositoryId', getRepository_1.getRepository);
-app.get('/api/repos/:repositoryId/all', getRepositoryAll_1.getRepositoryAll); //Возвращает содержимое всех папок и подпапок репозитория (для поиска по файлам)
-app.get('/api/repos/:repositoryId/tree/:commitHash/:path([^/]*)?', getRepository_1.getRepository);
-app.get('/api/repos/:repositoryId/blob/:commitHash/:pathToFile([^/]*)?', getFile_1.getFile);
-app.delete('/api/repos/:repositoryId', deleteRepository_1.deleteRepository);
-app.post('/api/repos(/:repositoryId)?', addRepository_1.addRepository);
+app.get('/api/repos/:repoID/commits/:commitHash', getCommits_1.getCommits);
+app.get('/api/repos/:repoID/commits/:commitHash/diff', getDiff_1.getDiff);
+app.get('/api/repos/:repoID', getRepository_1.getRepository);
+app.get('/api/repos/:repoID/all', getRepositoryAll_1.getRepositoryAll); //Возвращает содержимое всех папок и подпапок репозитория (для поиска по файлам)
+app.get('/api/repos/:repoID/tree/:commitHash/:path([^/]*)?', getRepository_1.getRepository);
+app.get('/api/repos/:repoID/blob/:commitHash/:pathToFile([^/]*)?', getFile_1.getFile);
+app.delete('/api/repos/:repoID', deleteRepository_1.deleteRepository);
+app.post('/api/repos(/:repoID)?', addRepository_1.addRepository);
 app.use(function (request, response) { return response.status(404).send('URL not found'); });
 app.listen(3030);

@@ -2,27 +2,27 @@ const assert = require('chai').assert;
 
 describe('После перехода по ссылке из списка файлов', function () {
 	it('в шапке отображается название репозитория', async function () {
-		const repositoryID = await this.browser.getMeta('repositoryID');
+		const repoID = await this.browser.getMeta('repoID');
 		const pathToDir = await this.browser.getMeta('pathToDir');
 		return this.browser
-			.url('/' + repositoryID + '/tree/master/' + pathToDir)
+			.url('/' + repoID + '/tree/master/' + pathToDir)
 			.waitForExist('.Table-Cell_content_name', 2000)
 			.click('.Table-Cell_content_name')
 			.pause(500)
 			.getText('.RepoList-CurrentRepo')
 			.then(function (text) {
-				assert.equal(text, 'Repository ' + repositoryID);
+				assert.equal(text, 'Repository ' + repoID);
 			});
 	});
 	it('хлебные крошки показывают путь к папке', async function () {
-		const repositoryID = await this.browser.getMeta('repositoryID');
+		const repoID = await this.browser.getMeta('repoID');
 		const pathToDir = await this.browser.getMeta('pathToDir');
-		const URL = '/' + repositoryID + '/tree/master/' + pathToDir;
+		const URL = '/' + repoID + '/tree/master/' + pathToDir;
 		const nextObject = await this.browser
 			.url(URL)
 			.waitForExist('.Table-Cell_content_name', 2000)
 			.getText('.Table-Cell_content_name');
-		const fullPath = [].concat(repositoryID, pathToDir.split('/'), nextObject[0]);
+		const fullPath = [].concat(repoID, pathToDir.split('/'), nextObject[0]);
 		return this.browser
 			.url(URL)
 			.waitForExist('.Table-Cell_content_name', 2000)
@@ -34,9 +34,9 @@ describe('После перехода по ссылке из списка фай
 			});
 	});
 	it('название текущего объекта совпадает с именем папки или файла', async function () {
-		const repositoryID = await this.browser.getMeta('repositoryID');
+		const repoID = await this.browser.getMeta('repoID');
 		const pathToDir = await this.browser.getMeta('pathToDir');
-		const URL = '/' + repositoryID + '/tree/master/' + pathToDir;
+		const URL = '/' + repoID + '/tree/master/' + pathToDir;
 		const nextObject = await this.browser
 			.url(URL)
 			.waitForExist('.Table-Cell_content_name', 2000)
@@ -52,10 +52,10 @@ describe('После перехода по ссылке из списка фай
 			});
 	});
 	it('отображается структура подпапки или содержимое файла', async function () {
-		const repositoryID = await this.browser.getMeta('repositoryID');
+		const repoID = await this.browser.getMeta('repoID');
 		const pathToDir = await this.browser.getMeta('pathToDir');
 		return this.browser
-			.url('/' + repositoryID + '/tree/master/' + pathToDir)
+			.url('/' + repoID + '/tree/master/' + pathToDir)
 			.waitForExist('.Table-Cell_content_name', 2000)
 			.click('.Table-Cell_content_name')
 			.pause(500)
@@ -69,22 +69,22 @@ describe('После перехода по ссылке из списка фай
 
 describe('После перехода по ссылке в хлебных крошках', function () {
 	it('в шапке отображается название репозитория', async function () {
-		const repositoryID = await this.browser.getMeta('repositoryID');
+		const repoID = await this.browser.getMeta('repoID');
 		const pathToFile = await this.browser.getMeta('pathToFile');
 		return this.browser
-			.url('/' + repositoryID + '/blob/master/' + pathToFile)
+			.url('/' + repoID + '/blob/master/' + pathToFile)
 			.waitForExist('.BreadCrumbs-Item', 2000)
 			.click('.BreadCrumbs-Item')
 			.pause(500)
 			.getText('.RepoList-CurrentRepo')
 			.then(function (text) {
-				assert.equal(text, 'Repository ' + repositoryID);
+				assert.equal(text, 'Repository ' + repoID);
 			});
 	});
 	it('хлебные крошки показывают путь к папке', async function () {
-		const repositoryID = await this.browser.getMeta('repositoryID');
+		const repoID = await this.browser.getMeta('repoID');
 		const pathToFile = await this.browser.getMeta('pathToFile');
-		const URL = '/' + repositoryID + '/blob/master/' + pathToFile;
+		const URL = '/' + repoID + '/blob/master/' + pathToFile;
 		const nextObject = await this.browser
 			.url(URL)
 			.waitForExist('.BreadCrumbs-Item', 2000)
@@ -100,9 +100,9 @@ describe('После перехода по ссылке в хлебных кро
 			});
 	});
 	it('название текущего объекта совпадает с именем папки', async function () {
-		const repositoryID = await this.browser.getMeta('repositoryID');
+		const repoID = await this.browser.getMeta('repoID');
 		const pathToFile = await this.browser.getMeta('pathToFile');
-		const URL = '/' + repositoryID + '/blob/master/' + pathToFile;
+		const URL = '/' + repoID + '/blob/master/' + pathToFile;
 		const nextObject = await this.browser
 			.url(URL)
 			.waitForExist('.BreadCrumbs-Item', 2000)
@@ -118,10 +118,10 @@ describe('После перехода по ссылке в хлебных кро
 			});
 	});
 	it('в таблице отображается структура папки', async function () {
-		const repositoryID = await this.browser.getMeta('repositoryID');
+		const repoID = await this.browser.getMeta('repoID');
 		const pathToFile = await this.browser.getMeta('pathToFile');
 		return this.browser
-			.url('/' + repositoryID + '/blob/master/' + pathToFile)
+			.url('/' + repoID + '/blob/master/' + pathToFile)
 			.waitForExist('.BreadCrumbs-Item', 2000)
 			.click('.BreadCrumbs-Item')
 			.pause(500)

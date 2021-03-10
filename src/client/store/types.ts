@@ -9,10 +9,10 @@ export interface FilesData {
 
 export default interface State {
 	isLoading: Boolean;
-	allRepositories: string[];
-	currentRepository: string;
-	pathToObject: string;
-	currentObject: string;
+	allRepos: string[];
+	currentRepo: string;
+	currentPath: string;
+	currentView: string;
 	currentFiles: FilesData[];
 	fileContent: string[];
 }

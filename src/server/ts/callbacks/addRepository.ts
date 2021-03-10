@@ -11,9 +11,9 @@ export const addRepository = (request: Express.Request, response: Express.Respon
 	const url = request.body.url.replace(/.*(?=:\/\/)/, 'git');
 	let params = ['clone', url];
 	let repoTitle = request.body.url.match(/(?<=\/)[^/]*\/?$/)[0].match(/[^/]*/)[0];
-	if(request.params['repositoryId']) {
-		params.push(request.params['repositoryId']);
-		repoTitle = request.params['repositoryId'];
+	if(request.params['repoID']) {
+		params.push(request.params['repoID']);
+		repoTitle = request.params['repoID'];
 	}
 	pathToRepo = path.join(pathToRepos, repoTitle);
 	fs.access(pathToRepo, (err) => { //Проверка существования локального репозитория с таким же названием

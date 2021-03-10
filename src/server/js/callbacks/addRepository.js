@@ -13,9 +13,9 @@ exports.addRepository = function (request, response) {
     var url = request.body.url.replace(/.*(?=:\/\/)/, 'git');
     var params = ['clone', url];
     var repoTitle = request.body.url.match(/(?<=\/)[^/]*\/?$/)[0].match(/[^/]*/)[0];
-    if (request.params['repositoryId']) {
-        params.push(request.params['repositoryId']);
-        repoTitle = request.params['repositoryId'];
+    if (request.params['repoID']) {
+        params.push(request.params['repoID']);
+        repoTitle = request.params['repoID'];
     }
     pathToRepo = path_1.default.join(pathToRepos, repoTitle);
     fs_1.default.access(pathToRepo, function (err) {

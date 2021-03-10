@@ -11,9 +11,9 @@ import TableCellContentDate from './_content/Table-Cell_content_date';
 import {TableIcon} from '../-Icon/Table-Icon';
 import Commiter from '../../Commiter/Commiter';
 import {connect} from 'react-redux';
-import {goToObject, setPath} from '../../../store/actions';
-import {getDirectoryContent, getFileContent} from '../../../store/middleware';
-import State from '../../../store/state';
+import {setView, setPath} from '../../../store/actions';
+import {fetchDirContent, fetchFileContent} from '../../../store/thunks';
+import State from '../../../store/types';
 import {ThunkDispatch} from 'redux-thunk';
 import {Action} from 'redux';
 
@@ -21,35 +21,35 @@ interface Props {
 	content?: 'name' | 'hash' | 'message' | 'commiter' | 'date';
 	value: string;
 	type?: 'blob' | 'tree' | 'branch',
-	currentRepository: string;
-	pathToObject: string;
+	currentRepo: string;
+	currentPath: string;
 	onObjectNameClick: (type: 'blob' | 'tree' | 'branch', value: string, repo: string, pathForData: string) => void;
 }
 
 const mapStateToProps = (state: State) => ({
-		currentRepository: state.currentRepository,
-		pathToObject: state.pathToObject
+		currentRepo: state.currentRepo,
+		currentPath: state.currentPath
 	});
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => ({
 		onObjectNameClick: (type: 'blob' | 'tree' | 'branch', value: string, repo: string, pathForData: string) => {
-			dispatch(goToObject(value));
+			dispatch(setView(value));
 			dispatch(setPath(pathForData));
 			if (type === 'tree') {
-				dispatch(getDirectoryContent(repo, pathForData));
+				dispatch(fetchDirContent(repo, pathForData));
 			}
 			if (type === 'blob') {
-				dispatch(getFileContent(repo, pathForData));
+				dispatch(fetchFileContent(repo, pathForData));
 			}
 		}
 	});
 
-const TableCell = ({content, value, type, onObjectNameClick, currentRepository, pathToObject}: Props) => {
+const TableCell = ({content, value, type, onObjectNameClick, currentRepo, currentPath}: Props) => {
 	if (content === 'name' && type) {
-		const pathForData = pathToObject ? pathToObject + '/' + value : value;
-		const pathToNext = '/' + currentRepository + '/' + type + '/master/' + pathForData;
+		const pathForData = currentPath ? currentPath + '/' + value : value;
+		const pathToNext = '/' + currentRepo + '/' + type + '/master/' + pathForData;
 		return (
-			<div className={TableCellContentName} onClick={() => onObjectNameClick(type, value, currentRepository, pathForData)}>
+			<div className={TableCellContentName} onClick={() => onObjectNameClick(type, value, currentRepo, pathForData)}>
 				<Link to={pathToNext}>
 					<TableIcon type={type} />
 					<span className={TextStyleBold}>{value}</span>

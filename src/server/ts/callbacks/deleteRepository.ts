@@ -17,16 +17,16 @@ const deleteDir = (pathToDir: string) => {
 	});
 	fs.rmdirSync(pathToDir);
 };
-//Ручка DELETE /api/repos/:repositoryId
+//Ручка DELETE /api/repos/:repoID
 export const deleteRepository = (request: Express.Request, response: Express.Response) => {
-	const pathToRepo = path.join(pathToRepos, request.params['repositoryId']);
+	const pathToRepo = path.join(pathToRepos, request.params['repoID']);
 	fs.access(pathToRepo, err => { //Проверка пути к репозиторию
 		if(err) {
 			response.status(404).send(pathToRepo + ' not found');
 		}
 		else {
 			deleteDir(pathToRepo);
-			response.send(request.params['repositoryId'] + ' has been deleted succesfully');
+			response.send(request.params['repoID'] + ' has been deleted succesfully');
 		}
 	});
 };

@@ -1,51 +1,41 @@
-import State, {FilesData} from './state';
-import {AnyAction, ActionCreator} from 'redux';
+import { FilesData } from './types';
 
-export const receiveListOfRepositories: ActionCreator<AnyAction> = (json: string[]) => {
-	return {
-		type: 'RECEIVE_LIST_OF_REPOSITORIES',
-		allRepositories: json
-	};
-}
-export const setRepo: ActionCreator<AnyAction> = (repoName: string) => {
-	return {
-		type: 'SET_REPO',
-		currentRepository: repoName
-	};
-}
-export const setPath: ActionCreator<AnyAction> = (path: string) => {
-	return {
-		type: 'SET_PATH',
-		pathToObject: path
-	};
-}
-export const goToObject: ActionCreator<AnyAction> = (objName: string) => {
-	return {
-		type: 'GO_TO_OBJECT',
-		currentObject: objName
-	};
-}
-export const receiveDirectoryContent: ActionCreator<AnyAction> = (json: FilesData[]) => {
-	return {
-		type: 'RECEIVE_DIRECTORY_CONTENT',
-		currentFiles: json
-	};
-}
-export const receiveFileContent: ActionCreator<AnyAction> = (text: string[]) => {
-	return {
-		type: 'RECEIVE_FILE_CONTENT',
-		fileContent: text
-	};
-}
-// export const receiveRepositoryContentAll: ActionCreator<AnyAction> = (json: FilesData[]) => {
-// 	return {
-// 		type: 'RECEIVE_REPOSITORY_CONTENT_ALL',
-// 		content: json
-// 	};
-// }
-// export const submitSearchForm: ActionCreator<AnyAction> = (inputValue: string) => {
-// 	return {
-// 		type: 'SUBMIT_SEARCH_FORM',
-// 		content: inputValue
-// 	};
-// }
+export const getRepoList = (json: string[]) => ({
+	type: 'GET_REPO_LIST',
+	payload: json
+});
+
+export const setRepo = (repoName: string) => ({
+	type: 'SET_REPO',
+	payload: repoName
+});
+
+export const setPath = (path: string) => ({
+	type: 'SET_PATH',
+	payload: path
+});
+
+export const setView = (view: string) => ({
+	type: 'SET_VIEW',
+	payload: view
+});
+
+export const getDirContent = (json: FilesData[]) => ({
+	type: 'GET_DIR_CONTENT',
+	payload: json
+});
+
+export const getFileContent = (text: string[]) => ({
+	type: 'GET_FILE_CONTENT',
+	payload: text
+});
+
+// export const getAllRepoContent = (json: FilesData[]) => ({
+// 	type: 'GET_ALL_REPO_CONTENT',
+// 	payload: json
+// });
+
+// export const submitSearchForm> = (inputValue: string) => ({
+// 	type: 'SUBMIT_SEARCH_FORM',
+// 	payload: inputValue
+// });

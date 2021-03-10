@@ -1,8 +1,8 @@
-import {createStore, applyMiddleware, AnyAction} from 'redux';
-import {reducer} from './reducer';
-import {getListOfRepositories} from './middleware';
-import State from './state';
-import thunk, {ThunkDispatch} from 'redux-thunk';
+import { createStore, applyMiddleware, AnyAction } from 'redux';
+import { reducer } from './reducers';
+import { fetchRepoList } from './thunks';
+import State from './types';
+import thunk, { ThunkDispatch } from 'redux-thunk';
 
 interface StoreExtension {
 	dispatch: ThunkDispatch<State, void, AnyAction>;
@@ -10,14 +10,15 @@ interface StoreExtension {
 
 const initialState = {
 	isLoading: true,
-	allRepositories: [],
-	currentRepository: '',
-	pathToObject: '',
-	currentObject: '',
+	allRepos: [],
+	currentRepo: '',
+	currentPath: '',
+	currentView: '',
 	currentFiles: [],
 	fileContent: []
 };
 const store = createStore<State, AnyAction, StoreExtension, void>(reducer, initialState, applyMiddleware(thunk));
-store.dispatch(getListOfRepositories());
+
+store.dispatch(fetchRepoList());
 
 export default store;
