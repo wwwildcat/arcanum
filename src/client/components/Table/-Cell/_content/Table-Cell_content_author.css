@@ -1,8 +1,0 @@
-@media (max-width: 360px) {
-  .Table-Cell_content_author {
-    grid-area: author;
-  }
-  .Table-Cell_content_author::before {
-    content: 'by ';
-  }
-}

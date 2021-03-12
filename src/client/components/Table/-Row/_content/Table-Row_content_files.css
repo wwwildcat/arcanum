@@ -1,9 +1,0 @@
-.Table-Row_content_files {
-  grid-template-columns: 4fr 4fr 7.5fr 3.5fr 3fr;
-}
-@media (max-width: 360px) {
-  .Table-Row_content_files {
-    grid-template-areas: 'name name name' 'message message message' 'hash author date';
-    grid-template-columns: 0.8fr auto 2fr;
-  }
-}

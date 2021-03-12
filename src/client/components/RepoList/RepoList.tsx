@@ -1,25 +1,29 @@
 import React from 'react';
-import {cn} from '@bem-react/classname';
-import {RepoListItem} from './-Item/RepoList-Item';
-import RepoListClosed from './_closed/RepoList_closed';
+import { ReactComponent as ArrowDown } from '../svg/ArrowDown.svg';
 import State from '../../store/types';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import './RepoList.css';
 
-export const cnRepoList = cn('RepoList');
-
 const mapStateToProps = (state: State) => ({
-		allRepos: state.allRepos
-	});
+	allRepos: state.allRepos,
+	currentRepo: state.currentRepo
+});
 
 interface Props {
 	allRepos: string[];
+	currentRepo: string;
 }
 
-const RepoList = ({allRepos}: Props) => 
-			<ul className={RepoListClosed}>
-				{allRepos.map((item, number) => 
-					<RepoListItem key={number} repoName={item} />)}
-			</ul>
+const RepoList = ({ allRepos, currentRepo }: Props) =>
+	<div className="RepoList">
+		<span className="RepoList-CurrentRepo">
+			Repository <span className="RepoList-Title">{currentRepo}</span>
+		</span>
+		<ArrowDown className="RepoList-Arrow"/>
+		<ul className="RepoList-Dropdown RepoList-Dropdown_closed">
+			{allRepos.map((item, number) =>
+				<li className="RepoList-Item" key={number}>{item}</li>)}
+		</ul>
+	</div>
 
 export default connect(mapStateToProps)(RepoList);

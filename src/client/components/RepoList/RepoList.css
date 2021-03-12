@@ -1,31 +1,99 @@
 .RepoList {
-  position: absolute;
-  z-index: 10;
-  top: 40px;
-  width: 266px;
-  margin: 0;
-  padding: 14px 22px 18px;
-  list-style-type: none;
-  background: #fff;
-  box-shadow: 0 4px 16px rgba(53, 73, 93, 0.2);
+	position: relative;
 }
+
+.RepoList-CurrentRepo {
+	position: relative;
+	top: 1px;
+
+	padding-bottom: 18px;
+	border-bottom: solid 3px #ff4f49;
+
+	line-height: 18px;
+	font-weight: bold;
+}
+
+.RepoList-Title {
+	font-weight: normal;
+}
+
+.RepoList-Arrow {
+	position: relative;
+	left: 6px;
+  	top: 7px;
+
+  	cursor: pointer;
+
+	fill: #000;
+}
+
+.RepoList-Dropdown {
+	position: absolute;
+	z-index: 10;
+	top: 40px;
+	width: 266px;
+
+	margin: 0;
+	padding: 14px 22px 18px;
+
+	list-style-type: none;
+	background: #fff;
+	box-shadow: 0 4px 16px rgba(53, 73, 93, 0.2);
+}
+
+.RepoList-Dropdown_closed {
+	display: none;
+}
+
+.RepoList-Item {
+	margin-bottom: 16px;
+}
+
+.RepoList-Item:last-child {
+	margin-bottom: 0;
+}
+
 @media (max-width: 360px) {
-  .RepoList {
-    top: calc(100% - 203px);
-    left: 0;
-    width: 100%;
-    height: 168px;
-    padding: 36px 16px 24px;
-    border-radius: 10px 10px 0 0;
-  }
-  .RepoList::before {
-    position: absolute;
-    top: 8px;
-    left: calc(50% - 21px);
-    width: 42px;
-    height: 4px;
-    content: '';
-    border-radius: 10px;
-    background: #e5e5e5;
-  }
+	.RepoList {
+		position: static;
+	}
+
+	.RepoList-CurrentRepo {
+		top: 5px;
+
+		padding-bottom: 16px;
+	}
+
+	.RepoList-Arrow {
+    	top: 11px;
+  	}
+
+	.RepoList-Dropdown {
+		top: calc(100% - 203px);
+		left: 0;
+
+		width: 100%;
+		height: 168px;
+
+		padding: 36px 16px 24px;
+		border-radius: 10px 10px 0 0;
+	}
+
+	.RepoList-Dropdown::before {
+		content: '';
+
+		position: absolute;
+		top: 8px;
+		left: calc(50% - 21px);
+
+		width: 42px;
+		height: 4px;
+
+		border-radius: 10px;
+		background: #e5e5e5;
+	}
+
+	.RepoList-Item {
+		margin-bottom: 24px;
+	}
 }

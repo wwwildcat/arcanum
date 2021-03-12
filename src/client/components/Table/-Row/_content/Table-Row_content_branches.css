@@ -1,9 +1,0 @@
-.Table-Row_content_branches {
-  display: flex;
-  justify-content: space-between;
-}
-@media (max-width: 360px) {
-  .Table-Row_content_branches {
-    flex-direction: column;
-  }
-}

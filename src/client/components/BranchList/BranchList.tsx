@@ -1,57 +1,65 @@
 import React from 'react';
-import {cn} from '@bem-react/classname';
+import { ReactComponent as ArrowDown } from '../svg/ArrowDown.svg';
 import './BranchList.css';
-import {BranchListItem} from './-Item/BranchList-Item';
-import BranchListClosed from './_closed/BranchList_closed';
-
-export const cnBranchList = cn('BranchList');
-
-interface BranchInfo {
-	branch: string;
-	date: string;
-}
 
 interface Props {
-	list: BranchInfo[];
+	currentBranch?: string;
+	list?: {
+		branch: string;
+		date: string;
+	}[];
 }
 
-class BranchList extends React.Component<Props> {
-	public static defaultProps = {
-		list: [
-			{
-				branch: 'trunk',
-				date: '4 s ago'
-			},
-			{
-				branch: 'users/rudskoy/DEVTOOLS-43865',
-				date: '1 min ago'
-			},
-			{
-				branch: 'users/rudskoy/DEVTOOLS-37948',
-				date: '16:25'
-			},
-			{
-				branch: 'users/rudskoy/DEVTOOLS-94877',
-				date: 'yesterday, 14:50'
-			},
-			{
-				branch: 'users/rudskoy/DEVTOOLS-87450',
-				date: 'Jan 11, 12:01'
-			},
-			{
-				branch: 'users/rudskoy/DEVTOOLS-27073',
-				date: 'Dec 29, 2017'
-			}
-		]
-	};
-	render() {
-		return (
-			<ul className={BranchListClosed}>
-				{this.props.list.map((item, number) =>
-					<BranchListItem key={number} branch={item.branch} date={item.date} isFirst={!number} />)}
-			</ul>
-		);
-	}
-}
+const BranchList = ({
+	currentBranch = 'master',
+	list = [
+		{
+			branch: 'master',
+			date: '4 s ago'
+		},
+		{
+			branch: 'users/rudskoy/DEVTOOLS-43865',
+			date: '1 min ago'
+		},
+		{
+			branch: 'users/rudskoy/DEVTOOLS-37948',
+			date: '16:25'
+		},
+		{
+			branch: 'users/rudskoy/DEVTOOLS-94877',
+			date: 'yesterday, 14:50'
+		},
+		{
+			branch: 'users/rudskoy/DEVTOOLS-87450',
+			date: 'Jan 11, 12:01'
+		},
+		{
+			branch: 'users/rudskoy/DEVTOOLS-27073',
+			date: 'Dec 29, 2017'
+		}
+	]
+}: Props) =>
+	<div className="BranchList">
+		<span className="BranchList-CurrentBranch">{currentBranch}</span>
+		<ArrowDown className="BranchList-Arrow" />
+		<ul className="BranchList-Dropdown BranchList-Dropdown_closed">
+			{list.map(({ branch, date }, number) => {
+				const isSelected = branch === currentBranch;
+
+				return (
+					<React.Fragment key={number}>
+						<li
+							className={`BranchList-Item ${isSelected && 'BranchList-Item_selected'}`}
+						>
+							{branch}
+							<div className={`BranchList-LastCommit ${isSelected && 'BranchList-LastCommit_selected'}`}>
+								Last commit: {date}
+							</div>
+						</li>
+						{isSelected && <hr className="BranchList-Break" />}
+					</React.Fragment>);
+			})}
+		</ul>
+	</div>
 
 export default BranchList;

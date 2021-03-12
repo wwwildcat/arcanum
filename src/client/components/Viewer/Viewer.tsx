@@ -1,13 +1,27 @@
 import React from 'react';
-import {cn} from '@bem-react/classname';
-import {ViewerHeader} from './-Header/Viewer-Header';
-import ViewerContent from './-Content/Viewer-Content';
+import { connect } from 'react-redux';
+import State from '../../store/types';
 import './Viewer.css';
 
-export const cnViewer = cn('Viewer');
+interface Props {
+	fileContent: string[];
+}
 
-export const Viewer = () =>
-	<div className={cnViewer()}>
-		<ViewerHeader />
-		<ViewerContent />
+const mapStateToProps = (state: State) => ({
+	fileContent: state.fileContent
+});
+
+
+const Viewer = ({ fileContent }: Props) =>
+	<div className="Viewer">
+		<div className="Viewer-Header"></div>
+		<div className="Viewer-Content">
+			{!!fileContent.length && fileContent.map((line, number) =>
+				<pre key={number}>
+					<div className="Viewer-LineNumber">{number + 1}</div>
+					<span>{line}</span>
+				</pre>)}
+		</div>
 	</div>
+
+export default connect(mapStateToProps)(Viewer);

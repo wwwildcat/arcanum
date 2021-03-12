@@ -1,31 +1,28 @@
 import React from 'react';
-import {cn} from '@bem-react/classname';
-import {HeaderDropdown} from './-Dropdown/Header-Dropdown';
-import {HeaderLogo} from './-Logo/Header-Logo';
+import RepoList from '../RepoList/RepoList';
+import { ReactComponent as HeaderLogo } from '../svg/logo.svg';
 import State from '../../store/types';
+import { connect } from 'react-redux';
 import './Header.css';
-import {connect} from 'react-redux';
 
 interface Props {
 	isLoading: Boolean;
 }
 
 const mapStateToProps = (state: State) => ({
-		isLoading: state.isLoading,
-	});
+	isLoading: state.isLoading,
+});
 
-export const cnHeader = cn('Header');
-
-const Header = ({isLoading}: Props) => {
-		if (isLoading) {
-			return (<div></div>);
-		}
-		return (
-			<header className={cnHeader()}>
-				<HeaderLogo />
-				<HeaderDropdown />
-			</header>
-		);
+const Header = ({ isLoading }: Props) => {
+	if (isLoading) {
+		return (<div></div>);
+	}
+	return (
+		<header className="Header">
+			<HeaderLogo className="Header-Logo" />
+			<RepoList />
+		</header>
+	);
 }
 
 export default connect(mapStateToProps)(Header);
