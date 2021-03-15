@@ -1,0 +1,21 @@
+.Header {
+	display: flex;
+
+	padding: 16px 0 19px 32px;
+	border-bottom: solid 1px #f0f2f3;
+
+	@media (max-width: 360px) {
+		padding: 19px 0 21px 16px;
+	}
+
+	&-Logo {
+		width: 118px;
+		height: 20px;
+
+		margin-right: 40px;
+
+		@media (max-width: 360px) {
+			margin-right: 26px;
+		}
+	}
+}

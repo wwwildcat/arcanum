@@ -1,0 +1,25 @@
+.Footer {
+	display: flex;
+	justify-content: space-between;
+
+	padding: 18px 20px 14px;
+	border-top: solid 1px #f0f2f3;
+
+	font-size: 13px;
+	line-height: 18px;
+
+	color: #7f8285;
+
+	@media (max-width: 360px) {
+		display: none;
+	}
+
+	&-Link {
+		color: #1774e9;
+	}
+
+	&-Version {
+		margin-right: 32px;
+	}
+}
+

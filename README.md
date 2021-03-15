@@ -1,36 +1,34 @@
-# arcanum
- 
-Установка: `npm install`
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-Запуск: `npm start /home/user/my-repos`, где `/home/user/my-repos` - путь до папки с репозиториями. В адресной строке браузера адрес вида http://localhost:3000/:repoID (название репозитория)
+## Getting Started
 
-## Перевод проекта на TypeScript
+First, run the development server:
 
-Компиляция: `npm run compile`
-
-Переводить проект на TypeScript в целом было несложно - и компоненты React, и функции бэкенда довольно однотипные, так что можно быстро научиться и делать по аналогии. Трудности возникли разве что с redux, redux-thunk и их типами, а также с библиотечными компонентами вроде <Router /> и их параметрами. Но если внимательно почитать их декларации, все становится понятно.
-Ошибки нашлись на бэкенде - с `'use strict'` оказалось, что не все ошибки корректно обрабатываются, и многие из них роняют сервер.
-В целом JavaScript привычнее, но TypeScript делает код более аккуратным и позволяет предотвратить некоторые глупые ошибки (например, моя любимая - потерять скобки у вызова метода без параметров). Так что PR я волью, чтобы постепенно привыкать и к TS.
-
-## Блоки серверной части
-
-Большинство запросов к серверу состоит из 3-х частей:
-
-- подготовка параметров запроса
-
-- собственно запрос через `child_process`
-
-- форматирование ответа в нужный json
-
-Поскольку собственно запрос возвращает результат работы стороннего API (git), то его нет смысла тестировать, а подготовку параметров и форматирование ответа для удобства тестирования можно выделить в отдельные функции. Например, для запроса содержимого директории [getRepository](https://github.com/wwwildcat/arcanum/blob/tests/src/server/callbacks/getRepository/getRepository.js) это [ветка getCommandParams](https://github.com/wwwildcat/arcanum/blob/tests/src/server/callbacks/getCommandParams.js#L11) и [getRepositoryData](https://github.com/wwwildcat/arcanum/blob/tests/src/server/callbacks/getRepository/getRepositoryData.js). Результатом их сценариев соответственно будет результат функции.
-
-[Тесты](https://github.com/wwwildcat/arcanum/tree/tests/tests)
-
-Запуск: `npm test` (и модульные, и интеграционные). Для корректной работы интеграционных тестов надо изменить `.hermione.conf.js`, прописав в поле meta:
+```bash
+npm run dev
+# or
+yarn dev
 ```
-meta: {
-	repoID: *название репозитория*,
-	pathToDir: *относительный путь к подпапке*,
-	pathToFile: *относительный путь к файлу*
-}
-```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
