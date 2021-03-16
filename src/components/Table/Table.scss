@@ -29,21 +29,23 @@
             }
 		}
 
-        &_files {
-            grid-template-columns: 4fr 4fr 7.5fr 3.5fr 3fr;
+        &_type {
+            &_files {
+                grid-template-columns: 4fr 4fr 7.5fr 3.5fr 3fr;
 
-            @media (max-width: 360px) {
-                grid-template-areas: 'name name name' 'message message message' 'hash author date';
-                grid-template-columns: 0.8fr auto 2fr;
+                @media (max-width: 360px) {
+                    grid-template-areas: 'name name name' 'message message message' 'hash author date';
+                    grid-template-columns: 0.8fr auto 2fr;
+                }
             }
-        }
 
-        &_branches {
-            display: flex;
-	        justify-content: space-between;
+            &_branches {
+                display: flex;
+                justify-content: space-between;
 
-            @media (max-width: 360px) {
-                flex-direction: column;
+                @media (max-width: 360px) {
+                    flex-direction: column;
+                }
             }
         }
 
@@ -56,22 +58,20 @@
         margin-right: 8px;
     }
 
-    &-Button {
+    &-ArrowButton {
         display: none;
 
         @media (max-width: 360px) {
             display: block;
 
             position: absolute;
-            top: calc(50% - 10px);
+            top: calc(50% - 25px);
             right: -5px;
 
             width: 25px;
             height: 25px;
 
             fill: #E5E5E5;
-
-            transform: rotate(-90deg);
         }
     }
 

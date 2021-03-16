@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { Action } from 'redux';
 import TableLink from './-Link/Table-Link';
-import Arrow from '../svg/ArrowDown.svg';
+import Arrow from '../svg/ArrowRight.svg';
+import File from '../svg/File.svg';
+import Folder from '../svg/Folder.svg';
+// import Branch from '../svg/Branch.svg';
 import { setView, setPath } from '../../store/actions';
 import { fetchDirContent, fetchFileContent } from '../../store/thunks';
 import State, { FilesData, contentTypes, Content, TableType } from '../../store/types';
@@ -12,69 +15,81 @@ import './Table.scss';
 
 interface Props {
     content: 'files' | 'branches';
-    currentRepo: string;
-    currentPath: string;
-    currentFiles: FilesData[];
-    handleLinkClick: (type: TableType, value: string, repo: string, nexPath: string) => void;
+    repo: string;
+    path: string;
+    files: FilesData[];
+    handleLinkClick: (type: TableType, value: string, repo: string, newPath: string) => void;
 }
 
 const mapStateToProps = (state: State) => ({
-    currentRepo: state.currentRepo,
-    currentPath: state.currentPath,
-    currentFiles: state.currentFiles,
+    repo: state.currentRepo,
+    path: state.currentPath,
+    files: state.currentFiles,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => ({
-    handleLinkClick: (type: TableType, value: string, repo: string, nexPath: string) => {
+    handleLinkClick: (type: TableType, value: string, repo: string, newPath: string) => {
         dispatch(setView(value));
-        dispatch(setPath(nexPath));
+        dispatch(setPath(newPath));
 
         if (type === 'tree') {
-            dispatch(fetchDirContent(repo, nexPath));
+            dispatch(fetchDirContent(repo, newPath));
         }
         if (type === 'blob') {
-            dispatch(fetchFileContent(repo, nexPath));
+            dispatch(fetchFileContent(repo, newPath));
         }
     },
 });
 
-const Table = ({ content, currentRepo, currentPath, currentFiles, handleLinkClick }: Props) => {
+const Table = ({ content, repo, path, files, handleLinkClick }: Props) => {
     const columns = content === 'files' ? contentTypes : contentTypes.slice(0, 2);
 
     return (
         <div className="Table">
-            <div className={`Table-Row Table-Row_header Table-Row_${content}`}>
+            <div className={`Table-Row Table-Row_header Table-Row_type_${content}`}>
                 {tableHeaderData[content].map((item, index) => (
                     <div className="Table-Cell" key={index}>
                         {item}
                     </div>
                 ))}
             </div>
-            {currentFiles &&
-                currentFiles.map((row, i) => (
-                    <div className={`Table-Row Table-Row_${content}`} key={i}>
-                        {row &&
-                            (columns as Content[]).map((item, index) => (
+            {files &&
+                files.map(({ name, type, ...rest }, i) => {
+                    const newPath = path ? `${path}/${name}` : name;
+                    const linkUrl = `/${repo}/${type}/master/${newPath}`;
+                    const handleClick = () => handleLinkClick(type, name, repo, path);
+
+                    return (
+                        <div className={`Table-Row Table-Row_type_${content}`} key={i}>
+                            {(columns as Content[]).map((item, index) => (
                                 <div
                                     className={`Table-Cell Table-Cell_content_${item}`}
                                     key={index}
                                 >
                                     {item === 'name' ? (
-                                        <TableLink
-                                            handleClick={handleLinkClick}
-                                            path={currentPath}
-                                            repo={currentRepo}
-                                            type={row.type}
-                                            value={row[item]}
-                                        />
+                                        <TableLink handleClick={handleClick} url={linkUrl}>
+                                            <>
+                                                {type === 'tree' && (
+                                                    <Folder className="Table-Icon" />
+                                                )}
+                                                {type === 'blob' && <File className="Table-Icon" />}
+                                                {/* {type === 'branch' && (
+                                                        <Branch className="Table-Icon" />
+                                                    )} */}
+                                                {name}
+                                            </>
+                                        </TableLink>
                                     ) : (
-                                        row[item]
+                                        rest[item]
                                     )}
                                 </div>
                             ))}
-                        <Arrow className="Table-Button" />
-                    </div>
-                ))}
+                            <TableLink handleClick={handleClick} url={linkUrl}>
+                                <Arrow className="Table-ArrowButton" />
+                            </TableLink>
+                        </div>
+                    );
+                })}
         </div>
     );
 };
