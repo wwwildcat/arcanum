@@ -24,8 +24,8 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => ({
     setDirData: (repo: string, pathSlug: string[]) => {
-        const pathToDir = pathSlug ? pathSlug.join('/') : '';
-        const dirName = pathSlug ? pathSlug.reverse()[0] : '';
+        const pathToDir = pathSlug || [];
+        const dirName = pathSlug ? pathSlug[pathSlug.length - 1] : '';
 
         dispatch(setRepo(repo));
         dispatch(fetchDirContent(repo, pathToDir));

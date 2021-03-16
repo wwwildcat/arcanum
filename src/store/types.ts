@@ -28,7 +28,7 @@ export default interface State {
     isLoading: boolean;
     allRepos: string[];
     currentRepo: string;
-    currentPath: string;
+    currentPath: string[];
     currentView: string;
     currentFiles: FilesData[];
     fileContent: string[];

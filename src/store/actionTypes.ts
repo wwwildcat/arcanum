@@ -21,7 +21,7 @@ interface SetRepoAction {
 
 interface SetPathAction {
     type: typeof SET_PATH;
-    payload: string;
+    payload: string[];
 }
 
 interface SetViewAction {

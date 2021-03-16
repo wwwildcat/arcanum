@@ -1,47 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { Action } from 'redux';
-import TableLink from './-Link/Table-Link';
+import Link from 'next/link';
 import Arrow from '../svg/ArrowRight.svg';
 import File from '../svg/File.svg';
 import Folder from '../svg/Folder.svg';
 // import Branch from '../svg/Branch.svg';
-import { setView, setPath } from '../../store/actions';
-import { fetchDirContent, fetchFileContent } from '../../store/thunks';
-import State, { FilesData, contentTypes, Content, TableType } from '../../store/types';
+import State, { ContentData, contentTypes, Content } from '../../store/types';
 import { tableHeaderData } from '../data';
 import './Table.scss';
 
 interface Props {
     content: 'files' | 'branches';
     repo: string;
-    path: string;
-    files: FilesData[];
-    handleLinkClick: (type: TableType, value: string, repo: string, newPath: string) => void;
+    path: string[];
+    files: ContentData[];
 }
 
 const mapStateToProps = (state: State) => ({
     repo: state.currentRepo,
     path: state.currentPath,
-    files: state.currentFiles,
+    files: state.currentTableContent,
 });
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => ({
-    handleLinkClick: (type: TableType, value: string, repo: string, newPath: string) => {
-        dispatch(setView(value));
-        dispatch(setPath(newPath));
-
-        if (type === 'tree') {
-            dispatch(fetchDirContent(repo, newPath));
-        }
-        if (type === 'blob') {
-            dispatch(fetchFileContent(repo, newPath));
-        }
-    },
-});
-
-const Table = ({ content, repo, path, files, handleLinkClick }: Props) => {
+const Table = ({ content, repo, path, files }: Props) => {
     const columns = content === 'files' ? contentTypes : contentTypes.slice(0, 2);
 
     return (
@@ -55,9 +36,8 @@ const Table = ({ content, repo, path, files, handleLinkClick }: Props) => {
             </div>
             {files &&
                 files.map(({ name, type, ...rest }, i) => {
-                    const newPath = path ? `${path}/${name}` : name;
-                    const linkUrl = `/${repo}/${type}/master/${newPath}`;
-                    const handleClick = () => handleLinkClick(type, name, repo, path);
+                    const newPath = path ? path.concat(name) : [name];
+                    const linkUrl = `/${repo}/${type}/master/${newPath.join('/')}`;
 
                     return (
                         <div className={`Table-Row Table-Row_type_${content}`} key={i}>
@@ -67,8 +47,8 @@ const Table = ({ content, repo, path, files, handleLinkClick }: Props) => {
                                     key={index}
                                 >
                                     {item === 'name' ? (
-                                        <TableLink handleClick={handleClick} url={linkUrl}>
-                                            <>
+                                        <Link href={linkUrl}>
+                                            <span className="Table-Link">
                                                 {type === 'tree' && (
                                                     <Folder className="Table-Icon" />
                                                 )}
@@ -77,16 +57,16 @@ const Table = ({ content, repo, path, files, handleLinkClick }: Props) => {
                                                         <Branch className="Table-Icon" />
                                                     )} */}
                                                 {name}
-                                            </>
-                                        </TableLink>
+                                            </span>
+                                        </Link>
                                     ) : (
                                         rest[item]
                                     )}
                                 </div>
                             ))}
-                            <TableLink handleClick={handleClick} url={linkUrl}>
+                            <Link href={linkUrl}>
                                 <Arrow className="Table-ArrowButton" />
-                            </TableLink>
+                            </Link>
                         </div>
                     );
                 })}
@@ -94,4 +74,4 @@ const Table = ({ content, repo, path, files, handleLinkClick }: Props) => {
     );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Table);
+export default connect(mapStateToProps)(Table);

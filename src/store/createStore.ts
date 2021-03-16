@@ -12,7 +12,7 @@ const initialState = {
     isLoading: true,
     allRepos: [],
     currentRepo: '',
-    currentPath: '',
+    currentPath: [],
     currentView: '',
     currentFiles: [],
     fileContent: [],

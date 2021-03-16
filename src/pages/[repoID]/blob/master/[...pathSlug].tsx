@@ -24,8 +24,8 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => ({
     setFileData: (repo: string, pathSlug: string[]) => {
-        const pathToFile = pathSlug ? pathSlug.join('/') : '';
-        const fileName = pathSlug ? pathSlug.reverse()[0] : '';
+        const pathToFile = pathSlug || [];
+        const fileName = pathSlug ? pathSlug[pathSlug.length - 1] : '';
 
         dispatch(setRepo(repo));
         dispatch(fetchFileContent(repo, pathToFile));

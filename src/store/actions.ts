@@ -11,7 +11,7 @@ export const setRepo = (repoName: string): ActionTypes => ({
     payload: repoName,
 });
 
-export const setPath = (path: string): ActionTypes => ({
+export const setPath = (path: string[]): ActionTypes => ({
     type: 'SET_PATH',
     payload: path,
 });

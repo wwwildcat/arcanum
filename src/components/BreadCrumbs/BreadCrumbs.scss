@@ -21,13 +21,16 @@
         line-height: 24px;
         word-spacing: 0.8em;
 
-        font-weight: bold;
+        color: $gray2;
+
+        &_active {
+            color: inherit;
+
+            font-weight: bold;
+        }
     }
 
     &-Link {
-        color: $gray2;
-        font-weight: normal;
-
         cursor: pointer;
     }
 }

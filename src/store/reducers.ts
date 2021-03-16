@@ -39,7 +39,7 @@ const reducer: Reducer = (state: State, action: AnyAction) => {
                 currentPath: action.payload,
             };
 
-        case SET_VIEW: // Переход к папке или файлу
+        case SET_VIEW: // current dir or file
             return {
                 ...state,
                 currentView: action.payload,

@@ -72,6 +72,10 @@
         }
     }
 
+    &-Link {
+        cursor: pointer;
+    }
+
     &-Cell {
         &:last-child {
             text-align: right;
@@ -80,8 +84,6 @@
         &_content {
             &_name {
                 font-weight: bold;
-
-	            cursor: pointer;
 
                 @include md {
                     grid-area: name;

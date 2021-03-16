@@ -1,55 +1,46 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Action } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
-import BreadCrumbsLink from './-Link/BreadCrumbs-Link';
+import cn from 'classnames';
+import Link from 'next/link';
 import State from '../../store/types';
-import { setView } from '../../store/actions';
-import { fetchDirContent } from '../../store/thunks';
 import './BreadCrumbs.scss';
 
 interface Props {
-    currentRepo: string;
-    currentPath: string;
-    handleBreadCrumbsClick: (value: string, repo: string, path: string) => void;
+    repo: string;
+    path: string[];
 }
 
 const mapStateToProps = (state: State) => ({
-    currentRepo: state.currentRepo,
-    currentPath: state.currentPath,
+    repo: state.currentRepo,
+    path: state.currentPath,
 });
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => ({
-    handleBreadCrumbsClick: (value: string, repo: string, path: string) => {
-        dispatch(setView(value));
-        dispatch(fetchDirContent(repo, path));
-    },
-});
+const BreadCrumbs = ({ repo, path }: Props) => (
+    <ul className="BreadCrumbs">
+        {[repo].concat(path).map((item, index) => {
+            const isActive = index === [repo].concat(path).length - 1;
+            const newPath = path.slice(0, index);
+            const url = newPath.length ? `/${repo}/tree/master/${newPath.join('/')}` : `/${repo}`;
 
-const BreadCrumbs = ({ currentRepo, currentPath, handleBreadCrumbsClick }: Props) => {
-    const BreadCrumbsItems = currentPath
-        ? [currentRepo].concat(currentPath.split('/'))
-        : [currentRepo];
-
-    return (
-        <ul className="BreadCrumbs">
-            {BreadCrumbsItems.map((item, index) => (
-                <li className="BreadCrumbs-Item" key={index}>
-                    {index === BreadCrumbsItems.length - 1 ? (
+            return (
+                <li
+                    className={cn('BreadCrumbs-Item', isActive && 'BreadCrumbs-Item_active')}
+                    key={index}
+                >
+                    {isActive ? (
                         item
                     ) : (
-                        <BreadCrumbsLink
-                            handleClick={handleBreadCrumbsClick}
-                            index={index}
-                            path={currentPath}
-                            repo={currentRepo}
-                            value={item}
-                        />
+                        <>
+                            <Link href={url}>
+                                <span className="BreadCrumbs-Link">{item}</span>
+                            </Link>
+                            {` / `}
+                        </>
                     )}
                 </li>
-            ))}
-        </ul>
-    );
-};
+            );
+        })}
+    </ul>
+);
 
-export default connect(mapStateToProps, mapDispatchToProps)(BreadCrumbs);
+export default connect(mapStateToProps)(BreadCrumbs);

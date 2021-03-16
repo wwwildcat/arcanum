@@ -15,10 +15,10 @@ export const fetchRepoList = () => {
     };
 };
 
-export const fetchDirContent = (repoID: string, dirPath?: string) => {
+export const fetchDirContent = (repoID: string, dirPath?: string[]) => {
     return async (dispatch: Dispatch): Promise<void> => {
         const url = dirPath
-            ? `http://localhost:3000/api/repos/${repoID}/tree/master/${dirPath}`
+            ? `http://localhost:3000/api/repos/${repoID}/tree/master/${dirPath.join('/')}`
             : `http://localhost:3000/api/repos/${repoID}`;
         const response = await fetch(url);
         const json = await response.json();
@@ -27,10 +27,10 @@ export const fetchDirContent = (repoID: string, dirPath?: string) => {
     };
 };
 
-export const fetchFileContent = (repoID: string, filePath: string) => {
+export const fetchFileContent = (repoID: string, filePath: string[]) => {
     return async (dispatch: Dispatch): Promise<void> => {
         const response = await fetch(
-            `http://localhost:3000/api/repos/${repoID}/blob/master/${filePath}`
+            `http://localhost:3000/api/repos/${repoID}/blob/master/${filePath.join('/')}`
         );
         const json = await response.json();
 

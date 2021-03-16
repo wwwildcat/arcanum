@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => ({
     setRepoData: (repo: string) => {
         dispatch(setRepo(repo));
         dispatch(fetchDirContent(repo));
-        dispatch(setPath(''));
+        dispatch(setPath([]));
         dispatch(setView(repo));
     },
 });
