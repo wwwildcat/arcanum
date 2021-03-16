@@ -8,7 +8,7 @@ const HomePage = (): JSX.Element => (
         <Head>
             <title>Yandex Arcanum</title>
         </Head>
-        <Header />
+        <Header noRepo />
         <Footer />
     </>
 );
