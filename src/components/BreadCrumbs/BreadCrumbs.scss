@@ -1,15 +1,17 @@
-.BreadCrumbs {
-  	margin: 0 32px;
-  	padding: 12px 0 10px;
+@import '../../styles/colors.scss';
+@import '../../styles/mixins.scss';
 
-  	border-bottom: solid 1px #e5e5e5;
+.BreadCrumbs {
+  	padding: 12px 0 10px;
+    margin: 0;
+
+  	border-bottom: solid 1px $lightGray1;
 
 	list-style-type: none;
 
   	word-wrap: break-word;
 
-    @media (max-width: 360px) {
-        margin: 0 16px;
+    @include xs {
         padding-bottom: 8px;
     }
 
@@ -23,7 +25,7 @@
     }
 
     &-Link {
-        color: #7f8285;
+        color: $gray2;
         font-weight: normal;
 
         cursor: pointer;

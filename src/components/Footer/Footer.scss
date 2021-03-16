@@ -1,21 +1,24 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins.scss';
+
 .Footer {
 	display: flex;
 	justify-content: space-between;
 
-	padding: 18px 20px 14px;
-	border-top: solid 1px #f0f2f3;
+	padding: 18px 0 14px;
+	border-top: solid 1px $lightGray2;
 
 	font-size: 13px;
 	line-height: 18px;
 
-	color: #7f8285;
+	color: $gray2;
 
-	@media (max-width: 360px) {
+	@include xs {
 		display: none;
 	}
 
 	&-Link {
-		color: #1774e9;
+		color: $blue;
 	}
 
 	&-Version {

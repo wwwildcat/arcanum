@@ -1,6 +1,7 @@
+@import '../../styles/colors.scss';
+
 .Viewer {
-	margin: 16px 32px;
-  	border: solid 1px #e5e5e5;
+  	border: solid 1px $lightGray1;
   	border-radius: 4px 4px 0 0;
 
     &-Header {
@@ -9,10 +10,10 @@
 
         position: relative;
 
-        border-bottom: solid 1px #e5e5e5;
+        border-bottom: solid 1px $lightGray1;
         padding: 15px 16px 8px;
 
-        background: #f5f5f5;
+        background: $lightGray3;
     }
 
     &-Content {
@@ -25,7 +26,7 @@
         font-size: 12px;
         line-height: 20px;
 
-        color: #00234b;
+        color: $darkBlue;
     }
 
     &-LineNumber {
@@ -37,6 +38,6 @@
 
         text-align: right;
 
-        color: #999;
+        color: $gray4;
     }
 }

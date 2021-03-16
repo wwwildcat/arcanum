@@ -1,7 +1,10 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins.scss';
+
 .RepoList {
 	position: relative;
 
-	@media (max-width: 360px) {
+	@include xs {
 		position: static;
 	}
 
@@ -14,12 +17,6 @@
 
 		line-height: 18px;
 		font-weight: bold;
-
-		@media (max-width: 360px) {
-			top: 5px;
-
-			padding-bottom: 16px;
-		}
 	}
 
 	&-Title {
@@ -34,10 +31,6 @@
 		cursor: pointer;
 
 		fill: #000;
-
-		@media (max-width: 360px) {
-			top: 11px;
-		}
 	}
 
 	&-Dropdown {
@@ -51,14 +44,19 @@
 
 		list-style-type: none;
 		background: #fff;
-		box-shadow: 0 4px 16px rgba(53, 73, 93, 0.2);
+		box-shadow: $shadow;
 
-		@media (max-width: 360px) {
-			top: calc(100% - 203px);
+		&_closed {
+			display: none;
+		}
+
+		@include xs {
+			position: fixed;
+			top: auto;
+			bottom: 0;
 			left: 0;
 
 			width: 100%;
-			height: 168px;
 
 			padding: 36px 16px 24px;
 			border-radius: 10px 10px 0 0;
@@ -74,19 +72,15 @@
 				height: 4px;
 
 				border-radius: 10px;
-				background: #e5e5e5;
+				background: $lightGray1;
 			}
-		}
-
-		&_closed {
-			display: none;
 		}
 	}
 
 	&-Item {
 		margin-bottom: 16px;
 
-		@media (max-width: 360px) {
+		@include xs {
 			margin-bottom: 24px;
 		}
 

@@ -1,3 +1,6 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins.scss';
+
 .BranchList {
 	display: inline-block;
 
@@ -6,13 +9,13 @@
 	margin-bottom: 10px;
 	margin-left: 8px;
 
-    @media (max-width: 360px) {
+    @include xs {
 		position: static;
 		margin-bottom: 4px;
 	}
 
     &-CurrentBranch {
-        color: #7f8285;
+        color: $gray2;
         font-size: 24px;
         line-height: 28px;
     }
@@ -26,7 +29,7 @@
 
         margin-left: 8px;
 
-        fill: #7F8285;
+        fill: $gray2;
 
         cursor: pointer;
     }
@@ -37,9 +40,7 @@
         top: 30px;
         left: 0;
 
-        overflow: auto;
         width: 320px;
-        height: 360px;
 
         margin: 0;
         padding: 0;
@@ -48,25 +49,24 @@
         list-style-type: none;
 
         background: #fff;
-        box-shadow: 0 4px 16px rgba(53, 73, 93, 0.2);
+        box-shadow: $shadow;
 
         &_closed {
             display: none;
         }
 
-        @media (max-width: 360px) {
-            top: calc(100% - 320px);
+        @include xs {
+            position: fixed;
+            top: auto;
+            bottom: 0;
             left: 0;
 
             width: 100%;
-            height: 320px;
 
             padding-top: 24px;
             border-radius: 10px 10px 0 0;
-        }
 
-        &::before {
-            @media (max-width: 360px) {
+            &::before {
                 content: '';
 
                 position: absolute;
@@ -77,7 +77,7 @@
                 height: 4px;
 
                 border-radius: 10px;
-                background: #e5e5e5;
+                background: $lightGray1;
             }
         }
     }
@@ -85,14 +85,14 @@
     &-Break {
         margin: 0 12px;
         border: none;
-        border-top: solid 1px #e5e5e5;
+        border-top: solid 1px $lightGray1;
     }
 
     &-Item {
         margin: 0;
         padding: 10px 12px 6px;
 
-        color: #434445;
+        color: $gray1;
         font-weight: bold;
 
         &:not(:first-child):hover {
@@ -102,7 +102,7 @@
             color: #000;
 
             & .BranchList-LastCommit {
-                color: #434445;
+                color: $gray1;
             }
         }
 
@@ -122,7 +122,7 @@
         line-height: 20px;
         font-weight: normal;
 
-        color: #7f8285;
+        color: $gray2;
 
         &_selected {
             color: #e0e0e0;

@@ -1,8 +1,11 @@
-.Current {
-  	margin: 12px 32px 0;
+@import '../../styles/colors.scss';
+@import '../../styles/mixins.scss';
 
-	@media (max-width: 360px) {
-    	margin: 10px 16px 0;
+.Current {
+  	margin-top: 12px;
+
+	@include xs {
+    	margin-top: 10px;
   	}
 
 	&-Name {
@@ -14,7 +17,7 @@
 		line-height: 28px;
 		font-weight: bold;
 
-		@media (max-width: 360px) {
+		@include xs {
 			margin-bottom: 4px;
 		}
 	}
@@ -22,7 +25,7 @@
 	&-LastCommit {
 		&_style {
 			&_blue {
-				color: #1774e9;
+				color: $blue;
 			}
 
 			&_commiter {
@@ -31,7 +34,7 @@
 				margin-left: 0.25em;
 
 				&::first-letter {
-					color: #ff3029;
+					color: $red;
 				}
 			}
 		}

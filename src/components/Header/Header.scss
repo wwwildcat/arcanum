@@ -1,11 +1,14 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins.scss';
+
 .Header {
 	display: flex;
 
-	padding: 16px 0 19px 32px;
-	border-bottom: solid 1px #f0f2f3;
+	padding: 16px 0 19px;
+	border-bottom: solid 1px $lightGray2;
 
-	@media (max-width: 360px) {
-		padding: 19px 0 21px 16px;
+	@include xs {
+		justify-content: space-between;
 	}
 
 	&-Logo {
@@ -14,8 +17,8 @@
 
 		margin-right: 40px;
 
-		@media (max-width: 360px) {
-			margin-right: 26px;
+		@include xs {
+			margin-right: 0;
 		}
 	}
 }
