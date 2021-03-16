@@ -1,4 +1,4 @@
-import { FilesData } from './types';
+import { ContentData, FileData } from './types';
 
 export const GET_REPO_LIST = 'GET_REPO_LIST';
 export const SET_REPO = 'SET_REPO';
@@ -31,17 +31,17 @@ interface SetViewAction {
 
 interface GetDirContentAction {
     type: typeof GET_DIR_CONTENT;
-    payload: FilesData[];
+    payload: ContentData[];
 }
 
 interface GetFileContentAction {
     type: typeof GET_FILE_CONTENT;
-    payload: string[];
+    payload: FileData;
 }
 
 interface GetAllRepoContentAction {
     type: typeof GET_ALL_REPO_CONTENT;
-    payload: FilesData[];
+    payload: ContentData[];
 }
 
 interface SubmitSearchFormAction {

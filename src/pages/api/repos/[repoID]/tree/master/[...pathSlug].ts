@@ -2,9 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import { spawn } from 'child_process';
 import { Request, Response } from 'express';
-import { InitialDataType, FullDataType } from '../../../../../../store/types';
+import { InitialContentData, FullContentData } from '../../../../../../store/types';
 
-export const getInitialData = (out: string): InitialDataType[] => {
+export const getInitialData = (out: string): InitialContentData[] => {
     const strings = out.split(/\n./);
     const objects = strings.map((obj) => ({
         name: obj.match(/(?<=\t).*/)[0],
@@ -13,7 +13,7 @@ export const getInitialData = (out: string): InitialDataType[] => {
     return objects;
 };
 
-export const getFullData = (out: string): FullDataType => ({
+export const getFullData = (out: string): FullContentData => ({
     hash: out.match(/(?<=commit )\S{6}/)[0],
     message: out.match(/(?<=\n\n).*/)[0].trim(),
     commiter: out.match(/(?<=Author:).*(?=<)/)[0].trim(),

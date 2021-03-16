@@ -1,22 +1,27 @@
-export interface InitialDataType {
+export interface InitialContentData {
     type: string;
     name: string;
 }
 
-export interface FullDataType {
+export interface FullContentData {
     hash: string;
     message: string;
     commiter: string;
     date: string;
 }
 
-export interface FilesData {
+export interface ContentData {
     type: 'blob' | 'tree';
     name: string;
     hash: string;
     message: string;
     commiter: string;
     date: string;
+}
+
+export interface FileData {
+    content: string[];
+    size: string;
 }
 
 export const contentTypes = ['name', 'hash', 'message', 'commiter', 'date'] as const;
@@ -30,6 +35,6 @@ export default interface State {
     currentRepo: string;
     currentPath: string[];
     currentView: string;
-    currentFiles: FilesData[];
-    fileContent: string[];
+    currentTableContent: ContentData[];
+    currentFile: FileData;
 }

@@ -49,13 +49,13 @@ const reducer: Reducer = (state: State, action: AnyAction) => {
             return {
                 ...state,
                 isLoading: false,
-                currentFiles: action.payload,
+                currentTableContent: action.payload,
             };
 
         case GET_FILE_CONTENT:
             return {
                 ...state,
-                fileContent: action.payload,
+                currentFile: action.payload,
             };
 
         // case SUBMIT_SEARCH_FORM: //Поиск файлов, содержащих в названии ключевое слово

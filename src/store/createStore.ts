@@ -14,8 +14,11 @@ const initialState = {
     currentRepo: '',
     currentPath: [],
     currentView: '',
-    currentFiles: [],
-    fileContent: [],
+    currentTableContent: [],
+    currentFile: {
+        content: [],
+        size: '',
+    },
 };
 const store = createStore<State, AnyAction, StoreExtension, void>(
     reducer,

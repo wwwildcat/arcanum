@@ -1,5 +1,5 @@
 import { ActionTypes } from './actionTypes';
-import { FilesData } from './types';
+import { ContentData, FileData } from './types';
 
 export const getRepoList = (json: string[]): ActionTypes => ({
     type: 'GET_REPO_LIST',
@@ -21,17 +21,17 @@ export const setView = (view: string): ActionTypes => ({
     payload: view,
 });
 
-export const getDirContent = (json: FilesData[]): ActionTypes => ({
+export const getDirContent = (json: ContentData[]): ActionTypes => ({
     type: 'GET_DIR_CONTENT',
     payload: json,
 });
 
-export const getFileContent = (text: string[]): ActionTypes => ({
+export const getFileContent = (json: FileData): ActionTypes => ({
     type: 'GET_FILE_CONTENT',
-    payload: text,
+    payload: json,
 });
 
-// export const getAllRepoContent = (json: FilesData[]): ActionTypes => ({
+// export const getAllRepoContent = (json: ContentData[]): ActionTypes => ({
 // 	type: 'GET_ALL_REPO_CONTENT',
 // 	payload: json
 // });
