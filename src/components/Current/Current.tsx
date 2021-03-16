@@ -1,37 +1,47 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import BranchList from '../BranchList/BranchList';
-import State from '../../store/types';
+import State, { ContentData } from '../../store/types';
 import './Current.scss';
 
 interface Props {
-    currentView: string;
-    hash?: string;
-    commiter?: string;
-    date?: string;
+    data: ContentData[];
+    name: string;
+    type: 'dir' | 'file';
 }
 
 const mapStateToProps = (state: State) => ({
-    currentView: state.currentView,
+    name: state.currentView,
+    data: state.currentTableContent,
 });
 
-const Current = ({ currentView, hash, commiter, date }: Props) => (
-    <div className="Current">
-        <div className="Current-Name">{currentView}</div>
-        <BranchList />
-        <div className="Current-LastCommit">
-            Last commit
-            <span className="Current-LastCommit_style_blue"> {hash}</span> on
-            <span className="Current-LastCommit_style_blue"> {date}</span> by
-            <div className="Current-LastCommit_style_commiter">{commiter}</div>
-        </div>
-    </div>
-);
+const getLastCommit = (type: 'dir' | 'file', data: ContentData[], fileName: string) => {
+    if (type === 'file') {
+        return data.find((item) => item.name === fileName);
+    }
 
-Current.defaultProps = {
-    hash: 'c4d248',
-    commiter: 'robot-srch-releaser',
-    date: '20 Oct 2017, 12:24',
+    data.sort((a, b) => {
+        return Number(new Date(b.date)) - Number(new Date(a.date));
+    });
+
+    return data[0];
+};
+
+const Current = ({ data, name, type }: Props) => {
+    const { hash, commiter, date } = getLastCommit(type, data, name) || {};
+
+    return (
+        <div className="Current">
+            <div className="Current-Name">{name}</div>
+            <BranchList />
+            <div className="Current-LastCommit">
+                Last commit
+                <span className="Current-LastCommit_style_blue"> {hash}</span> on
+                <span className="Current-LastCommit_style_blue"> {date}</span> by
+                <div className="Current-LastCommit_style_commiter">{commiter}</div>
+            </div>
+        </div>
+    );
 };
 
 export default connect(mapStateToProps)(Current);

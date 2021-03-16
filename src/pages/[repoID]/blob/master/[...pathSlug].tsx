@@ -50,8 +50,8 @@ const RepoPage = ({ setFileData }: Props) => {
             <Header />
             <>
                 <BreadCrumbs />
-                <Current />
-                <Tabs type="blob" />
+                <Current type="file" />
+                <Tabs type="file" />
                 <Viewer />
             </>
             <Footer />

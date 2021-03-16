@@ -49,8 +49,8 @@ const RepoPage = ({ isLoading, setRepoData }: Props) => {
             {!isLoading && (
                 <>
                     <BreadCrumbs />
-                    <Current />
-                    <Tabs type="tree" />
+                    <Current type="dir" />
+                    <Tabs type="dir" />
                     <Table content="files" />
                 </>
             )}

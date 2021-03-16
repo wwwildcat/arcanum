@@ -1,6 +1,6 @@
 export const tabsData = {
-    tree: ['FILES', 'BRANCHES'],
-    blob: ['DETAILS', 'HISTORY'],
+    dir: ['FILES', 'BRANCHES'],
+    file: ['DETAILS', 'HISTORY'],
 };
 
 export const tableHeaderData = {

@@ -50,8 +50,8 @@ const RepoPage = ({ setDirData }: Props) => {
             <Header />
             <>
                 <BreadCrumbs />
-                <Current />
-                <Tabs type="tree" />
+                <Current type="dir" />
+                <Tabs type="dir" />
                 <Table content="files" />
             </>
             <Footer />

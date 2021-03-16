@@ -3,7 +3,7 @@ import { tabsData } from '../data';
 import './Tabs.scss';
 
 interface Props {
-    type: 'blob' | 'tree';
+    type: 'dir' | 'file';
     activeTab?: 0 | 1;
 }
 
