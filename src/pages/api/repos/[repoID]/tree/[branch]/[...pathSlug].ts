@@ -22,8 +22,7 @@ export const getFullData = (out: string): FullContentData => ({
 
 const getRepository = (req: Request, res: Response): void => {
     const pathToRepos = process.env.DIR;
-    const { repoID, pathSlug } = req.query;
-    const commitHash = 'master';
+    const { repoID, branch, pathSlug } = req.query;
     const pathToRepo = path.join(pathToRepos, repoID as string);
     const pathToDir = (pathSlug as string[]).join('/');
     const fullPath = path.join(pathToRepo, pathToDir);
@@ -33,7 +32,7 @@ const getRepository = (req: Request, res: Response): void => {
             res.status(404).send(`${fullPath} not found`);
         } else {
             let fullOut = '';
-            const gitTree = spawn('git', ['ls-tree', `${commitHash}:${pathToDir}`], {
+            const gitTree = spawn('git', ['ls-tree', `${branch}:${pathToDir}`], {
                 cwd: pathToRepo,
             });
             gitTree.stdout.on('data', (chunk) => {
@@ -44,7 +43,7 @@ const getRepository = (req: Request, res: Response): void => {
             });
             gitTree.on('close', () => {
                 if (!fullOut) {
-                    res.status(404).send(`${commitHash} not found`);
+                    res.status(404).send(`${branch} not found`);
                 } else {
                     const promises: Promise<unknown>[] = [];
                     getInitialData(fullOut).forEach((obj) => {
@@ -53,7 +52,7 @@ const getRepository = (req: Request, res: Response): void => {
                             let out = '';
                             const commitInfo = spawn(
                                 'git',
-                                ['log', '-1', commitHash, '--', obj.name],
+                                ['log', '-1', `${branch}`, '--', obj.name],
                                 { cwd: fullPath }
                             );
                             commitInfo.stdout.on('data', (chunk) => {

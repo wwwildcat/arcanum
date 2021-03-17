@@ -1,78 +1,77 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import Link from 'next/link';
 import cn from 'classnames';
 import ArrowDown from '../svg/ArrowDown.svg';
+import State, { BranchData } from '../../store/types';
 import './BranchList.scss';
 
 interface Props {
-    currentBranch?: string;
-    list?: {
-        branch: string;
-        date: string;
-    }[];
+    allBranches: BranchData[];
+    currentBranch: string;
+    noBranch: boolean;
+    repo: string;
+    path: string[];
+    type: 'tree' | 'blob';
 }
 
-const BranchList = ({ currentBranch, list }: Props): JSX.Element => (
-    <div className="BranchList">
-        <span className="BranchList-CurrentBranch">{currentBranch}</span>
-        <ArrowDown className="BranchList-Arrow" />
-        <ul className={cn('BranchList-Dropdown', true && 'BranchList-Dropdown_closed')}>
-            {list.map(({ branch, date }, index) => {
-                const isSelected = branch === currentBranch;
+const mapStateToProps = (state: State) => ({
+    allBranches: state.allBranches,
+    repo: state.currentRepo,
+    currentBranch: state.currentBranch,
+    path: state.currentPath,
+});
 
-                return (
-                    <React.Fragment key={index}>
-                        <li
-                            className={cn(
-                                'BranchList-Item',
-                                isSelected && 'BranchList-Item_selected'
-                            )}
-                        >
-                            {branch}
-                            <div
-                                className={cn(
-                                    'BranchList-LastCommit',
-                                    isSelected && 'BranchList-LastCommit_selected'
-                                )}
-                            >
-                                Last commit: {date}
+const BranchList = ({
+    allBranches,
+    currentBranch,
+    noBranch,
+    repo,
+    path,
+    type,
+}: Props): JSX.Element => {
+    const [isOpen, setIsOpen] = useState(noBranch);
+
+    return (
+        <div className="BranchList">
+            <span className="BranchList-CurrentBranch">{currentBranch}</span>
+            <div
+                className={cn('BranchList-Arrow', isOpen && 'BranchList-Arrow_open')}
+                onClick={() => setIsOpen(!isOpen)}
+            >
+                <ArrowDown />
+            </div>
+            <ul className={cn('BranchList-Dropdown', !isOpen && 'BranchList-Dropdown_closed')}>
+                {currentBranch && (
+                    <>
+                        <li className="BranchList-Item BranchList-Item_selected">
+                            {currentBranch}
+                            <div className="BranchList-LastCommit BranchList-LastCommit_selected">
+                                Last commit:{' '}
+                                {allBranches?.find((item) => item.name === currentBranch)?.date}
                             </div>
                         </li>
-                        {isSelected && <hr className="BranchList-Break" />}
-                    </React.Fragment>
-                );
-            })}
-        </ul>
-    </div>
-);
-
-BranchList.defaultProps = {
-    currentBranch: 'master',
-    list: [
-        {
-            branch: 'master',
-            date: '4 s ago',
-        },
-        {
-            branch: 'users/rudskoy/DEVTOOLS-43865',
-            date: '1 min ago',
-        },
-        {
-            branch: 'users/rudskoy/DEVTOOLS-37948',
-            date: '16:25',
-        },
-        {
-            branch: 'users/rudskoy/DEVTOOLS-94877',
-            date: 'yesterday, 14:50',
-        },
-        {
-            branch: 'users/rudskoy/DEVTOOLS-87450',
-            date: 'Jan 11, 12:01',
-        },
-        {
-            branch: 'users/rudskoy/DEVTOOLS-27073',
-            date: 'Dec 29, 2017',
-        },
-    ],
+                        <hr className="BranchList-Break" />
+                    </>
+                )}
+                {allBranches.map(
+                    ({ name, date }, index) =>
+                        name !== currentBranch && (
+                            <li className="BranchList-Item" key={index}>
+                                <Link href={`/${repo}/${type}/${name}/${path.join('/')}`}>
+                                    <div onClick={() => setIsOpen(false)}>
+                                        {name}
+                                        <div className="BranchList-LastCommit">
+                                            Last commit: {date}
+                                        </div>
+                                    </div>
+                                </Link>
+                            </li>
+                        )
+                )}
+            </ul>
+        </div>
+    );
 };
 
-export default BranchList;
+export default connect(mapStateToProps)(BranchList);

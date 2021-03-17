@@ -21,6 +21,8 @@
     }
 
     &-Arrow {
+        display: inline-block;
+
         position: relative;
         top: 4px;
 
@@ -32,6 +34,13 @@
         fill: $gray2;
 
         cursor: pointer;
+
+        &_open {
+            left: -3px;
+            top: -2px;
+
+            transform: rotate(180deg);
+        }
     }
 
     &-Dropdown {
@@ -95,7 +104,7 @@
         color: $gray1;
         font-weight: bold;
 
-        &:not(:first-child):hover {
+        &:hover {
             cursor: pointer;
 
             background: #f4f5f6;
@@ -106,12 +115,19 @@
             }
         }
 
-        &_selected {
+        &_selected,
+        &_selected:hover {
             margin: 4px 0;
             padding: 10px 12px 6px;
 
+            cursor: auto;
+
             background: #4f4f4f;
             color: #f2f2f2;
+
+            & .BranchList-LastCommit {
+                color: #e0e0e0;
+            }
         }
     }
 
@@ -123,9 +139,5 @@
         font-weight: normal;
 
         color: $gray2;
-
-        &_selected {
-            color: #e0e0e0;
-        }
     }
 }

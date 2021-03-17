@@ -1,14 +1,24 @@
 import { ActionTypes } from './actionTypes';
-import { ContentData, FileData } from './types';
+import { ContentData, BranchData, FileData } from './types';
 
 export const getRepoList = (json: string[]): ActionTypes => ({
     type: 'GET_REPO_LIST',
     payload: json,
 });
 
-export const setRepo = (repoName: string): ActionTypes => ({
+export const getBranches = (json: BranchData[]): ActionTypes => ({
+    type: 'GET_BRANCHES',
+    payload: json,
+});
+
+export const setRepo = (repo: string): ActionTypes => ({
     type: 'SET_REPO',
-    payload: repoName,
+    payload: repo,
+});
+
+export const setBranch = (branch: string): ActionTypes => ({
+    type: 'SET_BRANCH',
+    payload: branch,
 });
 
 export const setPath = (path: string[]): ActionTypes => ({

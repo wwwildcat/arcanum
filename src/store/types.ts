@@ -19,6 +19,12 @@ export interface ContentData {
     date: string;
 }
 
+export interface BranchData {
+    name: string;
+    hash: string;
+    date: string;
+}
+
 export interface FileData {
     content: string[];
     size: string;
@@ -30,9 +36,10 @@ export type Content = typeof contentTypes[number];
 export type TableType = 'blob' | 'tree' | 'branch';
 
 export default interface State {
-    isLoading: boolean;
     allRepos: string[];
+    allBranches: BranchData[];
     currentRepo: string;
+    currentBranch: string;
     currentPath: string[];
     currentView: string;
     currentTableContent: ContentData[];

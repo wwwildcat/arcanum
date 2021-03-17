@@ -1,7 +1,9 @@
 import { Reducer, AnyAction } from 'redux';
 import {
     GET_REPO_LIST,
+    GET_BRANCHES,
     SET_REPO,
+    SET_BRANCH,
     SET_PATH,
     SET_VIEW,
     GET_DIR_CONTENT,
@@ -17,7 +19,12 @@ const reducer: Reducer = (state: State, action: AnyAction) => {
             return {
                 ...state,
                 allRepos: action.payload,
-                isLoading: false,
+            };
+
+        case GET_BRANCHES:
+            return {
+                ...state,
+                allBranches: action.payload,
             };
 
         // case GET_ALL_REPO_CONTENT:
@@ -31,6 +38,12 @@ const reducer: Reducer = (state: State, action: AnyAction) => {
             return {
                 ...state,
                 currentRepo: action.payload,
+            };
+
+        case SET_BRANCH:
+            return {
+                ...state,
+                currentBranch: action.payload,
             };
 
         case SET_PATH:

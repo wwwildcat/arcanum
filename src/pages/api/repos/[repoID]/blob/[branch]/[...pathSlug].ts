@@ -15,17 +15,16 @@ const getFormattedFile = (out: string): string[] => {
 
 const getFile = (req: Request, res: Response): void => {
     const pathToRepos = process.env.DIR;
-    const { repoID, pathSlug } = req.query;
+    const { repoID, branch, pathSlug } = req.query;
     const pathToRepo = path.join(pathToRepos, repoID as string);
     const pathToFile = (pathSlug as string[]).join('/');
-    const commitHash = 'master';
 
     fs.access(pathToRepo, (err) => {
         if (err) {
             res.status(404).send(`${pathToRepo} not found`);
         } else {
             let out = '';
-            const gitBlob = spawn('git', ['show', `${commitHash}:${pathToFile}`], {
+            const gitBlob = spawn('git', ['show', `${branch}:${pathToFile}`], {
                 cwd: pathToRepo,
             });
 
@@ -39,16 +38,12 @@ const getFile = (req: Request, res: Response): void => {
 
             gitBlob.on('close', () => {
                 if (!out) {
-                    res.status(404).send(`${commitHash} not found`);
+                    res.status(404).send(`${branch} not found`);
                 } else {
                     let sizeOut = '';
-                    const fileSize = spawn(
-                        'git',
-                        ['cat-file', '-s', `${commitHash}:${pathToFile}`],
-                        {
-                            cwd: pathToRepo,
-                        }
-                    );
+                    const fileSize = spawn('git', ['cat-file', '-s', `${branch}:${pathToFile}`], {
+                        cwd: pathToRepo,
+                    });
 
                     fileSize.stdout.on('data', (chunk) => {
                         sizeOut += chunk.toString();

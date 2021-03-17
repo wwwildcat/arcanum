@@ -1,7 +1,9 @@
-import { ContentData, FileData } from './types';
+import { ContentData, BranchData, FileData } from './types';
 
 export const GET_REPO_LIST = 'GET_REPO_LIST';
+export const GET_BRANCHES = 'GET_BRANCHES';
 export const SET_REPO = 'SET_REPO';
+export const SET_BRANCH = 'SET_BRANCH';
 export const SET_PATH = 'SET_PATH';
 export const SET_VIEW = 'SET_VIEW';
 export const GET_DIR_CONTENT = 'GET_DIR_CONTENT';
@@ -14,8 +16,18 @@ interface GetRepoListAction {
     payload: string[];
 }
 
+interface GetBranchesAction {
+    type: typeof GET_BRANCHES;
+    payload: BranchData[];
+}
+
 interface SetRepoAction {
     type: typeof SET_REPO;
+    payload: string;
+}
+
+interface SetBranchAction {
+    type: typeof SET_BRANCH;
     payload: string;
 }
 
@@ -51,7 +63,9 @@ interface SubmitSearchFormAction {
 
 export type ActionTypes =
     | GetRepoListAction
+    | GetBranchesAction
     | SetRepoAction
+    | SetBranchAction
     | SetPathAction
     | SetViewAction
     | GetDirContentAction

@@ -9,9 +9,10 @@ interface StoreExtension {
 }
 
 const initialState = {
-    isLoading: true,
     allRepos: [],
+    allBranches: [],
     currentRepo: '',
+    currentBranch: '',
     currentPath: [],
     currentView: '',
     currentTableContent: [],

@@ -10,36 +10,36 @@ import BreadCrumbs from '../../../../components/BreadCrumbs/BreadCrumbs';
 import Current from '../../../../components/Current/Current';
 import Tabs from '../../../../components/Tabs/Tabs';
 import Table from '../../../../components/Table/Table';
-import { setRepo, setPath, setView } from '../../../../store/actions';
-import { fetchDirContent } from '../../../../store/thunks';
+import { setRepo, setBranch, setView, setPath } from '../../../../store/actions';
+import { fetchBranches, fetchDirContent } from '../../../../store/thunks';
 import State from '../../../../store/types';
 
 interface Props {
-    setDirData: (repo: string, pathSlug: string[]) => void;
+    currentBranch: string;
+    setRepoData: (repo: string, branch: string) => void;
 }
 
 const mapStateToProps = (state: State) => ({
-    isLoading: state.isLoading,
+    currentBranch: state.currentBranch,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => ({
-    setDirData: (repo: string, pathSlug: string[]) => {
-        const pathToDir = pathSlug || [];
-        const dirName = pathSlug ? pathSlug[pathSlug.length - 1] : '';
-
+    setRepoData: (repo: string, branch: string) => {
         dispatch(setRepo(repo));
-        dispatch(fetchDirContent(repo, pathToDir));
-        dispatch(setPath(pathToDir));
-        dispatch(setView(dirName));
+        dispatch(fetchBranches(repo));
+        dispatch(setBranch(branch));
+        dispatch(fetchDirContent(repo, branch));
+        dispatch(setPath([]));
+        dispatch(setView(repo));
     },
 });
 
-const RepoPage = ({ setDirData }: Props) => {
+const RootPage = ({ currentBranch, setRepoData }: Props) => {
     const router = useRouter();
-    const { repoID, pathSlug } = router.query;
+    const { repoID, branch } = router.query;
 
     useEffect(() => {
-        setDirData(repoID as string, pathSlug as string[]);
+        setRepoData(repoID as string, branch as string);
     });
 
     return (
@@ -48,15 +48,17 @@ const RepoPage = ({ setDirData }: Props) => {
                 <title>Yandex Arcanum</title>
             </Head>
             <Header />
-            <>
-                <BreadCrumbs />
-                <Current type="dir" />
-                <Tabs type="dir" />
-                <Table content="files" />
-            </>
+            <BreadCrumbs />
+            <Current type="tree" />
+            {currentBranch && (
+                <>
+                    <Tabs type="tree" />
+                    <Table content="files" />
+                </>
+            )}
             <Footer />
         </>
     );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RepoPage);
+export default connect(mapStateToProps, mapDispatchToProps)(RootPage);

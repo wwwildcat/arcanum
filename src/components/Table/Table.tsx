@@ -12,17 +12,19 @@ import './Table.scss';
 interface Props {
     content: 'files' | 'branches';
     repo: string;
+    branch: string;
     path: string[];
     files: ContentData[];
 }
 
 const mapStateToProps = (state: State) => ({
     repo: state.currentRepo,
+    branch: state.currentBranch,
     path: state.currentPath,
     files: state.currentTableContent,
 });
 
-const Table = ({ content, repo, path, files }: Props) => {
+const Table = ({ content, repo, branch, path, files }: Props) => {
     const columns = content === 'files' ? contentTypes : contentTypes.slice(0, 2);
 
     return (
@@ -37,7 +39,7 @@ const Table = ({ content, repo, path, files }: Props) => {
             {files &&
                 files.map(({ name, type, ...rest }, i) => {
                     const newPath = path ? path.concat(name) : [name];
-                    const linkUrl = `/${repo}/${type}/master/${newPath.join('/')}`;
+                    const linkUrl = `/${repo}/${type}/${branch}/${newPath.join('/')}`;
 
                     return (
                         <div className={`Table-Row Table-Row_type_${content}`} key={i}>

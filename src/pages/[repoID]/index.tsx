@@ -8,31 +8,24 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import BreadCrumbs from '../../components/BreadCrumbs/BreadCrumbs';
 import Current from '../../components/Current/Current';
-import Tabs from '../../components/Tabs/Tabs';
-import Table from '../../components/Table/Table';
 import { setView, setPath, setRepo } from '../../store/actions';
-import { fetchDirContent } from '../../store/thunks';
+import { fetchBranches } from '../../store/thunks';
 import State from '../../store/types';
 
 interface Props {
-    isLoading: boolean;
     setRepoData: (repo: string) => void;
 }
-
-const mapStateToProps = (state: State) => ({
-    isLoading: state.isLoading,
-});
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => ({
     setRepoData: (repo: string) => {
         dispatch(setRepo(repo));
-        dispatch(fetchDirContent(repo));
+        dispatch(fetchBranches(repo));
         dispatch(setPath([]));
         dispatch(setView(repo));
     },
 });
 
-const RepoPage = ({ isLoading, setRepoData }: Props) => {
+const RepoPage = ({ setRepoData }: Props) => {
     const router = useRouter();
     const { repoID } = router.query;
 
@@ -46,17 +39,11 @@ const RepoPage = ({ isLoading, setRepoData }: Props) => {
                 <title>Yandex Arcanum</title>
             </Head>
             <Header />
-            {!isLoading && (
-                <>
-                    <BreadCrumbs />
-                    <Current type="dir" />
-                    <Tabs type="dir" />
-                    <Table content="files" />
-                </>
-            )}
+            <BreadCrumbs />
+            <Current noBranch type="tree" />
             <Footer />
         </>
     );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RepoPage);
+export default connect(null, mapDispatchToProps)(RepoPage);

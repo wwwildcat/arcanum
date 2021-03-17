@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux';
 import {
     getRepoList,
+    getBranches,
     getDirContent,
     getFileContent,
     // getAllRepoContent
@@ -15,11 +16,23 @@ export const fetchRepoList = () => {
     };
 };
 
-export const fetchDirContent = (repoID: string, dirPath?: string[]) => {
+export const fetchBranches = (repoID: string, path?: string[]) => {
+    return async (dispatch: Dispatch): Promise<void> => {
+        const url = path
+            ? `http://localhost:3000/api/repos/${repoID}/branches/${path.join('/')}`
+            : `http://localhost:3000/api/repos/${repoID}/branches/`;
+        const response = await fetch(url);
+        const json = await response.json();
+
+        dispatch(getBranches(json));
+    };
+};
+
+export const fetchDirContent = (repoID: string, branch: string, dirPath?: string[]) => {
     return async (dispatch: Dispatch): Promise<void> => {
         const url = dirPath
-            ? `http://localhost:3000/api/repos/${repoID}/tree/master/${dirPath.join('/')}`
-            : `http://localhost:3000/api/repos/${repoID}`;
+            ? `http://localhost:3000/api/repos/${repoID}/tree/${branch}/${dirPath.join('/')}`
+            : `http://localhost:3000/api/repos/${repoID}/tree/${branch}`;
         const response = await fetch(url);
         const json = await response.json();
 
@@ -27,10 +40,10 @@ export const fetchDirContent = (repoID: string, dirPath?: string[]) => {
     };
 };
 
-export const fetchFileContent = (repoID: string, filePath: string[]) => {
+export const fetchFileContent = (repoID: string, branch: string, filePath: string[]) => {
     return async (dispatch: Dispatch): Promise<void> => {
         const response = await fetch(
-            `http://localhost:3000/api/repos/${repoID}/blob/master/${filePath.join('/')}`
+            `http://localhost:3000/api/repos/${repoID}/blob/${branch}/${filePath.join('/')}`
         );
         const json = await response.json();
 

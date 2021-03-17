@@ -7,20 +7,24 @@ import './BreadCrumbs.scss';
 
 interface Props {
     repo: string;
+    branch: string;
     path: string[];
 }
 
 const mapStateToProps = (state: State) => ({
     repo: state.currentRepo,
+    branch: state.currentBranch,
     path: state.currentPath,
 });
 
-const BreadCrumbs = ({ repo, path }: Props) => (
+const BreadCrumbs = ({ repo, branch, path }: Props) => (
     <ul className="BreadCrumbs">
         {[repo].concat(path).map((item, index) => {
             const isActive = index === [repo].concat(path).length - 1;
             const newPath = path.slice(0, index);
-            const url = newPath.length ? `/${repo}/tree/master/${newPath.join('/')}` : `/${repo}`;
+            const url = newPath.length
+                ? `/${repo}/tree/${branch}/${newPath.join('/')}`
+                : `/${repo}/tree/${branch}`;
 
             return (
                 <li

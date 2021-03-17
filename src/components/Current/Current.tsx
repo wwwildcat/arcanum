@@ -6,17 +6,18 @@ import './Current.scss';
 
 interface Props {
     data: ContentData[];
+    noBranch?: boolean;
     name: string;
-    type: 'dir' | 'file';
+    type: 'tree' | 'blob';
 }
 
 const mapStateToProps = (state: State) => ({
-    name: state.currentView,
     data: state.currentTableContent,
+    name: state.currentView,
 });
 
-const getLastCommit = (type: 'dir' | 'file', data: ContentData[], fileName: string) => {
-    if (type === 'file') {
+const getLastCommit = (type: 'tree' | 'blob', data: ContentData[], fileName: string) => {
+    if (type === 'blob') {
         return data.find((item) => item.name === fileName);
     }
 
@@ -27,21 +28,27 @@ const getLastCommit = (type: 'dir' | 'file', data: ContentData[], fileName: stri
     return data[0];
 };
 
-const Current = ({ data, name, type }: Props) => {
+const Current = ({ noBranch, data, name, type }: Props) => {
     const { hash, commiter, date } = getLastCommit(type, data, name) || {};
 
     return (
         <div className="Current">
             <div className="Current-Name">{name}</div>
-            <BranchList />
-            <div className="Current-LastCommit">
-                Last commit
-                <span className="Current-LastCommit_style_blue"> {hash}</span> on
-                <span className="Current-LastCommit_style_blue"> {date}</span> by
-                <div className="Current-LastCommit_style_commiter">{commiter}</div>
-            </div>
+            <BranchList noBranch={noBranch} type={type} />
+            {!noBranch && (
+                <div className="Current-LastCommit">
+                    Last commit
+                    <span className="Current-LastCommit_style_blue"> {hash}</span> on
+                    <span className="Current-LastCommit_style_blue"> {date}</span> by
+                    <div className="Current-LastCommit_style_commiter">{commiter}</div>
+                </div>
+            )}
         </div>
     );
+};
+
+Current.defaultProps = {
+    noBranch: false,
 };
 
 export default connect(mapStateToProps)(Current);

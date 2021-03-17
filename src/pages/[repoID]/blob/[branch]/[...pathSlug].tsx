@@ -10,12 +10,12 @@ import BreadCrumbs from '../../../../components/BreadCrumbs/BreadCrumbs';
 import Current from '../../../../components/Current/Current';
 import Tabs from '../../../../components/Tabs/Tabs';
 import Viewer from '../../../../components/Viewer/Viewer';
-import { setRepo, setPath, setView } from '../../../../store/actions';
-import { fetchFileContent } from '../../../../store/thunks';
+import { setRepo, setBranch, setPath, setView } from '../../../../store/actions';
+import { fetchBranches, fetchFileContent } from '../../../../store/thunks';
 import State from '../../../../store/types';
 
 interface Props {
-    setFileData: (repo: string, pathSlug: string[]) => void;
+    setFileData: (repo: string, branch: string, pathSlug: string[]) => void;
 }
 
 const mapStateToProps = (state: State) => ({
@@ -23,12 +23,14 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => ({
-    setFileData: (repo: string, pathSlug: string[]) => {
+    setFileData: (repo: string, branch: string, pathSlug: string[]) => {
         const pathToFile = pathSlug || [];
         const fileName = pathSlug ? pathSlug[pathSlug.length - 1] : '';
 
         dispatch(setRepo(repo));
-        dispatch(fetchFileContent(repo, pathToFile));
+        dispatch(setBranch(branch));
+        dispatch(fetchFileContent(repo, branch, pathToFile));
+        dispatch(fetchBranches(repo, pathToFile));
         dispatch(setPath(pathToFile));
         dispatch(setView(fileName));
     },
@@ -36,10 +38,10 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => ({
 
 const RepoPage = ({ setFileData }: Props) => {
     const router = useRouter();
-    const { repoID, pathSlug } = router.query;
+    const { repoID, branch, pathSlug } = router.query;
 
     useEffect(() => {
-        setFileData(repoID as string, pathSlug as string[]);
+        setFileData(repoID as string, branch as string, pathSlug as string[]);
     });
 
     return (
@@ -50,8 +52,8 @@ const RepoPage = ({ setFileData }: Props) => {
             <Header />
             <>
                 <BreadCrumbs />
-                <Current type="file" />
-                <Tabs type="file" />
+                <Current type="blob" />
+                <Tabs type="blob" />
                 <Viewer />
             </>
             <Footer />
