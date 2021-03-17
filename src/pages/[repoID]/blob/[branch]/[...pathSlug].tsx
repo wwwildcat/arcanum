@@ -36,7 +36,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => ({
     },
 });
 
-const RepoPage = ({ setFileData }: Props) => {
+const FilePage = ({ setFileData }: Props) => {
     const router = useRouter();
     const { repoID, branch, pathSlug } = router.query;
 
@@ -61,4 +61,4 @@ const RepoPage = ({ setFileData }: Props) => {
     );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RepoPage);
+export default connect(mapStateToProps, mapDispatchToProps)(FilePage);

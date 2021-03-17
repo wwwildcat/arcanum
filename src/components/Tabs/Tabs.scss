@@ -33,5 +33,9 @@
 
             color: inherit;
         }
+
+        @include xs {
+            margin-right: 20px;
+        }
     }
 }
