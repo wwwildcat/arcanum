@@ -53,7 +53,7 @@ const RootPage = ({ currentBranch, setRepoData }: Props) => {
             {currentBranch && (
                 <>
                     <Tabs isRoot type="tree" />
-                    <Table content="files" />
+                    <Table tableType="files" />
                 </>
             )}
             <Footer />

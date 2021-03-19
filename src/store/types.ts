@@ -20,6 +20,7 @@ export interface ContentData {
 }
 
 export interface BranchData {
+    type: 'branch';
     name: string;
     hash: string;
     date: string;
@@ -30,10 +31,8 @@ export interface FileData {
     size: string;
 }
 
-export const contentTypes = ['name', 'hash', 'message', 'commiter', 'date'] as const;
-export type Content = typeof contentTypes[number];
-
-export type TableType = 'blob' | 'tree' | 'branch';
+export const columnTypes = ['name', 'hash', 'message', 'commiter', 'date'] as const;
+export type ColumnData = typeof columnTypes[number];
 
 export default interface State {
     allRepos: string[];

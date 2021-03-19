@@ -7,6 +7,7 @@ import './Current.scss';
 interface Props {
     data: ContentData[];
     noBranch?: boolean;
+    noBranchList?: boolean;
     name: string;
     type: 'tree' | 'blob';
 }
@@ -28,20 +29,24 @@ const getLastCommit = (type: 'tree' | 'blob', data: ContentData[], fileName: str
     return data[0];
 };
 
-const Current = ({ noBranch, data, name, type }: Props) => {
+const Current = ({ noBranch, noBranchList, data, name, type }: Props) => {
     const { hash, commiter, date } = getLastCommit(type, data, name) || {};
 
     return (
         <div className="Current">
             <div className="Current-Name">{name}</div>
-            <BranchList noBranch={noBranch} type={type} />
-            {!noBranch && (
-                <div className="Current-LastCommit">
-                    Last commit
-                    <span className="Current-LastCommit_style_blue"> {hash}</span> on
-                    <span className="Current-LastCommit_style_blue"> {date}</span> by
-                    <div className="Current-LastCommit_style_commiter">{commiter}</div>
-                </div>
+            {!noBranchList && (
+                <>
+                    <BranchList noBranch={noBranch} type={type} />
+                    {!noBranch && (
+                        <div className="Current-LastCommit">
+                            Last commit
+                            <span className="Current-LastCommit_style_blue"> {hash}</span> on
+                            <span className="Current-LastCommit_style_blue"> {date}</span> by
+                            <div className="Current-LastCommit_style_commiter">{commiter}</div>
+                        </div>
+                    )}
+                </>
             )}
         </div>
     );
@@ -49,6 +54,7 @@ const Current = ({ noBranch, data, name, type }: Props) => {
 
 Current.defaultProps = {
     noBranch: false,
+    noBranchList: false,
 };
 
 export default connect(mapStateToProps)(Current);

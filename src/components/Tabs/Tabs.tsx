@@ -1,24 +1,37 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import Link from 'next/link';
 import { tabsData } from '../data';
+import State from '../../store/types';
 import './Tabs.scss';
 
 interface Props {
-    activeTab?: 0 | 1 | 2;
+    activeTab?: number;
+    branch: string;
     isRoot?: boolean;
+    path: string[];
+    repo: string;
     type: 'tree' | 'blob';
 }
 
-const Tabs = ({ activeTab, isRoot, type }: Props): JSX.Element => {
+const mapStateToProps = (state: State) => ({
+    repo: state.currentRepo,
+    branch: state.currentBranch,
+    path: state.currentPath,
+});
+
+const Tabs = ({ activeTab, branch, isRoot, path, repo, type }: Props) => {
     const currentTabs = type === 'blob' ? tabsData.slice(2).reverse() : tabsData.slice(0, 3);
+
     return (
         <ul className="Tabs">
-            {currentTabs.map((item, index) => {
+            {currentTabs.map(({ name, url }, index) => {
                 const isActive = activeTab === index;
 
                 return (
-                    (isRoot || item !== 'BRANCHES') && (
+                    (isRoot || name !== 'BRANCHES') && (
                         <li className={`Tabs-Item ${isActive && 'Tabs-Item_active'}`} key={index}>
-                            {isActive ? item : <span>{item}</span>}
+                            {isActive ? name : <Link href={url(repo, branch, path)}>{name}</Link>}
                         </li>
                     )
                 );
@@ -32,4 +45,4 @@ Tabs.defaultProps = {
     isRoot: false,
 };
 
-export default Tabs;
+export default connect(mapStateToProps)(Tabs);

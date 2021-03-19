@@ -8,6 +8,7 @@ const getFormattedBranches = (out: string) => {
     branches.pop();
 
     return branches.map((branch) => ({
+        type: 'branch',
         name: branch.split(/\s+/)[0],
         hash: branch.split(/\s+/)[1],
         date: branch.split(/\s+/).slice(2).join(' '),

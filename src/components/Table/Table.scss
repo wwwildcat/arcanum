@@ -14,18 +14,6 @@
             padding: 12px 0;
         }
 
-		&_header {
-			padding: 16px 8px 8px;
-			border-bottom: solid 1px $lightGray1;
-
-			color: $gray5;
-			font-weight: bold;
-
-            @include md {
-                display: none;
-            }
-		}
-
         &_type {
             &_files {
                 grid-template-columns: 4.5fr 3.5fr 7.5fr 3fr 3.5fr;
@@ -45,6 +33,18 @@
                 }
             }
         }
+
+        &_header {
+			padding: 16px 8px 8px;
+			border-bottom: solid 1px $lightGray1;
+
+			color: $gray5;
+			font-weight: bold;
+
+            @include md {
+                display: none;
+            }
+		}
 
 		&:last-child {
 			border-bottom: none;
