@@ -1,19 +1,19 @@
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import path from 'path';
 import { Request, Response } from 'express';
 
-const getRepos = (req: Request, res: Response): void => {
+const getRepos = (req: Request, res: Response) => {
     const pathToRepos = process.env.DIR;
 
-    fs.readdir(pathToRepos, (err, items) => {
-        if (err) {
-            res.status(404).send(`${pathToRepos} not found`);
-        }
-        const repos = items.filter((item) =>
-            fs.statSync(path.resolve(pathToRepos, item)).isDirectory()
-        );
-        res.json(repos);
-    });
+    fs.readdir(pathToRepos)
+        .then((items) => {
+            const repos = items.filter(async (item) =>
+                (await fs.stat(path.resolve(pathToRepos, item))).isDirectory()
+            );
+
+            res.json(repos);
+        })
+        .catch((err: Error) => res.status(404).send(err.message));
 };
 
 export default getRepos;

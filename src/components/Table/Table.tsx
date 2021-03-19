@@ -5,7 +5,7 @@ import Arrow from '../svg/ArrowRight.svg';
 import File from '../svg/File.svg';
 import Folder from '../svg/Folder.svg';
 import Branch from '../svg/Branch.svg';
-import State, { BranchData, ContentData, columnTypes, ColumnData } from '../../store/types';
+import State, { BranchData, ObjectData, columnTypes, ColumnData } from '../../store/types';
 import { tableHeaderData } from '../data';
 import './Table.scss';
 
@@ -14,7 +14,7 @@ interface Props {
     repo: string;
     branch: string;
     path: string[];
-    files: ContentData[];
+    files: ObjectData[];
     branches: BranchData[];
 }
 

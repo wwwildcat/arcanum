@@ -27,6 +27,9 @@ module.exports = {
     },
     rules: {
         'linebreak-style': 'off',
+        'no-restricted-syntax': ['off'],
+        'no-underscore-dangle': 'off',
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
         'react/jsx-sort-props': [
             'error',
             {

@@ -1,73 +1,44 @@
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import path from 'path';
-import { spawn } from 'child_process';
 import { Request, Response } from 'express';
-import { InitialContentData, FullContentData } from '../../../../../../store/types';
+import gitWrapper from '../../../../utils/gitWrapper';
+import { formatTreeData, formatCommitData, sortObjects } from '../../../../utils/jsonFormatter';
+import { ObjectData } from '../../../../../../store/types';
 
-export const getInitialData = (out: string): InitialContentData[] => {
-    const strings = out.split(/\n./);
-    const objects = strings.map((obj) => ({
-        name: obj.match(/(?<=\t).*/)[0],
-        type: obj.match(/(?<=\s)\S*/)[0],
-    }));
-    return objects;
-};
-
-export const getFullData = (out: string): FullContentData => ({
-    hash: out.match(/(?<=commit )\S{6}/)[0],
-    message: out.match(/(?<=\n\n).*/)[0].trim(),
-    commiter: out.match(/(?<=Author:).*(?=<)/)[0].trim(),
-    date: out.match(/(?<=Date:).*(?=\+)/)[0].trim(),
-});
-
-const getRepository = (req: Request, res: Response): void => {
+const getRepository = (req: Request, res: Response) => {
     const pathToRepos = process.env.DIR;
     const { repoID, branch } = req.query;
     const pathToRepo = path.join(pathToRepos, repoID as string);
 
-    fs.access(pathToRepo, (err) => {
-        if (err) {
-            res.status(404).send(`${pathToRepo} not found`);
-        } else {
-            let fullOut = '';
-            const gitTree = spawn('git', ['ls-tree', `${branch}`], {
-                cwd: pathToRepo,
-            });
-            gitTree.stdout.on('data', (chunk) => {
-                fullOut += chunk.toString();
-            });
-            gitTree.on('error', (error) => {
-                throw error;
-            });
-            gitTree.on('close', () => {
-                if (!fullOut) {
-                    res.status(404).send(`${branch} not found`);
-                } else {
-                    const promises: Promise<unknown>[] = [];
-                    getInitialData(fullOut).forEach((obj) => {
-                        // additional data request
-                        const promise = new Promise((resolve) => {
-                            let out = '';
-                            const commitInfo = spawn(
-                                'git',
-                                ['log', '-1', `${branch}`, '--', obj.name],
-                                { cwd: pathToRepo }
-                            );
-                            commitInfo.stdout.on('data', (chunk) => {
-                                out += chunk.toString();
-                            });
-                            commitInfo.on('close', () => {
-                                resolve(Object.assign(obj, getFullData(out)));
-                            });
-                        });
-                        promises.push(promise);
-                    });
-                    const outerPromise = Promise.all(promises);
-                    outerPromise.then((value) => res.json(value));
-                }
-            });
-        }
-    });
+    fs.access(pathToRepo)
+        .then(async () => {
+            const treeContent = formatTreeData(
+                await gitWrapper(['ls-tree', `${branch}`], pathToRepo)
+            );
+            const fullContent = await Promise.all(
+                treeContent.map(async (item) => {
+                    const fullOut = await gitWrapper(
+                        [
+                            'log',
+                            '-1',
+                            '--format=%h%n%s%n%an%n%ar%n%ad',
+                            `${branch}`,
+                            '--',
+                            item.name,
+                        ],
+                        pathToRepo
+                    );
+
+                    return {
+                        ...item,
+                        ...formatCommitData(fullOut),
+                    };
+                })
+            );
+
+            res.json(sortObjects(fullContent as ObjectData[]));
+        })
+        .catch((err: Error) => res.status(404).send(err.message));
 };
 
 export default getRepository;

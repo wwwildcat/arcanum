@@ -8,7 +8,7 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import BreadCrumbs from '../../components/BreadCrumbs/BreadCrumbs';
 import Current from '../../components/Current/Current';
-import { setView, setPath, setRepo } from '../../store/actions';
+import { setBranch, setView, setPath, setRepo } from '../../store/actions';
 import { fetchBranches } from '../../store/thunks';
 import State from '../../store/types';
 
@@ -20,6 +20,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => ({
     setRepoData: (repo: string) => {
         dispatch(setRepo(repo));
         dispatch(fetchBranches(repo));
+        dispatch(setBranch(''));
         dispatch(setPath([]));
         dispatch(setView(repo));
     },

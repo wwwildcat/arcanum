@@ -1,22 +1,18 @@
-export interface InitialContentData {
+export interface TreeData {
     type: string;
     name: string;
 }
 
-export interface FullContentData {
+export interface CommitData {
     hash: string;
     message: string;
     commiter: string;
     date: string;
+    absDate: string;
 }
 
-export interface ContentData {
+export interface ObjectData extends TreeData, CommitData {
     type: 'blob' | 'tree';
-    name: string;
-    hash: string;
-    message: string;
-    commiter: string;
-    date: string;
 }
 
 export interface BranchData {
@@ -26,7 +22,7 @@ export interface BranchData {
     date: string;
 }
 
-export interface FileData {
+export interface FileData extends CommitData {
     content: string[];
     size: string;
 }
@@ -41,6 +37,6 @@ export default interface State {
     currentBranch: string;
     currentPath: string[];
     currentView: string;
-    currentTableContent: ContentData[];
+    currentTableContent: ObjectData[];
     currentFile: FileData;
 }

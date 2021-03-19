@@ -1,4 +1,4 @@
-import { Reducer, AnyAction } from 'redux';
+import { AnyAction } from 'redux';
 import {
     GET_REPO_LIST,
     GET_BRANCHES,
@@ -13,7 +13,7 @@ import {
 } from './actionTypes';
 import State from './types';
 
-const reducer: Reducer = (state: State, action: AnyAction) => {
+const reducer = (state: State, action: AnyAction) => {
     switch (action.type) {
         case GET_REPO_LIST:
             return {
