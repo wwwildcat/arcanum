@@ -9,7 +9,7 @@ import './RepoList.scss';
 interface Props {
     allRepos: string[];
     currentRepo: string;
-    noRepo: boolean;
+    noCurrentRepo: boolean;
 }
 
 const mapStateToProps = (state: State) => ({
@@ -17,8 +17,8 @@ const mapStateToProps = (state: State) => ({
     currentRepo: state.currentRepo,
 });
 
-const RepoList = ({ allRepos, currentRepo, noRepo }: Props) => {
-    const [isOpen, setIsOpen] = useState(noRepo);
+const RepoList = ({ allRepos, currentRepo, noCurrentRepo }: Props) => {
+    const [isOpen, setIsOpen] = useState(noCurrentRepo);
 
     return (
         <div className="RepoList">

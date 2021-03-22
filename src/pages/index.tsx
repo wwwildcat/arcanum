@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
-import Head from 'next/head';
 import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { connect } from 'react-redux';
-import Header from '../components/Header/Header';
-import Footer from '../components/Footer/Footer';
+import Layout from '../components/Layout/Layout';
 import { initializeStore } from '../store/createStore';
 import { fetchRepoList } from '../store/thunks';
 import State from '../store/types';
@@ -35,15 +33,7 @@ const HomePage = ({ setInitData }: Props) => {
         setInitData();
     });
 
-    return (
-        <>
-            <Head>
-                <title>Yandex Arcanum</title>
-            </Head>
-            <Header noRepo />
-            <Footer />
-        </>
-    );
+    return <Layout noCurrentRepo />;
 };
 
 export default connect(null, mapDispatchToProps)(HomePage);

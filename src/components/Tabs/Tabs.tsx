@@ -6,9 +6,9 @@ import State from '../../store/types';
 import './Tabs.scss';
 
 interface Props {
-    activeTab?: number;
+    activeTab: number;
     branch: string;
-    isRoot?: boolean;
+    isRoot: boolean;
     path: string[];
     repo: string;
     type: 'tree' | 'blob';
@@ -38,11 +38,6 @@ const Tabs = ({ activeTab, branch, isRoot, path, repo, type }: Props) => {
             })}
         </ul>
     );
-};
-
-Tabs.defaultProps = {
-    activeTab: 0,
-    isRoot: false,
 };
 
 export default connect(mapStateToProps)(Tabs);

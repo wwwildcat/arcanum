@@ -1,13 +1,9 @@
 import React, { useEffect } from 'react';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
 import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
-import BreadCrumbs from '../../components/BreadCrumbs/BreadCrumbs';
-import Current from '../../components/Current/Current';
+import Layout from '../../components/Layout/Layout';
 import { initializeStore } from '../../store/createStore';
 import { setView, setRepo } from '../../store/actions';
 import { fetchRepoList, fetchBranches } from '../../store/thunks';
@@ -45,17 +41,7 @@ const RepoPage = ({ setRepoData }: Props) => {
         setRepoData(repoID as string);
     });
 
-    return (
-        <>
-            <Head>
-                <title>Yandex Arcanum</title>
-            </Head>
-            <Header />
-            <BreadCrumbs />
-            <Current noBranch type="tree" />
-            <Footer />
-        </>
-    );
+    return <Layout noCurrentBranch />;
 };
 
 export default connect(null, mapDispatchToProps)(RepoPage);

@@ -9,7 +9,7 @@ import './BranchList.scss';
 interface Props {
     allBranches: BranchData[];
     currentBranch: string;
-    noBranch: boolean;
+    noCurrentBranch: boolean;
     repo: string;
     path: string[];
     type: 'tree' | 'blob';
@@ -22,8 +22,8 @@ const mapStateToProps = (state: State) => ({
     path: state.currentPath,
 });
 
-const BranchList = ({ allBranches, currentBranch, noBranch, repo, path, type }: Props) => {
-    const [isOpen, setIsOpen] = useState(noBranch);
+const BranchList = ({ allBranches, currentBranch, noCurrentBranch, repo, path, type }: Props) => {
+    const [isOpen, setIsOpen] = useState(noCurrentBranch);
 
     return (
         <div className="BranchList">

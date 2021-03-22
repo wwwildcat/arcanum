@@ -7,7 +7,7 @@ import './Current.scss';
 interface Props {
     tableData: ObjectData[];
     fileData: FileData;
-    noBranch?: boolean;
+    noCurrentBranch: boolean;
     noBranchList?: boolean;
     name: string;
     type: 'tree' | 'blob';
@@ -22,7 +22,7 @@ const mapStateToProps = (state: State) => ({
 const getLastCommit = (data: ObjectData[]) =>
     [...data].sort((a, b) => Number(new Date(b.absDate)) - Number(new Date(a.absDate)))[0];
 
-const Current = ({ noBranch, noBranchList, tableData, fileData, name, type }: Props) => {
+const Current = ({ noCurrentBranch, noBranchList, tableData, fileData, name, type }: Props) => {
     const { hash, commiter, date } = type === 'blob' ? fileData : getLastCommit(tableData) ?? {};
 
     return (
@@ -30,8 +30,8 @@ const Current = ({ noBranch, noBranchList, tableData, fileData, name, type }: Pr
             <div className="Current-Name">{name}</div>
             {!noBranchList && (
                 <>
-                    <BranchList noBranch={noBranch} type={type} />
-                    {!noBranch && (
+                    <BranchList noCurrentBranch={noCurrentBranch} type={type} />
+                    {!noCurrentBranch && (
                         <div className="Current-LastCommit">
                             Last commit
                             <span className="Current-LastCommit_style_blue"> {hash}</span> on
@@ -46,7 +46,6 @@ const Current = ({ noBranch, noBranchList, tableData, fileData, name, type }: Pr
 };
 
 Current.defaultProps = {
-    noBranch: false,
     noBranchList: false,
 };
 

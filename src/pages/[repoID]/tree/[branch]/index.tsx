@@ -1,15 +1,9 @@
 import React, { useEffect } from 'react';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
 import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
-import Header from '../../../../components/Header/Header';
-import Footer from '../../../../components/Footer/Footer';
-import BreadCrumbs from '../../../../components/BreadCrumbs/BreadCrumbs';
-import Current from '../../../../components/Current/Current';
-import Tabs from '../../../../components/Tabs/Tabs';
-import Table from '../../../../components/Table/Table';
+import Layout from '../../../../components/Layout/Layout';
 import { initializeStore } from '../../../../store/createStore';
 import { setRepo, setBranch, setView } from '../../../../store/actions';
 import { fetchRepoList, fetchBranches, fetchDirContent } from '../../../../store/thunks';
@@ -49,19 +43,7 @@ const RootPage = ({ setRepoData }: Props) => {
         setRepoData(repoID as string, branch as string);
     });
 
-    return (
-        <>
-            <Head>
-                <title>Yandex Arcanum</title>
-            </Head>
-            <Header />
-            <BreadCrumbs />
-            <Current type="tree" />
-            <Tabs isRoot type="tree" />
-            <Table tableType="files" />
-            <Footer />
-        </>
-    );
+    return <Layout isRoot />;
 };
 
 export default connect(null, mapDispatchToProps)(RootPage);

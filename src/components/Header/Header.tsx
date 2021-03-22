@@ -4,18 +4,14 @@ import HeaderLogo from '../svg/logo.svg';
 import './Header.scss';
 
 interface Props {
-    noRepo?: boolean;
+    noCurrentRepo: boolean;
 }
 
-const Header = ({ noRepo }: Props) => (
+const Header = ({ noCurrentRepo }: Props) => (
     <header className="Header">
         <HeaderLogo className="Header-Logo" />
-        <RepoList noRepo={noRepo} />
+        <RepoList noCurrentRepo={noCurrentRepo} />
     </header>
 );
-
-Header.defaultProps = {
-    noRepo: false,
-};
 
 export default Header;
