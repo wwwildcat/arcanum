@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Link from 'next/link';
 import cn from 'classnames';
+import State from '@/store/types';
 import ArrowDown from '../svg/ArrowDown.svg';
-import State from '../../store/types';
 import './RepoList.scss';
 
 interface Props {

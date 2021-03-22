@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { connect } from 'react-redux';
-import Layout from '../components/Layout/Layout';
-import { initializeStore } from '../store/createStore';
-import { fetchRepoList } from '../store/thunks';
-import State from '../store/types';
+import Layout from '@/components/Layout/Layout';
+import { initializeStore } from '@/store/createStore';
+import { fetchRepoList } from '@/store/thunks';
+import State from '@/store/types';
 
 interface Props {
     setInitData: () => void;

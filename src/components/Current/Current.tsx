@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import State, { ObjectData, FileData } from '@/store/types';
 import BranchList from '../BranchList/BranchList';
-import State, { ObjectData, FileData } from '../../store/types';
 import './Current.scss';
 
 interface Props {

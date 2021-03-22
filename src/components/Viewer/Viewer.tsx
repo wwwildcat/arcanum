@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import State, { FileData } from '@/store/types';
 import File from '../svg/File.svg';
-import State, { FileData } from '../../store/types';
 import './Viewer.scss';
 
 interface Props {

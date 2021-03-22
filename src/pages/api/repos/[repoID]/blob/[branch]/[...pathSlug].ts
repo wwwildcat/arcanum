@@ -1,10 +1,10 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import { Request, Response } from 'express';
-import gitWrapper from '../../../../utils/gitWrapper';
-import { formatFile } from '../../../../utils/jsonFormatter';
+import { NextApiRequest, NextApiResponse } from 'next';
+import gitWrapper from '@/apiUtils/gitWrapper';
+import { formatFile } from '@/apiUtils/jsonFormatter';
 
-const getFile = (req: Request, res: Response) => {
+const getFile = (req: NextApiRequest, res: NextApiResponse) => {
     const pathToRepos = process.env.DIR;
     const { repoID, branch, pathSlug } = req.query;
     const pathToRepo = path.join(pathToRepos, repoID as string);

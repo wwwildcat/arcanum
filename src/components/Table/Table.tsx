@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Link from 'next/link';
+import State, { BranchData, ObjectData, columnTypes, ColumnData } from '@/store/types';
 import Arrow from '../svg/ArrowRight.svg';
 import File from '../svg/File.svg';
 import Folder from '../svg/Folder.svg';
 import Branch from '../svg/Branch.svg';
-import State, { BranchData, ObjectData, columnTypes, ColumnData } from '../../store/types';
 import { tableHeaderData } from '../data';
 import './Table.scss';
 

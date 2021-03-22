@@ -1,8 +1,8 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import { Request, Response } from 'express';
+import { NextApiRequest, NextApiResponse } from 'next';
 
-const getRepos = (req: Request, res: Response) => {
+const getRepos = (req: NextApiRequest, res: NextApiResponse) => {
     const pathToRepos = process.env.DIR;
 
     fs.readdir(pathToRepos)

@@ -3,11 +3,11 @@ import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
 import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
-import Layout from '../../components/Layout/Layout';
-import { initializeStore } from '../../store/createStore';
-import { setRepo, setView } from '../../store/actions';
-import { fetchRepoList, fetchBranches } from '../../store/thunks';
-import State from '../../store/types';
+import Layout from '@/components/Layout/Layout';
+import { initializeStore } from '@/store/createStore';
+import { setRepo, setView } from '@/store/actions';
+import { fetchRepoList, fetchBranches } from '@/store/thunks';
+import State from '@/store/types';
 
 interface Props {
     setBranchData: (repo: string) => void;

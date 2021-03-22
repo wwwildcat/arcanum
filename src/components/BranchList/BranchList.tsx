@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Link from 'next/link';
 import cn from 'classnames';
+import State, { BranchData } from '@/store/types';
 import ArrowDown from '../svg/ArrowDown.svg';
-import State, { BranchData } from '../../store/types';
 import './BranchList.scss';
 
 interface Props {

@@ -1,11 +1,11 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import { Request, Response } from 'express';
-import gitWrapper from '../../../../utils/gitWrapper';
-import { formatTreeData, formatCommitData, sortObjects } from '../../../../utils/jsonFormatter';
-import { ObjectData } from '../../../../../../store/types';
+import { NextApiRequest, NextApiResponse } from 'next';
+import gitWrapper from '@/apiUtils/gitWrapper';
+import { formatTreeData, formatCommitData, sortObjects } from '@/apiUtils/jsonFormatter';
+import { ObjectData } from '@/store/types';
 
-const getRepository = (req: Request, res: Response) => {
+const getRepository = (req: NextApiRequest, res: NextApiResponse) => {
     const pathToRepos = process.env.DIR;
     const { repoID, branch, pathSlug } = req.query;
     const pathToRepo = path.join(pathToRepos, repoID as string);

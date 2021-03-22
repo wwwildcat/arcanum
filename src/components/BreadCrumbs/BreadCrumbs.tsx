@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import cn from 'classnames';
 import Link from 'next/link';
-import State from '../../store/types';
+import State from '@/store/types';
 import './BreadCrumbs.scss';
 
 interface Props {

@@ -1,4 +1,4 @@
-import { ObjectData } from '../../../store/types';
+import { ObjectData } from '@/store/types';
 
 export const formatTreeData = (out: string) => {
     const strings = out.split(/\n./);

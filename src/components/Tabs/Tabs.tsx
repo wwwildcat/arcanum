@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Link from 'next/link';
+import State from '@/store/types';
 import { tabsData } from '../data';
-import State from '../../store/types';
 import './Tabs.scss';
 
 interface Props {
