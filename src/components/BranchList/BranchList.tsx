@@ -1,29 +1,19 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import cn from 'classnames';
-import State, { BranchData } from '@/store/types';
+import { getAllBranches, getCurrentInfo } from '@/store/selectors';
 import ArrowDown from '../svg/ArrowDown.svg';
 import './BranchList.scss';
 
 interface Props {
-    allBranches: BranchData[];
-    currentBranch: string;
-    noCurrentBranch: boolean;
-    repo: string;
-    path: string[];
     type: 'tree' | 'blob';
 }
 
-const mapStateToProps = (state: State) => ({
-    allBranches: state.allBranches,
-    repo: state.currentRepo,
-    currentBranch: state.currentBranch,
-    path: state.currentPath,
-});
-
-const BranchList = ({ allBranches, currentBranch, noCurrentBranch, repo, path, type }: Props) => {
-    const [isOpen, setIsOpen] = useState(noCurrentBranch);
+const BranchList = ({ type }: Props) => {
+    const branches = useSelector(getAllBranches);
+    const { repo, branch: currentBranch, path } = useSelector(getCurrentInfo);
+    const [isOpen, setIsOpen] = useState(!currentBranch);
 
     return (
         <div className="BranchList">
@@ -41,13 +31,13 @@ const BranchList = ({ allBranches, currentBranch, noCurrentBranch, repo, path, t
                             {currentBranch}
                             <div className="BranchList-LastCommit BranchList-LastCommit_selected">
                                 Last commit:{' '}
-                                {allBranches?.find((item) => item.name === currentBranch)?.date}
+                                {branches?.find((item) => item.name === currentBranch)?.date}
                             </div>
                         </li>
                         <hr className="BranchList-Break" />
                     </>
                 )}
-                {allBranches.map(
+                {branches.map(
                     ({ name, date }, index) =>
                         name !== currentBranch && (
                             <li className="BranchList-Item" key={index}>
@@ -67,4 +57,4 @@ const BranchList = ({ allBranches, currentBranch, noCurrentBranch, repo, path, t
     );
 };
 
-export default connect(mapStateToProps)(BranchList);
+export default BranchList;

@@ -3,29 +3,29 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import Layout from '@/components/Layout/Layout';
 import { initializeStore } from '@/store/createStore';
-import { getBlobData } from '@/store/thunks';
+import { getTreeData } from '@/store/thunks';
 
 export const getServerSideProps = ({ params: { repoID, branch, pathSlug } }) => {
     const store = initializeStore();
     const { dispatch } = store;
 
-    dispatch(getBlobData(repoID, branch, pathSlug));
+    dispatch(getTreeData(repoID, branch, pathSlug));
 
     const props = { initialReduxState: store.getState() };
 
     return { props: JSON.parse(JSON.stringify(props)) };
 };
 
-const FilePage = () => {
+const DirPage = () => {
     const dispatch = useDispatch();
     const router = useRouter();
     const { repoID, branch, pathSlug } = router.query;
 
     useEffect(() => {
-        dispatch(getBlobData(repoID as string, branch as string, pathSlug as string[]));
+        dispatch(getTreeData(repoID as string, branch as string, pathSlug as string[]));
     }, [dispatch, repoID, branch, pathSlug]);
 
-    return <Layout type="blob" />;
+    return <Layout />;
 };
 
-export default FilePage;
+export default DirPage;

@@ -1,7 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
-import State, { BranchData, ObjectData, columnTypes, ColumnData } from '@/store/types';
+import { getCurrentInfo, getAllBranches, getTreeData } from '@/store/selectors';
+import { columnTypes, ColumnData } from '@/store/types';
 import Arrow from '../svg/ArrowRight.svg';
 import File from '../svg/File.svg';
 import Folder from '../svg/Folder.svg';
@@ -11,24 +12,14 @@ import './Table.scss';
 
 interface Props {
     tableType: 'files' | 'branches';
-    repo: string;
-    branch: string;
-    path: string[];
-    files: ObjectData[];
-    branches: BranchData[];
 }
 
-const mapStateToProps = (state: State) => ({
-    repo: state.currentRepo,
-    branch: state.currentBranch,
-    path: state.currentPath,
-    files: state.currentTableContent,
-    branches: state.allBranches,
-});
-
-const Table = ({ tableType, repo, branch, path, ...restProps }: Props) => {
+const Table = ({ tableType }: Props) => {
     const columns = tableType === 'files' ? columnTypes : columnTypes.slice(0, 2);
-    const tableContent = restProps[tableType];
+    const { repo, branch, path } = useSelector(getCurrentInfo);
+    const treeData = useSelector(getTreeData);
+    const branches = useSelector(getAllBranches);
+    const tableContent = tableType === 'files' ? treeData : branches;
 
     return (
         <div className="Table">
@@ -76,4 +67,4 @@ const Table = ({ tableType, repo, branch, path, ...restProps }: Props) => {
     );
 };
 
-export default connect(mapStateToProps)(Table);
+export default Table;

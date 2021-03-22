@@ -1,7 +1,7 @@
 import { ObjectData, BranchData, FileData } from './types';
 
-export const getRepoList = (json: string[]) => ({
-    type: 'GET_REPO_LIST',
+export const getRepos = (json: string[]) => ({
+    type: 'GET_REPOS',
     payload: json,
 });
 
@@ -25,18 +25,13 @@ export const setPath = (path: string[]) => ({
     payload: path,
 });
 
-export const setView = (view: string) => ({
-    type: 'SET_VIEW',
-    payload: view,
-});
-
-export const getDirContent = (json: ObjectData[]) => ({
-    type: 'GET_DIR_CONTENT',
+export const getTree = (json: ObjectData[]) => ({
+    type: 'GET_TREE',
     payload: json,
 });
 
-export const getFileContent = (json: FileData) => ({
-    type: 'GET_FILE_CONTENT',
+export const getBlob = (json: FileData) => ({
+    type: 'GET_BLOB',
     payload: json,
 });
 

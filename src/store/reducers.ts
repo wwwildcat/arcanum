@@ -1,13 +1,12 @@
 import { AnyAction } from 'redux';
 import {
-    GET_REPO_LIST,
+    GET_REPOS,
     GET_BRANCHES,
     SET_REPO,
     SET_BRANCH,
     SET_PATH,
-    SET_VIEW,
-    GET_DIR_CONTENT,
-    GET_FILE_CONTENT,
+    GET_TREE,
+    GET_BLOB,
     // GET_ALL_REPO_CONTENT,
     // SUBMIT_SEARCH_FORM
 } from './actionTypes';
@@ -15,7 +14,7 @@ import State from './types';
 
 const reducer = (state: State, action: AnyAction) => {
     switch (action.type) {
-        case GET_REPO_LIST:
+        case GET_REPOS:
             return {
                 ...state,
                 allRepos: action.payload,
@@ -37,38 +36,40 @@ const reducer = (state: State, action: AnyAction) => {
         case SET_REPO:
             return {
                 ...state,
-                currentRepo: action.payload,
+                current: {
+                    ...state.current,
+                    repo: action.payload,
+                },
             };
 
         case SET_BRANCH:
             return {
                 ...state,
-                currentBranch: action.payload,
+                current: {
+                    ...state.current,
+                    branch: action.payload,
+                },
             };
 
         case SET_PATH:
             return {
                 ...state,
-                currentPath: action.payload,
+                current: {
+                    ...state.current,
+                    path: action.payload,
+                },
             };
 
-        case SET_VIEW: // current dir or file
+        case GET_TREE:
             return {
                 ...state,
-                currentView: action.payload,
+                treeData: action.payload,
             };
 
-        case GET_DIR_CONTENT:
+        case GET_BLOB:
             return {
                 ...state,
-                isLoading: false,
-                currentTableContent: action.payload,
-            };
-
-        case GET_FILE_CONTENT:
-            return {
-                ...state,
-                currentFile: action.payload,
+                blobData: action.payload,
             };
 
         // case SUBMIT_SEARCH_FORM: //Поиск файлов, содержащих в названии ключевое слово

@@ -1,22 +1,27 @@
-import { Dispatch } from 'redux';
+import { Action, Dispatch } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
 import {
-    getRepoList,
+    getRepos,
     getBranches,
-    getDirContent,
-    getFileContent,
+    getTree,
+    getBlob,
+    setRepo,
+    setBranch,
+    setPath,
     // getAllRepoContent
 } from './actions';
+import State from './types';
 
-export const fetchRepoList = () => {
+export const fetchRepos = () => {
     return async (dispatch: Dispatch) => {
         const response = await fetch('http://localhost:3000/api/repos');
         const json = await response.json();
 
-        dispatch(getRepoList(json));
+        dispatch(getRepos(json));
     };
 };
 
-export const fetchBranches = (repoID: string, path?: string[]) => {
+const fetchBranches = (repoID: string, path?: string[]) => {
     return async (dispatch: Dispatch) => {
         const url = path
             ? `http://localhost:3000/api/repos/${repoID}/branches/${path.join('/')}`
@@ -28,7 +33,7 @@ export const fetchBranches = (repoID: string, path?: string[]) => {
     };
 };
 
-export const fetchDirContent = (repoID: string, branch: string, dirPath?: string[]) => {
+const fetchTree = (repoID: string, branch: string, dirPath?: string[]) => {
     return async (dispatch: Dispatch) => {
         const url = dirPath
             ? `http://localhost:3000/api/repos/${repoID}/tree/${branch}/${dirPath.join('/')}`
@@ -36,18 +41,51 @@ export const fetchDirContent = (repoID: string, branch: string, dirPath?: string
         const response = await fetch(url);
         const json = await response.json();
 
-        dispatch(getDirContent(json));
+        dispatch(getTree(json));
     };
 };
 
-export const fetchFileContent = (repoID: string, branch: string, filePath: string[]) => {
+const fetchBlob = (repoID: string, branch: string, filePath: string[]) => {
     return async (dispatch: Dispatch) => {
         const response = await fetch(
             `http://localhost:3000/api/repos/${repoID}/blob/${branch}/${filePath.join('/')}`
         );
         const json = await response.json();
 
-        dispatch(getFileContent(json));
+        dispatch(getBlob(json));
+    };
+};
+
+export const getRepoData = (repo: string) => {
+    return async (dispatch: ThunkDispatch<State, void, Action>) => {
+        dispatch(fetchRepos());
+        dispatch(setRepo(repo));
+        dispatch(fetchBranches(repo));
+    };
+};
+
+export const getTreeData = (repo: string, branch: string, path?: string[]) => {
+    return async (dispatch: ThunkDispatch<State, void, Action>) => {
+        dispatch(fetchRepos());
+        dispatch(setRepo(repo));
+        dispatch(fetchBranches(repo, path));
+        dispatch(setBranch(branch));
+        dispatch(fetchTree(repo, branch, path));
+
+        if (path) {
+            dispatch(setPath(path));
+        }
+    };
+};
+
+export const getBlobData = (repo: string, branch: string, path: string[]) => {
+    return async (dispatch: ThunkDispatch<State, void, Action>) => {
+        dispatch(fetchRepos());
+        dispatch(setRepo(repo));
+        dispatch(fetchBranches(repo, path));
+        dispatch(setBranch(branch));
+        dispatch(fetchBlob(repo, branch, path));
+        dispatch(setPath(path));
     };
 };
 

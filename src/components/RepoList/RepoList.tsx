@@ -1,24 +1,15 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import cn from 'classnames';
-import State from '@/store/types';
+import { getAllRepos, getCurrentInfo } from '@/store/selectors';
 import ArrowDown from '../svg/ArrowDown.svg';
 import './RepoList.scss';
 
-interface Props {
-    allRepos: string[];
-    currentRepo: string;
-    noCurrentRepo: boolean;
-}
-
-const mapStateToProps = (state: State) => ({
-    allRepos: state.allRepos,
-    currentRepo: state.currentRepo,
-});
-
-const RepoList = ({ allRepos, currentRepo, noCurrentRepo }: Props) => {
-    const [isOpen, setIsOpen] = useState(noCurrentRepo);
+const RepoList = () => {
+    const repos = useSelector(getAllRepos);
+    const { repo: currentRepo } = useSelector(getCurrentInfo);
+    const [isOpen, setIsOpen] = useState(!currentRepo);
 
     return (
         <div className="RepoList">
@@ -38,7 +29,7 @@ const RepoList = ({ allRepos, currentRepo, noCurrentRepo }: Props) => {
                         <hr className="RepoList-Break" />
                     </>
                 )}
-                {allRepos.map(
+                {repos.map(
                     (repo, index) =>
                         repo !== currentRepo && (
                             <li className="RepoList-Item" key={index}>
@@ -53,4 +44,4 @@ const RepoList = ({ allRepos, currentRepo, noCurrentRepo }: Props) => {
     );
 };
 
-export default connect(mapStateToProps)(RepoList);
+export default RepoList;

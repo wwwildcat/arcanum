@@ -14,12 +14,13 @@ let store: Store;
 const initialState = {
     allRepos: [],
     allBranches: [],
-    currentRepo: '',
-    currentBranch: '',
-    currentPath: [],
-    currentView: '',
-    currentTableContent: [],
-    currentFile: {
+    current: {
+        repo: '',
+        branch: '',
+        path: [],
+    },
+    treeData: [],
+    blobData: {
         content: [],
         size: '',
         hash: '',

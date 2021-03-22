@@ -1,37 +1,32 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import State, { ObjectData, FileData } from '@/store/types';
+import { useSelector } from 'react-redux';
+import { getBlobData, getCurrentInfo, getTreeData } from '@/store/selectors';
+import { ObjectData } from '@/store/types';
 import BranchList from '../BranchList/BranchList';
 import './Current.scss';
 
 interface Props {
-    tableData: ObjectData[];
-    fileData: FileData;
-    noCurrentBranch: boolean;
-    noBranchList?: boolean;
-    name: string;
+    isBranches: boolean;
     type: 'tree' | 'blob';
 }
-
-const mapStateToProps = (state: State) => ({
-    tableData: state.currentTableContent,
-    fileData: state.currentFile,
-    name: state.currentView,
-});
 
 const getLastCommit = (data: ObjectData[]) =>
     [...data].sort((a, b) => Number(new Date(b.absDate)) - Number(new Date(a.absDate)))[0];
 
-const Current = ({ noCurrentBranch, noBranchList, tableData, fileData, name, type }: Props) => {
-    const { hash, commiter, date } = type === 'blob' ? fileData : getLastCommit(tableData) ?? {};
+const Current = ({ isBranches, type }: Props) => {
+    const treeData = useSelector(getTreeData);
+    const blobData = useSelector(getBlobData);
+    const { repo, branch, path } = useSelector(getCurrentInfo);
+    const name = path.length ? path[path.length - 1] : repo;
+    const { hash, commiter, date } = type === 'blob' ? blobData : getLastCommit(treeData) ?? {};
 
     return (
         <div className="Current">
             <div className="Current-Name">{name}</div>
-            {!noBranchList && (
+            {!isBranches && (
                 <>
-                    <BranchList noCurrentBranch={noCurrentBranch} type={type} />
-                    {!noCurrentBranch && (
+                    <BranchList type={type} />
+                    {branch && (
                         <div className="Current-LastCommit">
                             Last commit
                             <span className="Current-LastCommit_style_blue"> {hash}</span> on
@@ -45,8 +40,4 @@ const Current = ({ noCurrentBranch, noBranchList, tableData, fileData, name, typ
     );
 };
 
-Current.defaultProps = {
-    noBranchList: false,
-};
-
-export default connect(mapStateToProps)(Current);
+export default Current;

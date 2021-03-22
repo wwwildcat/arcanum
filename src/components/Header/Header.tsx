@@ -3,14 +3,10 @@ import RepoList from '../RepoList/RepoList';
 import HeaderLogo from '../svg/logo.svg';
 import './Header.scss';
 
-interface Props {
-    noCurrentRepo: boolean;
-}
-
-const Header = ({ noCurrentRepo }: Props) => (
+const Header = () => (
     <header className="Header">
         <HeaderLogo className="Header-Logo" />
-        <RepoList noCurrentRepo={noCurrentRepo} />
+        <RepoList />
     </header>
 );
 

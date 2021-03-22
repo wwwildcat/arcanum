@@ -1,27 +1,18 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
-import State from '@/store/types';
+import { getCurrentInfo } from '@/store/selectors';
 import { tabsData } from '../data';
 import './Tabs.scss';
 
 interface Props {
     activeTab: number;
-    branch: string;
-    isRoot: boolean;
-    path: string[];
-    repo: string;
     type: 'tree' | 'blob';
 }
 
-const mapStateToProps = (state: State) => ({
-    repo: state.currentRepo,
-    branch: state.currentBranch,
-    path: state.currentPath,
-});
-
-const Tabs = ({ activeTab, branch, isRoot, path, repo, type }: Props) => {
+const Tabs = ({ activeTab, type }: Props) => {
     const currentTabs = type === 'blob' ? tabsData.slice(2).reverse() : tabsData.slice(0, 3);
+    const { repo, branch, path } = useSelector(getCurrentInfo);
 
     return (
         <ul className="Tabs">
@@ -29,7 +20,7 @@ const Tabs = ({ activeTab, branch, isRoot, path, repo, type }: Props) => {
                 const isActive = activeTab === index;
 
                 return (
-                    (isRoot || name !== 'BRANCHES') && (
+                    (!path.length || name !== 'BRANCHES') && (
                         <li className={`Tabs-Item ${isActive && 'Tabs-Item_active'}`} key={index}>
                             {isActive ? name : <Link href={url(repo, branch, path)}>{name}</Link>}
                         </li>
@@ -40,4 +31,4 @@ const Tabs = ({ activeTab, branch, isRoot, path, repo, type }: Props) => {
     );
 };
 
-export default connect(mapStateToProps)(Tabs);
+export default Tabs;

@@ -30,13 +30,16 @@ export interface FileData extends CommitData {
 export const columnTypes = ['name', 'hash', 'message', 'commiter', 'date'] as const;
 export type ColumnData = typeof columnTypes[number];
 
+interface CurrentData {
+    repo: string;
+    branch: string;
+    path: string[];
+}
+
 export default interface State {
     allRepos: string[];
     allBranches: BranchData[];
-    currentRepo: string;
-    currentBranch: string;
-    currentPath: string[];
-    currentView: string;
-    currentTableContent: ObjectData[];
-    currentFile: FileData;
+    current: CurrentData;
+    treeData: ObjectData[];
+    blobData: FileData;
 }
