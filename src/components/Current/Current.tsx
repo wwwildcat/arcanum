@@ -19,16 +19,11 @@ const mapStateToProps = (state: State) => ({
     name: state.currentView,
 });
 
-const getLastCommit = (data: ObjectData[]) => {
-    data.sort((a, b) => {
-        return Number(new Date(b.absDate)) - Number(new Date(a.absDate));
-    });
-
-    return data[0] || { hash: '', commiter: '', date: '' };
-};
+const getLastCommit = (data: ObjectData[]) =>
+    [...data].sort((a, b) => Number(new Date(b.absDate)) - Number(new Date(a.absDate)))[0];
 
 const Current = ({ noBranch, noBranchList, tableData, fileData, name, type }: Props) => {
-    const { hash, commiter, date } = type === 'blob' ? fileData : getLastCommit(tableData);
+    const { hash, commiter, date } = type === 'blob' ? fileData : getLastCommit(tableData) ?? {};
 
     return (
         <div className="Current">

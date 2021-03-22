@@ -39,47 +39,39 @@ const Table = ({ tableType, repo, branch, path, ...restProps }: Props) => {
                     </div>
                 ))}
             </div>
-            {tableContent &&
-                tableContent.map(({ name, type, ...rest }, i) => {
-                    const newPath = path ? path.concat(name) : [name];
-                    const linkUrl =
-                        tableType === 'files'
-                            ? `/${repo}/${type}/${branch}/${newPath.join('/')}`
-                            : `/${repo}/tree/${name}`;
+            {tableContent.map(({ name, type, ...rest }, i) => {
+                const newPath = path ? path.concat(name) : [name];
+                const linkUrl =
+                    tableType === 'files'
+                        ? `/${repo}/${type}/${branch}/${newPath.join('/')}`
+                        : `/${repo}/tree/${name}`;
 
-                    return (
-                        <div className={`Table-Row Table-Row_type_${tableType}`} key={i}>
-                            {(columns as ColumnData[]).map((item, index) => (
-                                <div
-                                    className={`Table-Cell Table-Cell_content_${item}`}
-                                    key={index}
-                                >
-                                    {item === 'name' ? (
-                                        <Link href={linkUrl}>
-                                            <span className="Table-Link">
-                                                {type === 'tree' && (
-                                                    <Folder className="Table-Icon" />
-                                                )}
-                                                {type === 'blob' && <File className="Table-Icon" />}
-                                                {type === 'branch' && (
-                                                    <Branch className="Table-Icon" />
-                                                )}
-                                                {name}
-                                            </span>
-                                        </Link>
-                                    ) : (
-                                        rest[item]
-                                    )}
-                                </div>
-                            ))}
-                            <Link href={linkUrl}>
-                                <>
-                                    <Arrow className="Table-ArrowButton" />
-                                </>
-                            </Link>
-                        </div>
-                    );
-                })}
+                return (
+                    <div className={`Table-Row Table-Row_type_${tableType}`} key={i}>
+                        {(columns as ColumnData[]).map((item, index) => (
+                            <div className={`Table-Cell Table-Cell_content_${item}`} key={index}>
+                                {item === 'name' ? (
+                                    <Link href={linkUrl}>
+                                        <span className="Table-Link">
+                                            {type === 'tree' && <Folder className="Table-Icon" />}
+                                            {type === 'blob' && <File className="Table-Icon" />}
+                                            {type === 'branch' && <Branch className="Table-Icon" />}
+                                            {name}
+                                        </span>
+                                    </Link>
+                                ) : (
+                                    rest[item]
+                                )}
+                            </div>
+                        ))}
+                        <Link href={linkUrl}>
+                            <>
+                                <Arrow className="Table-ArrowButton" />
+                            </>
+                        </Link>
+                    </div>
+                );
+            })}
         </div>
     );
 };

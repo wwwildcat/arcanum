@@ -1,7 +1,7 @@
 import React from 'react';
 import './Footer.scss';
 
-const Footer = (): JSX.Element => (
+const Footer = () => (
     <footer className="Footer">
         <span className="Footer-Address">
             Trade secrets of Yandex LLC. 16, Lev Tolstoy Str., Moscow, Russia, 119021

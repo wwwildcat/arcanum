@@ -22,14 +22,7 @@ const mapStateToProps = (state: State) => ({
     path: state.currentPath,
 });
 
-const BranchList = ({
-    allBranches,
-    currentBranch,
-    noBranch,
-    repo,
-    path,
-    type,
-}: Props): JSX.Element => {
+const BranchList = ({ allBranches, currentBranch, noBranch, repo, path, type }: Props) => {
     const [isOpen, setIsOpen] = useState(noBranch);
 
     return (

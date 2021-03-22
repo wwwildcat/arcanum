@@ -8,8 +8,9 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import BreadCrumbs from '../../components/BreadCrumbs/BreadCrumbs';
 import Current from '../../components/Current/Current';
-import { setBranch, setView, setPath, setRepo } from '../../store/actions';
-import { fetchBranches } from '../../store/thunks';
+import { initializeStore } from '../../store/createStore';
+import { setView, setRepo } from '../../store/actions';
+import { fetchRepoList, fetchBranches } from '../../store/thunks';
 import State from '../../store/types';
 
 interface Props {
@@ -18,13 +19,23 @@ interface Props {
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => ({
     setRepoData: (repo: string) => {
+        dispatch(fetchRepoList());
         dispatch(setRepo(repo));
         dispatch(fetchBranches(repo));
-        dispatch(setBranch(''));
-        dispatch(setPath([]));
         dispatch(setView(repo));
     },
 });
+
+export const getServerSideProps = ({ params: { repoID } }) => {
+    const store = initializeStore();
+    const { dispatch } = store;
+
+    mapDispatchToProps(dispatch).setRepoData(repoID);
+
+    const props = { initialReduxState: store.getState() };
+
+    return { props: JSON.parse(JSON.stringify(props)) };
+};
 
 const RepoPage = ({ setRepoData }: Props) => {
     const router = useRouter();

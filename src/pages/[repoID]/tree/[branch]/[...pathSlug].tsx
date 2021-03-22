@@ -10,8 +10,9 @@ import BreadCrumbs from '../../../../components/BreadCrumbs/BreadCrumbs';
 import Current from '../../../../components/Current/Current';
 import Tabs from '../../../../components/Tabs/Tabs';
 import Table from '../../../../components/Table/Table';
+import { initializeStore } from '../../../../store/createStore';
 import { setRepo, setBranch, setPath, setView } from '../../../../store/actions';
-import { fetchBranches, fetchDirContent } from '../../../../store/thunks';
+import { fetchRepoList, fetchBranches, fetchDirContent } from '../../../../store/thunks';
 import State from '../../../../store/types';
 
 interface Props {
@@ -20,17 +21,26 @@ interface Props {
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => ({
     setDirData: (repo: string, branch: string, pathSlug: string[]) => {
-        const pathToDir = pathSlug || [];
-        const dirName = pathSlug ? pathSlug[pathSlug.length - 1] : '';
-
+        dispatch(fetchRepoList());
         dispatch(setRepo(repo));
         dispatch(setBranch(branch));
-        dispatch(fetchDirContent(repo, branch, pathToDir));
-        dispatch(fetchBranches(repo, pathToDir));
-        dispatch(setPath(pathToDir));
-        dispatch(setView(dirName));
+        dispatch(fetchDirContent(repo, branch, pathSlug));
+        dispatch(fetchBranches(repo, pathSlug));
+        dispatch(setPath(pathSlug));
+        dispatch(setView(pathSlug[pathSlug.length - 1]));
     },
 });
+
+export const getServerSideProps = ({ params: { repoID, branch, pathSlug } }) => {
+    const store = initializeStore();
+    const { dispatch } = store;
+
+    mapDispatchToProps(dispatch).setDirData(repoID, branch, pathSlug);
+
+    const props = { initialReduxState: store.getState() };
+
+    return { props: JSON.parse(JSON.stringify(props)) };
+};
 
 const DirPage = ({ setDirData }: Props) => {
     const router = useRouter();
@@ -46,12 +56,10 @@ const DirPage = ({ setDirData }: Props) => {
                 <title>Yandex Arcanum</title>
             </Head>
             <Header />
-            <>
-                <BreadCrumbs />
-                <Current type="tree" />
-                <Tabs type="tree" />
-                <Table tableType="files" />
-            </>
+            <BreadCrumbs />
+            <Current type="tree" />
+            <Tabs type="tree" />
+            <Table tableType="files" />
             <Footer />
         </>
     );

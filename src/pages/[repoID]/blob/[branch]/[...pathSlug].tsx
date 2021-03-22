@@ -10,31 +10,37 @@ import BreadCrumbs from '../../../../components/BreadCrumbs/BreadCrumbs';
 import Current from '../../../../components/Current/Current';
 import Tabs from '../../../../components/Tabs/Tabs';
 import Viewer from '../../../../components/Viewer/Viewer';
+import { initializeStore } from '../../../../store/createStore';
 import { setRepo, setBranch, setPath, setView } from '../../../../store/actions';
-import { fetchBranches, fetchFileContent } from '../../../../store/thunks';
+import { fetchRepoList, fetchBranches, fetchFileContent } from '../../../../store/thunks';
 import State from '../../../../store/types';
 
 interface Props {
     setFileData: (repo: string, branch: string, pathSlug: string[]) => void;
 }
 
-const mapStateToProps = (state: State) => ({
-    isLoading: state.isLoading,
-});
-
 const mapDispatchToProps = (dispatch: ThunkDispatch<State, void, Action>) => ({
     setFileData: (repo: string, branch: string, pathSlug: string[]) => {
-        const pathToFile = pathSlug || [];
-        const fileName = pathSlug ? pathSlug[pathSlug.length - 1] : '';
-
+        dispatch(fetchRepoList());
         dispatch(setRepo(repo));
         dispatch(setBranch(branch));
-        dispatch(fetchFileContent(repo, branch, pathToFile));
-        dispatch(fetchBranches(repo, pathToFile));
-        dispatch(setPath(pathToFile));
-        dispatch(setView(fileName));
+        dispatch(fetchFileContent(repo, branch, pathSlug));
+        dispatch(fetchBranches(repo, pathSlug));
+        dispatch(setPath(pathSlug));
+        dispatch(setView(pathSlug[pathSlug.length - 1]));
     },
 });
+
+export const getServerSideProps = ({ params: { repoID, branch, pathSlug } }) => {
+    const store = initializeStore();
+    const { dispatch } = store;
+
+    mapDispatchToProps(dispatch).setFileData(repoID, branch, pathSlug);
+
+    const props = { initialReduxState: store.getState() };
+
+    return { props: JSON.parse(JSON.stringify(props)) };
+};
 
 const FilePage = ({ setFileData }: Props) => {
     const router = useRouter();
@@ -50,15 +56,13 @@ const FilePage = ({ setFileData }: Props) => {
                 <title>Yandex Arcanum</title>
             </Head>
             <Header />
-            <>
-                <BreadCrumbs />
-                <Current type="blob" />
-                <Tabs type="blob" />
-                <Viewer />
-            </>
+            <BreadCrumbs />
+            <Current type="blob" />
+            <Tabs type="blob" />
+            <Viewer />
             <Footer />
         </>
     );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FilePage);
+export default connect(null, mapDispatchToProps)(FilePage);
