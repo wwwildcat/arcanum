@@ -18,7 +18,7 @@ const Current = ({ isBranches, type }: Props) => {
     const blobData = useSelector(getBlobData);
     const { repo, branch, path } = useSelector(getCurrentInfo);
     const name = path.length ? path[path.length - 1] : repo;
-    const { hash, commiter, date } = type === 'blob' ? blobData : getLastCommit(treeData) ?? {};
+    const { hash, commiter, absDate } = type === 'blob' ? blobData : getLastCommit(treeData) ?? {};
 
     return (
         <div className="Current">
@@ -30,7 +30,7 @@ const Current = ({ isBranches, type }: Props) => {
                         <div className="Current-LastCommit">
                             Last commit
                             <span className="Current-LastCommit_style_blue"> {hash}</span> on
-                            <span className="Current-LastCommit_style_blue"> {date}</span> by
+                            <span className="Current-LastCommit_style_blue"> {absDate}</span> by
                             <div className="Current-LastCommit_style_commiter">{commiter}</div>
                         </div>
                     )}

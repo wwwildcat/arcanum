@@ -30,8 +30,8 @@ const BranchList = ({ type }: Props) => {
                         <li className="BranchList-Item BranchList-Item_selected">
                             {currentBranch}
                             <div className="BranchList-LastCommit BranchList-LastCommit_selected">
-                                Last commit:{' '}
-                                {branches?.find((item) => item.name === currentBranch)?.date}
+                                Last commit{' '}
+                                {branches.find(({ name }) => name === currentBranch).date}
                             </div>
                         </li>
                         <hr className="BranchList-Break" />
@@ -45,7 +45,7 @@ const BranchList = ({ type }: Props) => {
                                     <div onClick={() => setIsOpen(false)}>
                                         {name}
                                         <div className="BranchList-LastCommit">
-                                            Last commit: {date}
+                                            Last commit {date}
                                         </div>
                                     </div>
                                 </Link>

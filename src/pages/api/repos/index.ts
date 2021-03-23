@@ -11,7 +11,7 @@ const getRepos = (req: NextApiRequest, res: NextApiResponse) => {
                 (await fs.stat(path.resolve(pathToRepos, item))).isDirectory()
             );
 
-            res.json(repos);
+            res.status(200).json(repos);
         })
         .catch((err: Error) => res.status(404).send(err.message));
 };

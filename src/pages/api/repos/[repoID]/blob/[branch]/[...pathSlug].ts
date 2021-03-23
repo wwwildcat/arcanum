@@ -22,7 +22,7 @@ const getFile = (req: NextApiRequest, res: NextApiResponse) => {
                 pathToRepo
             );
 
-            res.json(formatFile(fileOut, sizeOut, commitOut));
+            res.status(200).json(formatFile(fileOut, sizeOut, commitOut));
         })
         .catch((err: Error) => res.status(404).send(err.message));
 };
