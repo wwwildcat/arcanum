@@ -6,9 +6,9 @@ import { formatTreeData, formatCommitData, sortObjects } from '@/apiUtils/jsonFo
 import { ObjectData } from '@/store/types';
 
 const getRepository = (req: NextApiRequest, res: NextApiResponse) => {
-    const pathToRepos = process.env.DIR;
+    const basePath = process.env.BASE_PATH;
     const { repoID, branch, pathSlug } = req.query;
-    const pathToRepo = path.join(pathToRepos, repoID as string);
+    const pathToRepo = path.join(basePath, repoID as string);
     const pathArg = pathSlug ? `${branch}:${(pathSlug as string[]).join('/')}` : `${branch}`;
 
     fs.access(pathToRepo)

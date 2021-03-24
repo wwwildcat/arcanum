@@ -4,11 +4,11 @@ import Layout from '@/components/Layout/Layout';
 import { initializeStore } from '@/store/createStore';
 import { fetchRepos } from '@/store/thunks';
 
-export const getServerSideProps = () => {
+export const getServerSideProps = async () => {
     const store = initializeStore();
     const { dispatch } = store;
 
-    dispatch(fetchRepos());
+    await dispatch(fetchRepos());
 
     const props = { initialReduxState: store.getState() };
 

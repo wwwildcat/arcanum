@@ -5,9 +5,9 @@ import gitWrapper from '@/apiUtils/gitWrapper';
 import { formatBranches } from '@/apiUtils/jsonFormatter';
 
 const getBranches = (req: NextApiRequest, res: NextApiResponse) => {
-    const pathToRepos = process.env.DIR;
+    const basePath = process.env.BASE_PATH;
     const { repoID, pathSlug } = req.query;
-    const pathToRepo = path.join(pathToRepos, repoID as string);
+    const pathToRepo = path.join(basePath, repoID as string);
     const pathToObj = pathSlug && (pathSlug as string[]).join('/');
 
     fs.access(pathToRepo)

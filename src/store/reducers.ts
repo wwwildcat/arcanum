@@ -1,37 +1,35 @@
 import { AnyAction } from 'redux';
 import {
-    GET_REPOS,
-    GET_BRANCHES,
+    SET_REPOS,
+    SET_BRANCHES,
+    SET_ERROR,
     SET_REPO,
     SET_BRANCH,
     SET_PATH,
-    GET_TREE,
-    GET_BLOB,
-    // GET_ALL_REPO_CONTENT,
-    // SUBMIT_SEARCH_FORM
+    SET_TREE,
+    SET_BLOB,
 } from './actionTypes';
 import State from './types';
 
 const reducer = (state: State, action: AnyAction) => {
     switch (action.type) {
-        case GET_REPOS:
+        case SET_REPOS:
             return {
                 ...state,
                 allRepos: action.payload,
             };
 
-        case GET_BRANCHES:
+        case SET_BRANCHES:
             return {
                 ...state,
                 allBranches: action.payload,
             };
 
-        // case GET_ALL_REPO_CONTENT:
-        // return {
-        // 	...state,
-        // 	allFiles: action.payload,
-        // 	allFilesFilter: action.payload
-        // };
+        case SET_ERROR:
+            return {
+                ...state,
+                error: action.payload,
+            };
 
         case SET_REPO:
             return {
@@ -60,28 +58,17 @@ const reducer = (state: State, action: AnyAction) => {
                 },
             };
 
-        case GET_TREE:
+        case SET_TREE:
             return {
                 ...state,
                 treeData: action.payload,
             };
 
-        case GET_BLOB:
+        case SET_BLOB:
             return {
                 ...state,
                 blobData: action.payload,
             };
-
-        // case SUBMIT_SEARCH_FORM: //Поиск файлов, содержащих в названии ключевое слово
-        // 	const searchInput = action.payload.toLowerCase();
-        // 	const allFilesFilter = state.allFiles.filter(file => file.shortName.toLowerCase().indexOf(searchInput) !== -1);
-
-        // return {
-        // 	 ...state,
-        // 	 allFilesFilter: allFilesFilter,
-        // 	 viewFiles: 'all'
-        //  };
-        // }
 
         default: {
             return state;

@@ -5,9 +5,9 @@ import gitWrapper from '@/apiUtils/gitWrapper';
 import { formatFile } from '@/apiUtils/jsonFormatter';
 
 const getFile = (req: NextApiRequest, res: NextApiResponse) => {
-    const pathToRepos = process.env.DIR;
+    const basePath = process.env.BASE_PATH;
     const { repoID, branch, pathSlug } = req.query;
-    const pathToRepo = path.join(pathToRepos, repoID as string);
+    const pathToRepo = path.join(basePath, repoID as string);
     const pathToFile = (pathSlug as string[]).join('/');
 
     fs.access(pathToRepo)

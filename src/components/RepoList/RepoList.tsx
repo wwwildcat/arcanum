@@ -1,20 +1,27 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import cn from 'classnames';
-import { getAllRepos, getCurrentInfo } from '@/store/selectors';
+import { getAllRepos, getRepo } from '@/store/selectors';
 import ArrowDown from '../svg/ArrowDown.svg';
 import './RepoList.scss';
 
-const RepoList = () => {
+interface Props {
+    isError: boolean;
+}
+
+const RepoList = ({ isError }: Props) => {
     const repos = useSelector(getAllRepos);
-    const { repo: currentRepo } = useSelector(getCurrentInfo);
+    const _currentRepo = useSelector(getRepo);
+    const currentRepo = isError ? '' : _currentRepo;
     const [isOpen, setIsOpen] = useState(!currentRepo);
 
     return (
         <div className="RepoList">
             <span className="RepoList-Current">
-                Repository <span className="RepoList-Title">{currentRepo}</span>
+                {currentRepo ? 'Repository ' : 'Select repository'}
+                <span className="RepoList-Title">{currentRepo}</span>
             </span>
             <div
                 className={cn('RepoList-Arrow', isOpen && 'RepoList-Arrow_open')}

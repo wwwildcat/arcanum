@@ -1,99 +1,121 @@
-import { Action, Dispatch } from 'redux';
+import { Action, ActionCreator } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import {
-    getRepos,
-    getBranches,
-    getTree,
-    getBlob,
+    setRepos,
+    setBranches,
+    setTreeData,
+    setBlobData,
     setRepo,
     setBranch,
     setPath,
-    // getAllRepoContent
+    setError,
 } from './actions';
-import State from './types';
+import State, { BranchData } from './types';
 
-export const fetchRepos = () => {
-    return async (dispatch: Dispatch) => {
-        const response = await fetch('http://localhost:3000/api/repos');
-        const json = await response.json();
+const fetchThunk = (url: string, onSuccess: ActionCreator<Action>) => {
+    return async (dispatch: ThunkDispatch<State, void, Action>) => {
+        try {
+            const baseApiUrl = 'http://localhost:3000/api/repos';
+            const response = await fetch(`${baseApiUrl}/${url}`);
+            const json = await response.json();
 
-        dispatch(getRepos(json));
+            dispatch(onSuccess(json));
+
+            return json;
+        } catch (err) {
+            dispatch(setError(err));
+
+            return err;
+        }
     };
 };
 
-const fetchBranches = (repoID: string, path?: string[]) => {
-    return async (dispatch: Dispatch) => {
-        const url = path
-            ? `http://localhost:3000/api/repos/${repoID}/branches/${path.join('/')}`
-            : `http://localhost:3000/api/repos/${repoID}/branches/`;
-        const response = await fetch(url);
-        const json = await response.json();
+export const fetchRepos = () => fetchThunk('', setRepos);
 
-        dispatch(getBranches(json));
-    };
+const fetchBranches = (repoID: string, path?: string[]) => {
+    const url = path ? `${repoID}/branches/${path.join('/')}` : `${repoID}/branches`;
+
+    return fetchThunk(url, setBranches);
 };
 
 const fetchTree = (repoID: string, branch: string, dirPath?: string[]) => {
-    return async (dispatch: Dispatch) => {
-        const url = dirPath
-            ? `http://localhost:3000/api/repos/${repoID}/tree/${branch}/${dirPath.join('/')}`
-            : `http://localhost:3000/api/repos/${repoID}/tree/${branch}`;
-        const response = await fetch(url);
-        const json = await response.json();
+    const url = dirPath
+        ? `${repoID}/tree/${branch}/${dirPath.join('/')}`
+        : `${repoID}/tree/${branch}`;
 
-        dispatch(getTree(json));
-    };
+    return fetchThunk(url, setTreeData);
 };
 
-const fetchBlob = (repoID: string, branch: string, filePath: string[]) => {
-    return async (dispatch: Dispatch) => {
-        const response = await fetch(
-            `http://localhost:3000/api/repos/${repoID}/blob/${branch}/${filePath.join('/')}`
-        );
-        const json = await response.json();
+const fetchBlob = (repoID: string, branch: string, filePath: string[]) =>
+    fetchThunk(`${repoID}/blob/${branch}/${filePath.join('/')}`, setBlobData);
 
-        dispatch(getBlob(json));
-    };
-};
-
-export const getRepoData = (repo: string) => {
+export const getRepoData = (repo: string, path?: string[]) => {
     return async (dispatch: ThunkDispatch<State, void, Action>) => {
-        dispatch(fetchRepos());
-        dispatch(setRepo(repo));
-        dispatch(fetchBranches(repo));
+        try {
+            const repos = await dispatch(fetchRepos());
+
+            if (!repos.includes(repo)) {
+                throw new Error('No such repo');
+            } else {
+                dispatch(setRepo(repo));
+
+                const branches = await dispatch(fetchBranches(repo, path));
+
+                return branches;
+            }
+        } catch (err) {
+            dispatch(setError(err));
+
+            return err;
+        }
     };
 };
 
 export const getTreeData = (repo: string, branch: string, path?: string[]) => {
     return async (dispatch: ThunkDispatch<State, void, Action>) => {
-        dispatch(fetchRepos());
-        dispatch(setRepo(repo));
-        dispatch(fetchBranches(repo, path));
-        dispatch(setBranch(branch));
-        dispatch(fetchTree(repo, branch, path));
+        try {
+            const branches = await dispatch(getRepoData(repo, path));
 
-        if (path) {
-            dispatch(setPath(path));
+            if (branches.find((item: BranchData) => item.name === branch)) {
+                dispatch(setBranch(branch));
+
+                const tree = await dispatch(fetchTree(repo, branch, path));
+                if (Array.isArray(tree)) {
+                    if (path) {
+                        dispatch(setPath(path));
+                    }
+                } else {
+                    throw new Error('No such directory');
+                }
+            } else {
+                throw new Error('No such branch');
+            }
+        } catch (err) {
+            dispatch(setError(err));
         }
     };
 };
 
 export const getBlobData = (repo: string, branch: string, path: string[]) => {
     return async (dispatch: ThunkDispatch<State, void, Action>) => {
-        dispatch(fetchRepos());
-        dispatch(setRepo(repo));
-        dispatch(fetchBranches(repo, path));
-        dispatch(setBranch(branch));
-        dispatch(fetchBlob(repo, branch, path));
-        dispatch(setPath(path));
+        try {
+            const branches = await dispatch(getRepoData(repo));
+
+            if (branches.find((item: BranchData) => item.name === branch)) {
+                dispatch(setBranch(branch));
+
+                const blob = await dispatch(fetchBlob(repo, branch, path));
+
+                if (typeof blob === 'object') {
+                    dispatch(setPath(path));
+                } else {
+                    throw new Error('No such file');
+                }
+            } else {
+                throw new Error('No such branch');
+            }
+        } catch (err) {
+            dispatch(setError(err));
+        }
     };
 };
-
-// export const fetchAllRepoContent = (repoID: string) => {
-// 	return async function (dispatch: Dispatch) {
-// 		const response = await fetch(`http://localhost:3000/api/repos/${repoID}/all`);
-// 		const json = await response.json();
-
-// 		dispatch(getAllRepoContent(json));
-// 	};
-// }

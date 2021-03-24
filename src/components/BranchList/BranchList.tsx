@@ -17,7 +17,7 @@ const BranchList = ({ type }: Props) => {
 
     return (
         <div className="BranchList">
-            <span className="BranchList-CurrentBranch">{currentBranch}</span>
+            <span className="BranchList-CurrentBranch">{currentBranch || 'Select branch'}</span>
             <div
                 className={cn('BranchList-Arrow', isOpen && 'BranchList-Arrow_open')}
                 onClick={() => setIsOpen(!isOpen)}

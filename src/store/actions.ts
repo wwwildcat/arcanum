@@ -1,13 +1,18 @@
-import { ObjectData, BranchData, FileData } from './types';
+import { ObjectData, BranchData, BlobData } from './types';
 
-export const getRepos = (json: string[]) => ({
-    type: 'GET_REPOS',
+export const setRepos = (json: string[]) => ({
+    type: 'SET_REPOS',
     payload: json,
 });
 
-export const getBranches = (json: BranchData[]) => ({
-    type: 'GET_BRANCHES',
+export const setBranches = (json: BranchData[]) => ({
+    type: 'SET_BRANCHES',
     payload: json,
+});
+
+export const setError = (err: Error) => ({
+    type: 'SET_ERROR',
+    payload: err,
 });
 
 export const setRepo = (repo: string) => ({
@@ -25,22 +30,12 @@ export const setPath = (path: string[]) => ({
     payload: path,
 });
 
-export const getTree = (json: ObjectData[]) => ({
-    type: 'GET_TREE',
+export const setTreeData = (json: ObjectData[]) => ({
+    type: 'SET_TREE',
     payload: json,
 });
 
-export const getBlob = (json: FileData) => ({
-    type: 'GET_BLOB',
+export const setBlobData = (json: BlobData) => ({
+    type: 'SET_BLOB',
     payload: json,
 });
-
-// export const getAllRepoContent = (json: ObjectData[]) => ({
-// 	type: 'GET_ALL_REPO_CONTENT',
-// 	payload: json
-// });
-
-// export const submitSearchForm> = (inputValue: string) => ({
-// 	type: 'SUBMIT_SEARCH_FORM',
-// 	payload: inputValue
-// });

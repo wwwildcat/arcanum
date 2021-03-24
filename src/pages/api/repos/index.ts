@@ -3,12 +3,12 @@ import path from 'path';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 const getRepos = (req: NextApiRequest, res: NextApiResponse) => {
-    const pathToRepos = process.env.DIR;
+    const basePath = process.env.BASE_PATH;
 
-    fs.readdir(pathToRepos)
+    fs.readdir(basePath)
         .then((items) => {
             const repos = items.filter(async (item) =>
-                (await fs.stat(path.resolve(pathToRepos, item))).isDirectory()
+                (await fs.stat(path.resolve(basePath, item))).isDirectory()
             );
 
             res.status(200).json(repos);

@@ -5,15 +5,15 @@ import Layout from '@/components/Layout/Layout';
 import { initializeStore } from '@/store/createStore';
 import { getBlobData } from '@/store/thunks';
 
-export const getServerSideProps = ({ params: { repoID, branch, pathSlug } }) => {
+export const getServerSideProps = async ({ params: { repoID, branch, pathSlug } }) => {
     const store = initializeStore();
     const { dispatch } = store;
 
-    dispatch(getBlobData(repoID, branch, pathSlug));
+    await dispatch(getBlobData(repoID, branch, pathSlug));
 
     const props = { initialReduxState: store.getState() };
 
-    return { props: JSON.parse(JSON.stringify(props)) };
+    return { props: JSON.parse(JSON.stringify(props)), notFound: store.getState().error };
 };
 
 const FilePage = () => {

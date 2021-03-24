@@ -19,16 +19,9 @@ const initialState = {
         branch: '',
         path: [],
     },
+    error: null,
     treeData: [],
-    blobData: {
-        content: [],
-        size: '',
-        hash: '',
-        message: '',
-        commiter: '',
-        date: '',
-        absDate: '',
-    },
+    blobData: null,
 };
 
 const initStore = (preloadedState = initialState) => {

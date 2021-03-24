@@ -22,7 +22,7 @@ const Current = ({ isBranches, type }: Props) => {
 
     return (
         <div className="Current">
-            <div className="Current-Name">{name}</div>
+            {branch && <div className="Current-Name">{name}</div>}
             {!isBranches && (
                 <>
                     <BranchList type={type} />

@@ -22,7 +22,7 @@ export interface BranchData {
     date: string;
 }
 
-export interface FileData extends CommitData {
+export interface BlobData extends CommitData {
     content: string[];
     size: string;
 }
@@ -40,6 +40,7 @@ export default interface State {
     allRepos: string[];
     allBranches: BranchData[];
     current: CurrentData;
+    error: Error;
     treeData: ObjectData[];
-    blobData: FileData;
+    blobData: BlobData;
 }

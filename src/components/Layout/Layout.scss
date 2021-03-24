@@ -1,0 +1,42 @@
+@import '../../styles/colors.scss';
+@import '../../styles/mixins.scss';
+
+.Layout {
+	display: flex;
+	flex-direction: column;
+
+	min-height: 100vh;
+
+	&-Header {
+		display: flex;
+
+		padding: 16px 0 19px;
+		border-bottom: solid 1px $lightGray2;
+
+		@include sm {
+			justify-content: space-between;
+		}
+	}
+
+	&-Logo {
+		width: 118px;
+		height: 20px;
+
+		margin-right: 40px;
+
+		@include sm {
+			margin-right: 0;
+		}
+	}
+
+	&-Content {
+		flex-grow: 1;
+	}
+
+	&-NotFound {
+		margin: 32px 0;
+		font-size: 24px;
+		line-height: 28px;
+		text-align: center;
+	}
+}

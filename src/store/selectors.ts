@@ -8,3 +8,4 @@ export const getBranch = (state: State) => state.current.branch;
 export const getPath = (state: State) => state.current.path;
 export const getBlobData = (state: State) => state.blobData;
 export const getTreeData = (state: State) => state.treeData;
+export const getErrorData = (state: State) => state.error;

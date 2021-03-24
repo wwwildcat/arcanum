@@ -5,15 +5,15 @@ import Layout from '@/components/Layout/Layout';
 import { initializeStore } from '@/store/createStore';
 import { getRepoData } from '@/store/thunks';
 
-export const getServerSideProps = ({ params: { repoID } }) => {
+export const getServerSideProps = async ({ params: { repoID } }) => {
     const store = initializeStore();
     const { dispatch } = store;
 
-    dispatch(getRepoData(repoID));
+    await dispatch(getRepoData(repoID));
 
     const props = { initialReduxState: store.getState() };
 
-    return { props: JSON.parse(JSON.stringify(props)) };
+    return { props: JSON.parse(JSON.stringify(props)), notFound: store.getState().error };
 };
 
 const BranchesPage = () => {
