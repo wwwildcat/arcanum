@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import { getCurrentInfo } from '@/store/selectors';
 import { tabsData } from '../data';
+import { cnActive } from '../utils';
 import './Tabs.scss';
 
 interface Props {
@@ -21,7 +22,7 @@ const Tabs = ({ activeTab, type }: Props) => {
 
                 return (
                     (!path.length || name !== 'BRANCHES') && (
-                        <li className={`Tabs-Item ${isActive && 'Tabs-Item_active'}`} key={index}>
+                        <li className={cnActive('Tabs-Item', isActive)} key={index}>
                             {isActive ? name : <Link href={url(repo, branch, path)}>{name}</Link>}
                         </li>
                     )

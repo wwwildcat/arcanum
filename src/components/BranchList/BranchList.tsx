@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
-import cn from 'classnames';
 import { getAllBranches, getCurrentInfo } from '@/store/selectors';
 import ArrowDown from '../svg/ArrowDown.svg';
+import { cnClosed } from '../utils';
 import './BranchList.scss';
 
 interface Props {
@@ -19,12 +19,12 @@ const BranchList = ({ type }: Props) => {
         <div className="BranchList">
             <span className="BranchList-CurrentBranch">{currentBranch || 'Select branch'}</span>
             <div
-                className={cn('BranchList-Arrow', isOpen && 'BranchList-Arrow_open')}
+                className={cnClosed('BranchList-Arrow', isOpen)}
                 onClick={() => setIsOpen(!isOpen)}
             >
                 <ArrowDown />
             </div>
-            <ul className={cn('BranchList-Dropdown', !isOpen && 'BranchList-Dropdown_closed')}>
+            <ul className={cnClosed('BranchList-Dropdown', isOpen)}>
                 {currentBranch && (
                     <>
                         <li className="BranchList-Item BranchList-Item_selected">

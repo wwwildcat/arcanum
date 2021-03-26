@@ -2,9 +2,9 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
-import cn from 'classnames';
 import { getAllRepos, getRepo } from '@/store/selectors';
 import ArrowDown from '../svg/ArrowDown.svg';
+import { cnClosed } from '../utils';
 import './RepoList.scss';
 
 interface Props {
@@ -23,13 +23,10 @@ const RepoList = ({ isError }: Props) => {
                 {currentRepo ? 'Repository ' : 'Select repository'}
                 <span className="RepoList-Title">{currentRepo}</span>
             </span>
-            <div
-                className={cn('RepoList-Arrow', isOpen && 'RepoList-Arrow_open')}
-                onClick={() => setIsOpen(!isOpen)}
-            >
+            <div className={cnClosed('RepoList-Arrow', isOpen)} onClick={() => setIsOpen(!isOpen)}>
                 <ArrowDown />
             </div>
-            <ul className={cn('RepoList-Dropdown', !isOpen && 'RepoList-Dropdown_closed')}>
+            <ul className={cnClosed('RepoList-Dropdown', isOpen)}>
                 {currentRepo && (
                     <>
                         <li className="RepoList-Item RepoList-Item_selected">{currentRepo}</li>

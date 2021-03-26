@@ -4,8 +4,12 @@
 .RepoList {
 	position: relative;
 
+	margin-right: 15px;
+
 	@include xs {
 		position: static;
+
+		margin-right: 0;
 	}
 
 	&-Current {
@@ -27,18 +31,20 @@
 		display: inline-block;
 
 		position: relative;
-		left: 6px;
-		top: 7px;
+		left: 3px;
+		top: -3px;
 
 		cursor: pointer;
 
-		fill: #000;
+		fill: $black;
 
-		&_open {
-			left: 3px;
-			top: -3px;
+		transform: rotate(180deg);
 
-			transform: rotate(180deg);
+		&_closed {
+			left: 6px;
+			top: 7px;
+
+			transform: none;
 		}
 	}
 
@@ -52,11 +58,15 @@
 		padding: 0;
 
 		list-style-type: none;
-		background: #fff;
+		background: $white;
 		box-shadow: $shadow;
 
 		&_closed {
 			display: none;
+		}
+
+		@include sm {
+			right: 12px;
 		}
 
 		@include xs {

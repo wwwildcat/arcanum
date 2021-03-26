@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import cn from 'classnames';
 import Link from 'next/link';
 import { getCurrentInfo } from '@/store/selectors';
+import { cnActive } from '../utils';
 import './BreadCrumbs.scss';
 
 const BreadCrumbs = () => {
@@ -18,10 +18,7 @@ const BreadCrumbs = () => {
                     : `/${repo}/tree/${branch}`;
 
                 return (
-                    <li
-                        className={cn('BreadCrumbs-Item', isActive && 'BreadCrumbs-Item_active')}
-                        key={index}
-                    >
+                    <li className={cnActive('BreadCrumbs-Item', isActive)} key={index}>
                         {isActive ? (
                             item
                         ) : (
