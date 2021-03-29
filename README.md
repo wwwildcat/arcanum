@@ -1,34 +1,41 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Arcanum
 
-## Getting Started
+A sample local Git web interface. Based on homework for [15th Yandex Interface Development School](https://academy.yandex.ru/schools/frontend) (2019, autumn).
 
-First, run the development server:
+Created with [create-next-app](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-```bash
-npm run dev
-# or
-yarn dev
+### Features
+
+- listing local repos and switching between them
+- file structure explorer to browse all files and folders within the repo
+- file viewer to show file content and file size
+- latest commit info for selected file or folder
+- listing local branches (both for the entire repo and for its files and subfolders) and switching between them
+
+### Technologies
+
+- [Next.js](https://github.com/vercel/next.js/)
+- [TypeScript](https://github.com/Microsoft/TypeScript)
+- [Redux](https://github.com/reduxjs/redux)
+- [react-redux](https://github.com/reduxjs/react-redux)
+- [redux-thunk](https://github.com/reduxjs/redux-thunk)
+- [node-sass](https://github.com/sass/node-sass)
+
+### Requirements
+
+- [NodeJS](https://nodejs.org/en/) ^14.x
+- [Git](https://git-scm.com/) ^2.29
+
+### Usage & development
+
+0. Install [yarn](https://classic.yarnpkg.com/en/docs/install) if needed.
+1. `git clone https://github.com/wwwildcat/shri-arcanum.git`
+2. Create a file called `.env` on the root of the project and add the `BASE_PATH` variable:
 ```
+BASE_PATH='path'
+```
+where `path` is your absolute path to local directory that contains Git repositories, example: `/home/user/repos`.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+3. `yarn install`
+4. `yarn dev`
+5. URL: [http://localhost:3000](http://localhost:3000)
