@@ -21,6 +21,23 @@ pre {
 }
 
 a {
+	display: block;
+
 	text-decoration: none;
 	color: inherit;
+}
+
+button {
+	border: none;
+	padding: 0;
+
+	background-color: inherit;
+
+	&:focus:not(:focus-visible) {
+		outline: 0;
+	}
+
+	&:focus-visible {
+		outline: -webkit-focus-ring-color auto 1px;
+	}
 }

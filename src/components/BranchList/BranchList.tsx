@@ -18,12 +18,13 @@ const BranchList = ({ type }: Props) => {
     return (
         <div className="BranchList">
             <span className="BranchList-CurrentBranch">{currentBranch || 'Select branch'}</span>
-            <div
+            <button
                 className={cnClosed('BranchList-Arrow', isOpen)}
                 onClick={() => setIsOpen(!isOpen)}
+                type="button"
             >
                 <ArrowDown />
-            </div>
+            </button>
             <ul className={cnClosed('BranchList-Dropdown', isOpen)}>
                 {currentBranch && (
                     <>
@@ -41,13 +42,13 @@ const BranchList = ({ type }: Props) => {
                     ({ name, date }, index) =>
                         name !== currentBranch && (
                             <li className="BranchList-Item" key={index}>
-                                <Link href={`/${repo}/${type}/${name}/${path.join('/')}`}>
-                                    <div onClick={() => setIsOpen(false)}>
+                                <Link href={`/${repo}/${type}/${name}/${path.join('/')}`} passHref>
+                                    <a href=" " onClick={() => setIsOpen(false)}>
                                         {name}
                                         <div className="BranchList-LastCommit">
                                             Last commit {date}
                                         </div>
-                                    </div>
+                                    </a>
                                 </Link>
                             </li>
                         )

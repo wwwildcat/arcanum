@@ -42,23 +42,23 @@ const Table = ({ tableType }: Props) => {
                         {(columns as ColumnData[]).map((item, index) => (
                             <div className={`Table-Cell Table-Cell_content_${item}`} key={index}>
                                 {item === 'name' ? (
-                                    <Link href={linkUrl}>
-                                        <span className="Table-Link">
+                                    <Link href={linkUrl} passHref>
+                                        <a className="Table-Link" href=" ">
                                             {type === 'tree' && <Folder className="Table-Icon" />}
                                             {type === 'blob' && <File className="Table-Icon" />}
                                             {type === 'branch' && <Branch className="Table-Icon" />}
                                             {name}
-                                        </span>
+                                        </a>
                                     </Link>
                                 ) : (
                                     rest[item]
                                 )}
                             </div>
                         ))}
-                        <Link href={linkUrl}>
-                            <>
-                                <Arrow className="Table-ArrowButton" />
-                            </>
+                        <Link href={linkUrl} passHref>
+                            <a className="Table-ArrowButton" href=" ">
+                                <Arrow height={20} width={20} />
+                            </a>
                         </Link>
                     </div>
                 );

@@ -23,9 +23,13 @@ const RepoList = ({ isError }: Props) => {
                 {currentRepo ? 'Repository ' : 'Select repository'}
                 <span className="RepoList-Title">{currentRepo}</span>
             </span>
-            <div className={cnClosed('RepoList-Arrow', isOpen)} onClick={() => setIsOpen(!isOpen)}>
+            <button
+                className={cnClosed('RepoList-Arrow', isOpen)}
+                onClick={() => setIsOpen(!isOpen)}
+                type="button"
+            >
                 <ArrowDown />
-            </div>
+            </button>
             <ul className={cnClosed('RepoList-Dropdown', isOpen)}>
                 {currentRepo && (
                     <>
@@ -37,8 +41,10 @@ const RepoList = ({ isError }: Props) => {
                     (repo, index) =>
                         repo !== currentRepo && (
                             <li className="RepoList-Item" key={index}>
-                                <Link href={`/${repo}`}>
-                                    <div onClick={() => setIsOpen(false)}>{repo}</div>
+                                <Link href={`/${repo}`} passHref>
+                                    <a href=" " onClick={() => setIsOpen(false)}>
+                                        {repo}
+                                    </a>
                                 </Link>
                             </li>
                         )

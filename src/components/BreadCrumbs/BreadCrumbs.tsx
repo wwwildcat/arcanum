@@ -23,8 +23,10 @@ const BreadCrumbs = () => {
                             item
                         ) : (
                             <>
-                                <Link href={url}>
-                                    <span className="BreadCrumbs-Link">{item}</span>
+                                <Link href={url} passHref>
+                                    <a className="BreadCrumbs-Link" href=" ">
+                                        {item}
+                                    </a>
                                 </Link>
                                 {` / `}
                             </>
