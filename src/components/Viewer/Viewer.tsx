@@ -9,7 +9,7 @@ const Viewer = () => {
     const { content, size } = useSelector(getBlobData);
 
     return (
-        <div className="Viewer">
+        <div className="Viewer" data-testid="viewer">
             <div className="Viewer-Header">
                 <File className="Viewer-Icon" />
                 {path[path.length - 1]}

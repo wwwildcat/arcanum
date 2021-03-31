@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
@@ -10,11 +11,24 @@ import Branch from '../svg/Branch.svg';
 import { tableHeaderData } from '../data';
 import './Table.scss';
 
-interface Props {
+interface TableProps {
     tableType: 'files' | 'branches';
 }
 
-const Table = ({ tableType }: Props) => {
+interface IconProps {
+    className: string;
+    type: 'tree' | 'blob' | 'branch';
+}
+
+const Icon = ({ type, ...rest }: IconProps) => (
+    <>
+        {type === 'tree' && <Folder {...rest} />}
+        {type === 'blob' && <File {...rest} />}
+        {type === 'branch' && <Branch {...rest} />}
+    </>
+);
+
+const Table = ({ tableType }: TableProps) => {
     const columns = tableType === 'files' ? columnTypes : columnTypes.slice(0, 2);
     const { repo, branch, path } = useSelector(getCurrentInfo);
     const treeData = useSelector(getTreeData);
@@ -22,7 +36,7 @@ const Table = ({ tableType }: Props) => {
     const tableContent = tableType === 'files' ? treeData : branches;
 
     return (
-        <div className="Table">
+        <div className="Table" data-testid="table">
             <div className={`Table-Row Table-Row_header Table-Row_type_${tableType}`}>
                 {tableHeaderData[tableType].map((item, index) => (
                     <div className="Table-Cell" key={index}>
@@ -30,7 +44,7 @@ const Table = ({ tableType }: Props) => {
                     </div>
                 ))}
             </div>
-            {tableContent.map(({ name, type, ...rest }, i) => {
+            {tableContent.map(({ name, type, ...rest }, i: number) => {
                 const newPath = path ? path.concat(name) : [name];
                 const linkUrl =
                     tableType === 'files'
@@ -44,9 +58,11 @@ const Table = ({ tableType }: Props) => {
                                 {item === 'name' ? (
                                     <Link href={linkUrl} passHref>
                                         <a className="Table-Link" href=" ">
-                                            {type === 'tree' && <Folder className="Table-Icon" />}
-                                            {type === 'blob' && <File className="Table-Icon" />}
-                                            {type === 'branch' && <Branch className="Table-Icon" />}
+                                            <Icon
+                                                className="Table-Icon"
+                                                data-testid={`table-icon-${type}`}
+                                                type={type}
+                                            />
                                             {name}
                                         </a>
                                     </Link>

@@ -39,3 +39,11 @@ where `path` is your absolute path to local directory that contains Git reposito
 3. `yarn install`
 4. `yarn dev`
 5. URL: [http://localhost:3000](http://localhost:3000)
+
+### Unit testing
+
+```
+yarn test
+```
+
+Using [Jest](https://github.com/facebook/jest), [react-testing-library](https://github.com/testing-library/react-testing-library), [jest-dom](https://github.com/testing-library/jest-dom) and [redux-mock-store](https://github.com/reduxjs/redux-mock-store).

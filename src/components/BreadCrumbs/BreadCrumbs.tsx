@@ -9,7 +9,7 @@ const BreadCrumbs = () => {
     const { repo, branch, path } = useSelector(getCurrentInfo);
 
     return (
-        <ul className="BreadCrumbs">
+        <ul className="BreadCrumbs" data-testid="breadCrumbs">
             {[repo].concat(path).map((item, index) => {
                 const isActive = index === [repo].concat(path).length - 1;
                 const newPath = path.slice(0, index);

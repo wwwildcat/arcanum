@@ -37,6 +37,8 @@ module.exports = {
             },
         ],
         'react/no-array-index-key': 'off',
+        'react/react-in-jsx-scope': 'off',
+        'prefer-destructuring': ['error', { object: true, array: false }],
         'prettier/prettier': [
             'error',
             {

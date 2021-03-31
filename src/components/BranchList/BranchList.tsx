@@ -16,7 +16,7 @@ const BranchList = ({ type }: Props) => {
     const [isOpen, setIsOpen] = useState(!currentBranch);
 
     return (
-        <div className="BranchList">
+        <div className="BranchList" data-testid="branchList">
             <span className="BranchList-CurrentBranch">{currentBranch || 'Select branch'}</span>
             <button
                 className={cnClosed('BranchList-Arrow', isOpen)}

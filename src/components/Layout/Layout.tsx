@@ -6,7 +6,7 @@ import Logo from '../svg/logo.svg';
 import RepoList from '../RepoList/RepoList';
 import Footer from '../Footer/Footer';
 import BreadCrumbs from '../BreadCrumbs/BreadCrumbs';
-import Current from '../Current/Current';
+import CurrentBar from '../CurrentBar/CurrentBar';
 import Tabs from '../Tabs/Tabs';
 import Table from '../Table/Table';
 import Viewer from '../Viewer/Viewer';
@@ -34,12 +34,14 @@ const Layout = ({ activeTab, isError, tableType, type }: Props) => {
             </header>
             <div className="Layout-Content">
                 {isError ? (
-                    <div className="Layout-NotFound">404 Not Found</div>
+                    <div className="Layout-NotFound" data-testid="notFound">
+                        404 Not Found
+                    </div>
                 ) : (
                     repo && (
                         <>
                             <BreadCrumbs />
-                            <Current isBranches={tableType === 'branches'} type={type} />
+                            <CurrentBar isBranches={tableType === 'branches'} type={type} />
                             {(branch || tableType === 'branches') && (
                                 <>
                                     <Tabs activeTab={activeTab} type={type} />

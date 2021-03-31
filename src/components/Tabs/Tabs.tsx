@@ -16,7 +16,7 @@ const Tabs = ({ activeTab, type }: Props) => {
     const { repo, branch, path } = useSelector(getCurrentInfo);
 
     return (
-        <ul className="Tabs">
+        <ul className="Tabs" data-testid="tabs">
             {currentTabs.map(({ name, url }, index) => {
                 const isActive = activeTab === index;
 

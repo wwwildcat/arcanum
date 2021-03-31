@@ -18,7 +18,7 @@ const RepoList = ({ isError }: Props) => {
     const [isOpen, setIsOpen] = useState(!currentRepo);
 
     return (
-        <div className="RepoList">
+        <div className="RepoList" data-testid="repoList">
             <span className="RepoList-Current">
                 {currentRepo ? 'Repository ' : 'Select repository'}
                 <span className="RepoList-Title">{currentRepo}</span>
