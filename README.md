@@ -46,4 +46,4 @@ where `path` is your absolute path to local directory that contains Git reposito
 yarn test
 ```
 
-Using [Jest](https://github.com/facebook/jest), [react-testing-library](https://github.com/testing-library/react-testing-library), [jest-dom](https://github.com/testing-library/jest-dom) and [redux-mock-store](https://github.com/reduxjs/redux-mock-store).
+Using [Jest](https://github.com/facebook/jest), [react-testing-library](https://github.com/testing-library/react-testing-library), [jest-dom](https://github.com/testing-library/jest-dom) with [redux-mock-store](https://github.com/reduxjs/redux-mock-store), [node-mocks-http](https://github.com/howardabrams/node-mocks-http) and [jest-fetch-mock](https://github.com/jefflau/jest-fetch-mock).

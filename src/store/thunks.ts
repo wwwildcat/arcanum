@@ -80,12 +80,8 @@ export const getTreeData = (repo: string, branch: string, path?: string[]) => {
                 dispatch(setBranch(branch));
 
                 const tree = await dispatch(fetchTree(repo, branch, path));
-                if (Array.isArray(tree)) {
-                    if (path) {
-                        dispatch(setPath(path));
-                    }
-                } else {
-                    throw new Error('No such directory');
+                if (Array.isArray(tree) && path) {
+                    dispatch(setPath(path));
                 }
             } else {
                 throw new Error('No such branch');
@@ -99,17 +95,15 @@ export const getTreeData = (repo: string, branch: string, path?: string[]) => {
 export const getBlobData = (repo: string, branch: string, path: string[]) => {
     return async (dispatch: ThunkDispatch<State, void, Action>) => {
         try {
-            const branches = await dispatch(getRepoData(repo));
+            const branches = await dispatch(getRepoData(repo, path));
 
             if (branches.find((item: BranchData) => item.name === branch)) {
                 dispatch(setBranch(branch));
 
                 const blob = await dispatch(fetchBlob(repo, branch, path));
 
-                if (typeof blob === 'object') {
+                if (blob.content) {
                     dispatch(setPath(path));
-                } else {
-                    throw new Error('No such file');
                 }
             } else {
                 throw new Error('No such branch');

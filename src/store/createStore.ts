@@ -11,7 +11,7 @@ interface StoreExtension {
 
 let store: Store;
 
-const initialState = {
+export const initialState = {
     allRepos: [],
     allBranches: [],
     current: {
