@@ -7,10 +7,32 @@ Created with [create-next-app](https://github.com/vercel/next.js/tree/canary/pac
 ### Features
 
 - listing local repos and switching between them
+<img src="screenshots/select_repo.png" alt="screenshots/select_repo.png" width="1024"/>
+<img src="screenshots/select_repo_1.png" alt="screenshots/select_repo_1.png" width="1024"/>
+<p>
+    <img src="screenshots/select_repo_m.png" alt="screenshots/select_repo_m.png" width="320"/>
+    <img src="screenshots/select_repo_1_m.png" alt="screenshots/select_repo_1_m.png" width="320"/>
+</p>
+
 - file structure explorer to browse all files and folders within the repo
+<p>
+    <img src="screenshots/table.png" alt="screenshots/table.png" width="75%"/>
+    <img src="screenshots/table_m.png" alt="screenshots/table_m.png" width="24%"/>
+</p>
+
 - file viewer to show file content and file size
-- latest commit info for selected file or folder
+<img src="screenshots/file_viewer.png" alt="screenshots/file_viewer.png" width="1024"/>
+
+- last commit info for selected file or folder
 - listing local branches (both for the entire repo and for its files and subfolders) and switching between them
+<img src="screenshots/select_branch.png" alt="screenshots/select_branch.png" width="1024"/>
+<img src="screenshots/select_branch_1.png" alt="screenshots/select_branch_1.png" width="1024"/>
+<img src="screenshots/branches.png" alt="screenshots/branches.png" width="1024"/>
+<p>
+    <img src="screenshots/select_branch_m.png" alt="screenshots/select_branch_m.png" width="32%"/>
+    <img src="screenshots/select_branch_1_m.png" alt="screenshots/select_branch_1_m.png" width="32%"/>
+    <img src="screenshots/branches_m.png" alt="screenshots/branches_m.png" width="32%"/>
+</p>
 
 ### Technologies
 
